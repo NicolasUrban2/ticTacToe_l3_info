@@ -1,8 +1,10 @@
-module com.example.tictactoe_l3_info {
+module main {
     requires javafx.controls;
     requires javafx.fxml;
 
 
-    opens com.example.tictactoe_l3_info to javafx.fxml;
-    exports com.example.tictactoe_l3_info;
+    exports main;
+    opens main to javafx.fxml;
+    exports controller;
+    opens controller to javafx.fxml;
 }
