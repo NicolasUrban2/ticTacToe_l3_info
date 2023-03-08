@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49a09cd-4046-42f5-9712-b12a3a508a29" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/HelloApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/aiLearningOverview.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ai/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ai/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/tictactoe_l3_info/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/aiLearningOverviewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/tictactoe_l3_info/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-    </list>
+    <list default="true" id="a49a09cd-4046-42f5-9712-b12a3a508a29" name="Changes" comment="Implemented the learning loading screen" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,12 +64,24 @@
       <updated>1678199224323</updated>
       <workItem from="1678199225461" duration="1973000" />
       <workItem from="1678259704520" duration="11485000" />
-      <workItem from="1678274482408" duration="696000" />
+      <workItem from="1678274482408" duration="788000" />
     </task>
+    <task id="LOCAL-00001" summary="Implemented the learning loading screen">
+      <created>1678275265859</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1678275265859</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Implemented the learning loading screen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented the learning loading screen" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
