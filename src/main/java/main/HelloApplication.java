@@ -17,7 +17,6 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(HelloApplication.class.getResource("/aiLearningOverview.fxml"));
-        System.out.println(loader.getLocation());
         AnchorPane aiLearningOverview = (AnchorPane) loader.load();
         Scene scene = new Scene(aiLearningOverview);
         stage.setTitle("Tic Tac Toe");
