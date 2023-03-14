@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainLayoutController">
+    <children>
+      <MenuBar prefHeight="28.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="IA">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Modèles" />
+                  <MenuItem fx:id="parametresMenuItem" onAction="#onAiParametresButtonClick" mnemonicParsing="false" text="Paramètres" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Règles">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Comment jouer" />
+                  <MenuItem mnemonicParsing="false" text="Wikipedia" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="À propos">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Nous" />
+                  <MenuItem mnemonicParsing="false" text="Github" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+    </children>
 </AnchorPane>

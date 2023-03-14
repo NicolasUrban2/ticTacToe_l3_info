@@ -5,7 +5,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="211.0" prefWidth="341.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.aiLearningOverviewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="211.0" prefWidth="341.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AiLearningOverviewController">
    <children>
       <ProgressBar fx:id="progressBar" layoutX="70.0" layoutY="82.0" prefWidth="200.0" progress="0.0" />
       <Button fx:id="startButton" layoutX="98.0" layoutY="154.0" mnemonicParsing="false" onAction="#onStartButtonClick" text="Démarrer apprentissage" />

@@ -13,7 +13,7 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
-public class aiLearningOverviewController {
+public class AiLearningOverviewController {
     @FXML
     private Label messageLabel;
 
