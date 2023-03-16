@@ -2,15 +2,12 @@ package controller;
 
 import ai.Config;
 import ai.ConfigFileLoader;
-import javafx.application.Application;
+import static controller.MainLayoutController.enableMainWindow;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import main.HelloApplication;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -45,6 +42,9 @@ public class AiSettingsOverviewController implements Initializable {
 
     @FXML
     private TextField textFieldDifficileLearningRate;
+
+    @FXML
+    private Button okButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -106,5 +106,15 @@ public class AiSettingsOverviewController implements Initializable {
         // Voir les classes pour écrire dedans (vu qu'on a déjà des classes pour les lire)
         // on récupère tous les champs, on efface tout le fichier config et on écrit dedans
         // avec un printwriter
+    }
+
+    public void closeWindow(){
+        Stage stage = (Stage) okButton.getScene().getWindow();
+        stage.close();
+    }
+    public void onOkButtonClick(){
+        onSaveButtonClick();
+        enableMainWindow();
+        closeWindow();
     }
 }

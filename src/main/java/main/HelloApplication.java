@@ -10,17 +10,20 @@ import java.io.*;
 
 public class HelloApplication extends Application {
 
+    public static Stage root;
+    public static AnchorPane rootAnchorPane;
     public static void main(String[] args) {
         launch();
     }
     @Override
     public void start(Stage stage) throws IOException {
+        root = stage;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(HelloApplication.class.getResource("/mainLayout.fxml"));
-        AnchorPane aiLearningOverview = (AnchorPane) loader.load();
-        Scene scene = new Scene(aiLearningOverview);
-        stage.setTitle("Tic Tac Toe");
-        stage.setScene(scene);
-        stage.show();
+        this.rootAnchorPane = (AnchorPane) loader.load();
+        Scene scene = new Scene(rootAnchorPane);
+        root.setTitle("Tic Tac Toe");
+        root.setScene(scene);
+        root.show();
     }
 }
