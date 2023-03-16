@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.HelloApplication;
@@ -49,6 +50,29 @@ public class AiSettingsOverviewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         displayConfigContent();
+        setTextFormattersToTextFields();
+    }
+
+    private void setTextFormattersToTextFields() {
+        String regexNumber = "^(0|[1-9][0-9]*)$";
+        String regexFloat = "^(0|[1-9][0-9]*)\\\\.(0|[1-9][0-9]*)$";
+
+        setTextFormatterToTextField(regexNumber, textFieldFacileHiddenLayerSize);
+        setTextFormatterToTextField(regexNumber, textFieldFacileNumberOfHiddenLayers);
+        setTextFormatterToTextField(regexFloat, textFieldFacileLearningRate);
+
+        setTextFormatterToTextField(regexNumber, textFieldMoyenHiddenLayerSize);
+        setTextFormatterToTextField(regexNumber, textFieldMoyenNumberOfHiddenLayers);
+        setTextFormatterToTextField(regexFloat, textFieldMoyenLearningRate);
+
+        setTextFormatterToTextField(regexNumber, textFieldDifficileHiddenLayerSize);
+        setTextFormatterToTextField(regexNumber, textFieldDifficileNumberOfHiddenLayers);
+        setTextFormatterToTextField(regexFloat, textFieldDifficileLearningRate);
+    }
+
+    private static void setTextFormatterToTextField(String regexNumber, TextField textField) {
+        textField.setTextFormatter(new TextFormatter<>(change ->
+                (change.getControlNewText().matches(regexNumber)) ? change : null));
     }
 
     private void displayConfigContent() {
