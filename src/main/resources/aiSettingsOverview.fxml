@@ -10,7 +10,6 @@
 
 <AnchorPane prefHeight="200.0" prefWidth="233.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AiSettingsOverviewController">
    <children>
-      <Button layoutX="138.0" layoutY="168.0" mnemonicParsing="false" text="Sauvegarder" />
       <GridPane layoutX="9.0" layoutY="36.0" prefHeight="128.0" prefWidth="216.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -27,21 +26,22 @@
             <Label text="Facile" GridPane.rowIndex="0" />
             <Label text="Moyen" GridPane.rowIndex="1" />
             <Label text="Difficile" GridPane.rowIndex="2" />
-            <TextField fx:id="textFieldFacileNumberOfHiddenLayers" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-            <TextField fx:id="textFieldFacileHiddenLayerSize" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-            <TextField fx:id="textFieldFacileLearningRate" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+            <TextField fx:id="textFieldFacileHiddenLayerSize" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <TextField fx:id="textFieldFacileLearningRate" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            <TextField fx:id="textFieldFacileNumberOfHiddenLayers" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-            <TextField fx:id="textFieldMoyenNumberOfHiddenLayers" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-             <TextField fx:id="textFieldMoyenHiddenLayerSize" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-             <TextField fx:id="textFieldMoyenLearningRate" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+             <TextField fx:id="textFieldMoyenHiddenLayerSize" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+             <TextField fx:id="textFieldMoyenLearningRate" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="textFieldMoyenNumberOfHiddenLayers" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-            <TextField fx:id="textFieldDifficileNumberOfHiddenLayers" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="textFieldDifficileHiddenLayerSize" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField fx:id="textFieldDifficileLearningRate" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <TextField fx:id="textFieldDifficileHiddenLayerSize" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="textFieldDifficileLearningRate" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="textFieldDifficileNumberOfHiddenLayers" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Label layoutX="88.0" layoutY="14.0" text="L" />
-      <Label layoutX="135.0" layoutY="14.0" text="H" />
-      <Label layoutX="192.0" layoutY="14.0" text="LR" />
+      <Label layoutX="88.0" layoutY="14.0" text="H" />
+      <Label layoutX="135.0" layoutY="14.0" text="LR" />
+      <Label layoutX="192.0" layoutY="14.0" text="L" />
+        <Button layoutX="138.0" layoutY="168.0" mnemonicParsing="false" text="Sauvegarder" onAction="#onSaveButtonClick" />
    </children>
 </AnchorPane>

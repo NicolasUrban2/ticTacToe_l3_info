@@ -12,6 +12,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.HelloApplication;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,6 +48,10 @@ public class AiSettingsOverviewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        displayConfigContent();
+    }
+
+    private void displayConfigContent() {
         ConfigFileLoader cfl = new ConfigFileLoader();
         cfl.loadConfigFile("./resources/config.txt");
         Config configFacile = cfl.get("F");
@@ -62,5 +68,43 @@ public class AiSettingsOverviewController implements Initializable {
         textFieldDifficileNumberOfHiddenLayers.setText(Integer.toString(configDifficile.numberOfhiddenLayers));
         textFieldDifficileHiddenLayerSize.setText(Integer.toString(configDifficile.hiddenLayerSize));
         textFieldDifficileLearningRate.setText(Double.toString(configDifficile.learningRate));
+    }
+
+    public void onSaveButtonClick(){
+        int fl, fh, ml, mh, dl, dh;
+        double flr, mlr, dlr;
+        fl = Integer.parseInt(textFieldFacileNumberOfHiddenLayers.getText());
+        ml = Integer.parseInt(textFieldMoyenNumberOfHiddenLayers.getText());
+        dl = Integer.parseInt(textFieldDifficileNumberOfHiddenLayers.getText());
+
+        fh = Integer.parseInt(textFieldFacileHiddenLayerSize.getText());
+        mh = Integer.parseInt(textFieldMoyenHiddenLayerSize.getText());
+        dh = Integer.parseInt(textFieldDifficileHiddenLayerSize.getText());
+
+        flr = Double.parseDouble(textFieldFacileLearningRate.getText());
+        mlr = Double.parseDouble(textFieldMoyenLearningRate.getText());
+        dlr = Double.parseDouble(textFieldDifficileLearningRate.getText());
+
+        String newContent = "F:" + fh + ":" + flr + ":" + fl + "\n" +
+                            "M:" + mh + ":" + mlr + ":" + ml + "\n" +
+                            "D:" + dh + ":" + dlr + ":" + dl;
+
+        try {
+            File file = new File("./resources/config.txt");
+
+            file.createNewFile();
+
+            FileWriter fw = new FileWriter(file, false);
+            fw.write(newContent);
+            fw.close();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Lié aux sauvegardes
+        // Voir les classes pour écrire dedans (vu qu'on a déjà des classes pour les lire)
+        // on récupère tous les champs, on efface tout le fichier config et on écrit dedans
+        // avec un printwriter
     }
 }
