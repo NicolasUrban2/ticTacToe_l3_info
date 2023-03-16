@@ -42,6 +42,7 @@
       <Label layoutX="88.0" layoutY="14.0" text="H" />
       <Label layoutX="135.0" layoutY="14.0" text="LR" />
       <Label layoutX="192.0" layoutY="14.0" text="L" />
-        <Button layoutX="138.0" layoutY="168.0" mnemonicParsing="false" text="Sauvegarder" onAction="#onSaveButtonClick" />
+        <Button layoutX="138.0" layoutY="168.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Sauvegarder" />
+      <Button layoutX="99.0" layoutY="168.0" mnemonicParsing="false" text="OK" />
    </children>
 </AnchorPane>
