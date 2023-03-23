@@ -12,8 +12,6 @@ import main.HelloApplication;
 import java.io.IOException;
 
 public class MainLayoutController{
-    @FXML
-    private MenuItem parametresMenuItem;
 
     @FXML
     public void onAiParametresButtonClick() throws IOException {
@@ -25,6 +23,27 @@ public class MainLayoutController{
         stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Paramètres");
+        stage.setScene(scene);
+
+        stage.setOnCloseRequest(event -> {
+            enableMainWindow();
+        });
+
+        stage.show();
+        HelloApplication.rootAnchorPane.getStyle();
+        disableMainWindow();
+    }
+
+    @FXML
+    public void onAiModelesButtonClick() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(HelloApplication.class.getResource("/aiModelsOverview.fxml"));
+        AnchorPane aiSettingsOverview = (AnchorPane) loader.load();
+        Scene scene = new Scene(aiSettingsOverview);
+        Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Modèles");
         stage.setScene(scene);
 
         stage.setOnCloseRequest(event -> {
