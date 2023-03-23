@@ -10,7 +10,7 @@
 <AnchorPane prefHeight="442.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AiModelsOverviewController">
    <children>
 
-                  <Button layoutX="215.0" layoutY="403.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Supprimer" />
+                  <Button onAction="#onDeleteButtonClick" layoutX="215.0" layoutY="403.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="81.0" text="Supprimer" />
       <ScrollPane prefHeight="397.0" prefWidth="310.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
             <GridPane fx:id="gridPane" alignment="CENTER" prefHeight="360.0" prefWidth="283.0">
