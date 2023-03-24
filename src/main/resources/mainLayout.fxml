@@ -4,30 +4,35 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainLayoutController">
     <children>
-      <MenuBar prefHeight="28.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="IA">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Modèles" />
-                  <MenuItem fx:id="parametresMenuItem" onAction="#onAiParametresButtonClick" mnemonicParsing="false" text="Paramètres" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Règles">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Comment jouer" />
-                  <MenuItem mnemonicParsing="false" text="Wikipedia" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="À propos">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Nous" />
-                  <MenuItem mnemonicParsing="false" text="Github" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
+      <BorderPane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <MenuBar prefHeight="28.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="IA">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Modèles" />
+                        <MenuItem fx:id="parametresMenuItem" mnemonicParsing="false" onAction="#onAiParametresButtonClick" text="Paramètres" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Règles">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Comment jouer" />
+                        <MenuItem mnemonicParsing="false" text="Wikipedia" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="À propos">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Nous" />
+                        <MenuItem mnemonicParsing="false" text="Github" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+      </BorderPane>
     </children>
 </AnchorPane>
