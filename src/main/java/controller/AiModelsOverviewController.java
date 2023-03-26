@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
@@ -26,6 +27,8 @@ public class AiModelsOverviewController implements Initializable {
 
     private List<String> modelsFilesNames = new ArrayList<>();
 
+    private List<String> modelFilesToDelete = new ArrayList<>();
+
     private String modelsPath = "./resources/models";
 
     private void searchModels() {
@@ -34,25 +37,45 @@ public class AiModelsOverviewController implements Initializable {
         this.modelsFilesNames.addAll(Arrays.asList(modelsDirectory.list()));
     }
 
-    @FXML
-    public void onDeleteButtonClick() {
-        List<String> modelsToDeleteList = new ArrayList<>();
-        for (int i = 0; i < modelsFilesNames.size(); i++) {
-            if (((CheckBox) getNodeFromGridPane(1, i)).isSelected()) {
-                modelsToDeleteList.add(modelsFilesNames.get(i));
-                System.out.println(modelsFilesNames.get(i));
-                File file = new File(modelsPath + "/" + modelsFilesNames.get(i));
-                file.delete();
-            }
-        }
-        searchModels();
-        clearGridPane();
-        fillGridPane();
-        showDeletedFiles();
+    private void removeModelsToDeleteFromModelsFilesNames() {
+        modelsFilesNames.removeAll(modelFilesToDelete);
     }
 
-    public void showDeletedFiles() {
-        // Affiche une fenêtre qui dit que la liste des fichiers ont bien été crées
+    @FXML
+    public void onDeleteButtonClick() {
+        modelFilesToDelete.clear();
+        for (int i = 0; i < modelsFilesNames.size(); i++) {
+            if (((CheckBox) getNodeFromGridPane(1, i)).isSelected()) {
+                modelFilesToDelete.add(modelsFilesNames.get(i));
+            }
+        }
+        removeModelsToDeleteFromModelsFilesNames();
+        //searchModels();
+        clearGridPane();
+        fillGridPane();
+    }
+
+    @FXML
+    public void onOkButtonClick() {
+        deleteModelsFromModelFilesToDelete();
+        closeWindow();
+    }
+
+    @FXML
+    public void onSauvegarderButtonClick() {
+        deleteModelsFromModelFilesToDelete();
+    }
+
+    private void deleteModelsFromModelFilesToDelete() {
+        for(int i=0; i<modelFilesToDelete.size(); i++) {
+            File fileToDelete = new File(modelsPath + "/" + modelFilesToDelete.get(i));
+            fileToDelete.delete();
+        }
+    }
+
+    public void closeWindow(){
+        Stage stage = (Stage) gridPane.getScene().getWindow();
+        stage.close();
     }
 
     private void fillGridPane() {
