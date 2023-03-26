@@ -50,6 +50,27 @@ public class MainLayoutController implements Initializable {
         disableMainWindow();
     }
 
+    @FXML
+    public void onAiModelesButtonClick() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("/aiModelsOverview.fxml"));
+        AnchorPane aiSettingsOverview = (AnchorPane) loader.load();
+        Scene scene = new Scene(aiSettingsOverview);
+        Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Modèles");
+        stage.setScene(scene);
+
+        stage.setOnCloseRequest(event -> {
+            enableMainWindow();
+        });
+
+        stage.show();
+        mainController.getRootAnchorPane().getStyle();
+        disableMainWindow();
+    }
+
     public void disableMainWindow(){
         Stage root = mainController.getRoot();
         root.setResizable(false);
