@@ -14,6 +14,12 @@ import main.Main;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class MainLayoutController implements Initializable {
+    @FXML
+    private MenuItem parametresMenuItem;
 
 public class MainLayoutController implements Initializable {
     @FXML

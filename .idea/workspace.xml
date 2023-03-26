@@ -4,40 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49a09cd-4046-42f5-9712-b12a3a508a29" name="Changes" comment="Implementation de MainController (Singleton)">
-      <change afterPath="$PROJECT_DIR$/resources/models/model_1_64_0.1.srl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/models/model_1_64_0.4.srl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/models/model_2_128_0.01.srl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/AiModelsOverviewController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/HelloApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/aiModelsOverview.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/dataset/Index" beforeDir="false" afterPath="$PROJECT_DIR$/resources/dataset/Index" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/dataset/Tic_tac_initial_results.csv" beforeDir="false" afterPath="$PROJECT_DIR$/resources/dataset/Tic_tac_initial_results.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/dataset/tic-tac-toe.data" beforeDir="false" afterPath="$PROJECT_DIR$/resources/dataset/tic-tac-toe.data" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/dataset/tic-tac-toe.names" beforeDir="false" afterPath="$PROJECT_DIR$/resources/dataset/tic-tac-toe.names" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/train/config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/train/config.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/train/train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/train/train.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/train_dev_test/dev.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/train_dev_test/dev.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/train_dev_test/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/train_dev_test/test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/train_dev_test/train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/train_dev_test/train.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ai/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ai/Config.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ai/ConfigFileLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ai/ConfigFileLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ai/Coup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ai/Coup.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ai/Layer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ai/Layer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ai/MultiLayerPerceptron.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ai/MultiLayerPerceptron.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ai/SigmoidalTransferFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ai/SigmoidalTransferFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ai/TanHyperbolicTransferFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ai/TanHyperbolicTransferFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ai/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ai/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ai/TransferFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ai/TransferFunction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/AiLearningOverviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/AiLearningOverviewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/AiSettingsOverviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/AiSettingsOverviewController.java" afterDir="false" />
+    <list default="true" id="a49a09cd-4046-42f5-9712-b12a3a508a29" name="Changes" comment="Autre résolution de conflits">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/WelcomeScreenLayout.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainLayoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainLayoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/aiLearningOverview.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/aiLearningOverview.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/aiSettingsOverview.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/aiSettingsOverview.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mainLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mainLayout.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/welcomeScreenLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/welcomeScreenLayout.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1679834211048</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Résolution de conflit pour le rebase de main sur ChoixDeDifficulte">
+      <created>1679844616255</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679844616255</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,7 +108,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implemented the learning loading screen" />
     <MESSAGE value="Implementation de MainController (Singleton)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implementation de MainController (Singleton)" />
+    <MESSAGE value="Résolution de conflit pour le rebase de main sur ChoixDeDifficulte" />
+    <MESSAGE value="Autre résolution de conflits" />
+    <option name="LAST_COMMIT_MESSAGE" value="Autre résolution de conflits" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
