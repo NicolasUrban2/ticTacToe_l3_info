@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import main.Main;
 
 import java.io.File;
 import java.net.URL;
@@ -30,6 +31,8 @@ public class AiModelsOverviewController implements Initializable {
     private List<String> modelFilesToDelete = new ArrayList<>();
 
     private String modelsPath = "./resources/models";
+
+    private MainController mainController = MainController.getInstance();
 
     private void searchModels() {
         this.modelsFilesNames.clear();
@@ -75,6 +78,7 @@ public class AiModelsOverviewController implements Initializable {
 
     public void closeWindow(){
         Stage stage = (Stage) gridPane.getScene().getWindow();
+        mainController.enableMainWindow();
         stage.close();
     }
 

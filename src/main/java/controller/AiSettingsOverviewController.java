@@ -136,11 +136,11 @@ public class AiSettingsOverviewController implements Initializable {
 
     public void closeWindow(){
         Stage stage = (Stage) okButton.getScene().getWindow();
+        mainController.enableMainWindow();
         stage.close();
     }
     public void onOkButtonClick(){
         onSaveButtonClick();
-        mainController.enableMainWindow();
         closeWindow();
     }
 }

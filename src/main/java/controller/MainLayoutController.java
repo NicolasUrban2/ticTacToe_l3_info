@@ -21,10 +21,6 @@ public class MainLayoutController implements Initializable {
     @FXML
     private MenuItem parametresMenuItem;
 
-public class MainLayoutController implements Initializable {
-    @FXML
-    private MenuItem parametresMenuItem;
-
     @FXML
     private BorderPane mainPane;
 
