@@ -85,4 +85,5 @@ public class MainLayoutController implements Initializable {
         root.setResizable(true);
         HelloApplication.rootAnchorPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0)");
     }
+
 }

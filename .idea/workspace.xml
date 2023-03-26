@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49a09cd-4046-42f5-9712-b12a3a508a29" name="Changes" comment="Implemented the learning loading screen" />
+    <list default="true" id="a49a09cd-4046-42f5-9712-b12a3a508a29" name="Changes" comment="Implemented the learning loading screen">
+      <change beforePath="$PROJECT_DIR$/resources/models/model_1_64_0.1 - Copie.srl" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
