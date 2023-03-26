@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49a09cd-4046-42f5-9712-b12a3a508a29" name="Changes" comment="Implémentation du bouton &quot;Supprimer&quot; (bases)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/controller/DifficultyChoiceController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/difficultyChoiceOverview.fxml" afterDir="false" />
+    <list default="true" id="a49a09cd-4046-42f5-9712-b12a3a508a29" name="Changes" comment="Implementation de MainController (Singleton)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/AiSettingsOverviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/AiSettingsOverviewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainLayoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainLayoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ViewLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ViewLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/WelcomeScreenLayoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/WelcomeScreenLayoutController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/WelcomeScreenLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/welcomeScreenLayout.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +86,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678275265859</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Implementation de MainController (Singleton)">
+      <created>1679834211048</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679834211048</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,7 +101,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Implemented the learning loading screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented the learning loading screen" />
+    <MESSAGE value="Implementation de MainController (Singleton)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementation de MainController (Singleton)" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

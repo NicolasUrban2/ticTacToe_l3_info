@@ -26,12 +26,7 @@ public class MainLayoutController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            System.out.println("Affichage de l'écran titre");
-            mainPane.setCenter(ViewLoader.getView("welcomeScreenLayout"));
-        } catch(Exception e) {
-            System.err.println(e.getMessage());
-        }
+        changeView("welcomeScreenLayout");
     }
 
     @FXML
@@ -67,5 +62,13 @@ public class MainLayoutController implements Initializable {
         mainController.getRootAnchorPane().setStyle("-fx-background-color: rgba(0, 0, 0, 0)");
     }
 
+    public void changeView(String viewName) {
+        try {
+            System.out.println(viewName);
+            mainPane.setCenter(ViewLoader.getView(viewName));
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
 
 }

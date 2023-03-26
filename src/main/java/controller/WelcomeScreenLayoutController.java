@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import main.Main;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,10 +15,10 @@ public class WelcomeScreenLayoutController implements Initializable {
     @FXML
     private ImageView imageLoutre;
 
+    private MainController mainController = MainController.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         loutreAnimationSetup();
     }
 
@@ -35,11 +36,7 @@ public class WelcomeScreenLayoutController implements Initializable {
 
     @FXML
     public void onJoueurVsIAButtonClick() {
-        try {
-            System.out.println("Affichage du choix des difficultés.");
-            //overviewPane.setCenter(ViewLoader.getView("difficultyChoiceOverview"));
-        } catch(Exception e) {
-            System.err.println(e.getMessage());
-        }
+        System.out.println("Affichage du choix des difficultés.");
+        mainController.changeView("difficultyChoiceOverview");
     }
 }

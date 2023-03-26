@@ -30,8 +30,9 @@ public class MainController {
         root = stage;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("/mainLayout.fxml"));
-        mainLayoutController = loader.getController();
+        //System.out.println(mainLayoutController);
         this.rootAnchorPane = (AnchorPane) loader.load();
+        mainLayoutController = loader.getController();
         Scene scene = new Scene(rootAnchorPane);
         root.setTitle("Tic Tac Toe");
         root.setScene(scene);
@@ -52,5 +53,9 @@ public class MainController {
 
     public void disableMainWindow() {
         mainLayoutController.disableMainWindow();
+    }
+
+    public void changeView(String viewName) {
+        mainLayoutController.changeView(viewName);
     }
 }
