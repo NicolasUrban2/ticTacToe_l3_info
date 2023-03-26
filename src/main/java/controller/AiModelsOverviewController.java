@@ -15,9 +15,7 @@ import javafx.scene.text.Font;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Collections;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class AiModelsOverviewController implements Initializable {
     @FXML
@@ -26,24 +24,35 @@ public class AiModelsOverviewController implements Initializable {
     @FXML
     private Button deleteButton;
 
-    private List<String> modelsFilesNames;
+    private List<String> modelsFilesNames = new ArrayList<>();
 
     private String modelsPath = "./resources/models";
 
     private void searchModels() {
+        this.modelsFilesNames.clear();
         File modelsDirectory = new File(modelsPath);
-        this.modelsFilesNames = List.of(modelsDirectory.list());
+        this.modelsFilesNames.addAll(Arrays.asList(modelsDirectory.list()));
     }
 
     @FXML
     public void onDeleteButtonClick() {
+        List<String> modelsToDeleteList = new ArrayList<>();
         for (int i = 0; i < modelsFilesNames.size(); i++) {
             if (((CheckBox) getNodeFromGridPane(1, i)).isSelected()) {
+                modelsToDeleteList.add(modelsFilesNames.get(i));
                 System.out.println(modelsFilesNames.get(i));
-                // A faire : supprimer le fichier du même nom
+                File file = new File(modelsPath + "/" + modelsFilesNames.get(i));
+                file.delete();
             }
         }
-        // A faire : fermer la fenêtre
+        searchModels();
+        clearGridPane();
+        fillGridPane();
+        showDeletedFiles();
+    }
+
+    public void showDeletedFiles() {
+        // Affiche une fenêtre qui dit que la liste des fichiers ont bien été crées
     }
 
     private void fillGridPane() {
@@ -61,8 +70,15 @@ public class AiModelsOverviewController implements Initializable {
         }
     }
 
+    private void clearGridPane() {
+        gridPane.getChildren().clear();
+        gridPane.getRowConstraints().clear();
+        gridPane.getColumnConstraints().clear();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         searchModels();
         fillGridPane();
     }
