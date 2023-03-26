@@ -28,17 +28,17 @@
       </ImageView>
       <VBox alignment="CENTER" layoutX="34.0" layoutY="144.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="144.0">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Joueur contre IA" textAlignment="CENTER" onAction="#onJoueurVsIAButtonClick">
+            <Button alignment="CENTER" mnemonicParsing="false" text="Joueur contre IA" textAlignment="CENTER">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Joueur contre humain" textAlignment="CENTER">
+            <Button alignment="CENTER" mnemonicParsing="false" text="Joueur contre humain">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" text="Tutoriel" textAlignment="CENTER">
+            <Button alignment="CENTER" mnemonicParsing="false" text="Tutoriel">
                <VBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
