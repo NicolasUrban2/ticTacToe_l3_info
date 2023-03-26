@@ -2,13 +2,11 @@ package controller;
 
 import ai.Config;
 import ai.ConfigFileLoader;
-import static controller.MainLayoutController.enableMainWindow;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -47,6 +45,8 @@ public class AiSettingsOverviewController implements Initializable {
 
     @FXML
     private Button okButton;
+
+    private MainController mainController = MainController.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -139,7 +139,7 @@ public class AiSettingsOverviewController implements Initializable {
     }
     public void onOkButtonClick(){
         onSaveButtonClick();
-        enableMainWindow();
+        mainController.enableMainWindow();
         closeWindow();
     }
 }
