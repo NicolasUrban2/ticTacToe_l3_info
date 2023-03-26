@@ -13,7 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import main.Main;
 
 import java.io.File;
 import java.net.URL;

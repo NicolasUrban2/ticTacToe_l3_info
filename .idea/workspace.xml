@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a49a09cd-4046-42f5-9712-b12a3a508a29" name="Changes" comment="Autre résolution de conflits">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/WelcomeScreenLayout.fxml" afterDir="false" />
+    <list default="true" id="de1286f1-9fc1-4393-982a-3b40e53b4673" name="Changes" comment="Autre résolution de conflits">
+      <change afterPath="$PROJECT_DIR$/src/main/java/main/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/AiModelsOverviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/AiModelsOverviewController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/MainLayoutController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/MainLayoutController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/welcomeScreenLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/welcomeScreenLayout.fxml" afterDir="false" />
     </list>
