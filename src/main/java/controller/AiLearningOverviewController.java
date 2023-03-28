@@ -3,17 +3,22 @@ package controller;
 import ai.*;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.stage.Stage;
+import model.GameSettings;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
-public class AiLearningOverviewController {
+public class AiLearningOverviewController implements Initializable {
     @FXML
     private Label messageLabel;
 
@@ -21,71 +26,110 @@ public class AiLearningOverviewController {
     private ProgressBar progressBar;
 
     @FXML
-    private Button startButton;
-
+    private Button cancelButton;
     @FXML
-    public void onStartButtonClick() {
+    private Button okButton;
+
+    private GameSettings gameSettings = GameSettings.getInstance();
+
+    private Thread thread;
+
+    private String newModelFileName;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            int size = 9;
-            messageLabel.setText("START TRAINING ...");
-            //
-            //			int[] layers = new int[]{ size, 128, 128, size };
-
-            ConfigFileLoader cfl = new ConfigFileLoader();
-            cfl.loadConfigFile("./resources/config.txt");
-            Config config = cfl.get("F");
-            System.out.println("Test.main() : " + config);
-            int l = config.numberOfhiddenLayers;
-            int h = config.hiddenLayerSize;
-            double lr = config.learningRate;
-            double epochs = 10000 ;
-            HashMap<Integer, Coup> mapTrain = loadCoupsFromFile("./resources/train_dev_test/train.txt");
-
-            int[] layers = new int[l + 2];
-            layers[0] = size;
-            for (int i = 0; i < l; i++) {
-                layers[i + 1] = h;
-            }
-            layers[layers.length - 1] = size;
-            //
-            MultiLayerPerceptron net = new MultiLayerPerceptron(layers, lr, new SigmoidalTransferFunction());
-
-            messageLabel.setText("Load data ...");
-
-            Task<Void> task = new Task<>() {
-                @Override
-                protected Void call() throws Exception {
-                    double error = 0.0;
-                    //TRAINING ...
-                    for (int i = 0; i < epochs; i++) {
-
-                        Coup c = null;
-                        while (c == null)
-                            c = mapTrain.get((int) (Math.round(Math.random() * mapTrain.size())));
-
-                        error += net.backPropagate(c.in, c.out);
-                        updateMessage(i+", "+epochs);
-                        if (i % 10000 == 0) {
-                            updateMessage("Error at step " + i + " is " + (error / (double) i));
-                        }
-                        updateProgress(i, epochs);
-                    }
-                    updateMessage("Learning completed!");
-                    return null;
-                }
-            };
-            progressBar.progressProperty().bind(task.progressProperty());
-            task.messageProperty().addListener((obs, oldMsg, newMsg) -> {
-                messageLabel.setText(newMsg);
-            });
-            Thread thread = new Thread(task);
-            thread.start();
+            createNewModel();
         } catch (Exception e) {
             System.out.println("Test.main()");
             e.printStackTrace();
             System.exit(-1);
         }
+        okButton.setDisable(true);
+    }
 
+    @FXML
+    private void onOkButtonCLick() {
+        closeWindow();
+    }
+
+    public void closeWindow(){
+        Stage stage = (Stage) okButton.getScene().getWindow();
+        stage.close();
+    }
+
+    @FXML
+    private void onCancelButtonClick() {
+        thread.interrupt();
+        File file = new File(newModelFileName);
+        file.delete();
+    }
+
+    private void createNewModel() {
+        int size = 9;
+        messageLabel.setText("START TRAINING ...");
+        //
+        //			int[] layers = new int[]{ size, 128, 128, size };
+
+        ConfigFileLoader cfl = new ConfigFileLoader();
+        cfl.loadConfigFile("./resources/config.txt");
+        Config config = cfl.get(gameSettings.getDifficulty());
+
+        messageLabel.setText("Test.main() : " + config);
+
+        int l = config.numberOfhiddenLayers;
+        int h = config.hiddenLayerSize;
+        double lr = config.learningRate;
+        double epochs = 10000 ;
+        HashMap<Integer, Coup> mapTrain = loadCoupsFromFile("./resources/train_dev_test/train.txt");
+
+        int[] layers = new int[l + 2];
+        layers[0] = size;
+        for (int i = 0; i < l; i++) {
+            layers[i + 1] = h;
+        }
+        layers[layers.length - 1] = size;
+        //
+        MultiLayerPerceptron net = new MultiLayerPerceptron(layers, lr, new SigmoidalTransferFunction());
+
+        messageLabel.setText("Load data ...");
+
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                double error = 0.0;
+                //TRAINING ...
+                int i=0;
+                while (i<epochs && !Thread.currentThread().isInterrupted()) {
+                    Coup c = null;
+                    while (c == null)
+                        c = mapTrain.get((int) (Math.round(Math.random() * mapTrain.size())));
+
+                    error += net.backPropagate(c.in, c.out);
+                    updateMessage(i+", "+epochs);
+                    if (i % 10000 == 0) {
+                        updateMessage("Error at step " + i + " is " + (error / (double) i));
+                    }
+                    updateProgress(i, epochs);
+                    i++;
+                }
+                if(Thread.currentThread().isInterrupted()) {
+                    updateMessage("Apprentissage annulé");
+                } else {
+                    updateMessage("Apprentissage terminé !");
+                }
+                okButton.setDisable(false);
+                return null;
+            }
+        };
+        progressBar.progressProperty().bind(task.progressProperty());
+        task.messageProperty().addListener((obs, oldMsg, newMsg) -> {
+            messageLabel.setText(newMsg);
+        });
+        thread = new Thread(task);
+        thread.start();
+        newModelFileName = "./resources/models/model_" + l + "_" + h + "_" + lr + ".srl";
+        net.save(newModelFileName);
     }
 
     public static HashMap<Integer, Coup> loadCoupsFromFile(String file){

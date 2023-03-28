@@ -4,8 +4,11 @@ import ai.Config;
 import ai.ConfigFileLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import model.GameSettings;
 
 import java.io.File;
@@ -77,7 +80,16 @@ public class DifficultyChoiceController implements Initializable {
             System.out.println("Existe bien");
         }
         else {
-            System.out.println("Existe pas");
+            try {
+                Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiLearningOverview"));
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setTitle("Entraînement de l'IA");
+                stage.show();
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+
         }
     }
 

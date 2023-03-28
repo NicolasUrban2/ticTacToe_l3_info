@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="211.0" prefWidth="341.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AiLearningOverviewController">
    <children>
-      <ProgressBar fx:id="progressBar" layoutX="70.0" layoutY="82.0" prefWidth="200.0" progress="0.0" />
-      <Button fx:id="startButton" layoutX="98.0" layoutY="154.0" mnemonicParsing="false" onAction="#onStartButtonClick" text="Démarrer apprentissage" />
-      <Label fx:id="messageLabel" layoutX="70.0" layoutY="55.0" prefHeight="18.0" prefWidth="200.0" />
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ProgressBar fx:id="progressBar" prefWidth="200.0" progress="0.0" BorderPane.alignment="CENTER" />
+         </center>
+         <top>
+            <Label fx:id="messageLabel" prefHeight="18.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets top="20.0" />
+               </BorderPane.margin>
+            </Label>
+         </top>
+         <bottom>
+            <ButtonBar maxWidth="-Infinity" prefHeight="40.0" prefWidth="170.0" BorderPane.alignment="CENTER">
+              <buttons>
+                <Button onAction="#onOkButtonCLick" fx:id="okButton" mnemonicParsing="false" text="OK" />
+                  <Button onAction="#onCancelButtonClick" fx:id="cancelButton" cancelButton="true" mnemonicParsing="false" text="Annuler" />
+              </buttons>
+               <padding>
+                  <Insets right="18.0" />
+               </padding>
+            </ButtonBar>
+         </bottom>
+      </BorderPane>
    </children>
 </AnchorPane>
