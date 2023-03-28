@@ -2,12 +2,14 @@ package controller;
 
 import ai.Config;
 import ai.ConfigFileLoader;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -19,63 +21,89 @@ import java.util.ResourceBundle;
 public class AiSettingsOverviewController implements Initializable {
     @FXML
     private TextField textFieldFacileNumberOfHiddenLayers;
-
     @FXML
     private TextField textFieldFacileHiddenLayerSize;
-
     @FXML
     private TextField textFieldFacileLearningRate;
-
     @FXML
     private TextField textFieldMoyenNumberOfHiddenLayers;
-
     @FXML
     private TextField textFieldMoyenHiddenLayerSize;
-
     @FXML
     private TextField textFieldMoyenLearningRate;
-
     @FXML
     private TextField textFieldDifficileNumberOfHiddenLayers;
-
     @FXML
     private TextField textFieldDifficileHiddenLayerSize;
-
     @FXML
     private TextField textFieldDifficileLearningRate;
-
     @FXML
     private Button okButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Label errorLabel;
 
     private MainController mainController = MainController.getInstance();
+
+    private final String[] regexTable = {"^([0-9]*)$", "^([0-9]*).(0|[0-9]*)$"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         displayConfigContent();
-        setTextFormattersToTextFields();
+        setTextVerifiersToAllTextFields();
     }
 
-    private void setTextFormattersToTextFields() {
-        String regexNumber = "^(0|[1-9][0-9]*)$";
-        String regexFloat = "^(0|[1-9][0-9]*)\\\\.(0|[1-9][0-9]*)$";
+    private void setTextVerifiersToAllTextFields() {
+        setEventHandlerToTextField(0, textFieldFacileHiddenLayerSize);
+        setEventHandlerToTextField(0, textFieldFacileNumberOfHiddenLayers);
+        setEventHandlerToTextField(1, textFieldFacileLearningRate);
 
-        setTextFormatterToTextField(regexNumber, textFieldFacileHiddenLayerSize);
-        setTextFormatterToTextField(regexNumber, textFieldFacileNumberOfHiddenLayers);
-        setTextFormatterToTextField(regexFloat, textFieldFacileLearningRate);
+        setEventHandlerToTextField(0, textFieldMoyenHiddenLayerSize);
+        setEventHandlerToTextField(0, textFieldMoyenNumberOfHiddenLayers);
+        setEventHandlerToTextField(1, textFieldMoyenLearningRate);
 
-        setTextFormatterToTextField(regexNumber, textFieldMoyenHiddenLayerSize);
-        setTextFormatterToTextField(regexNumber, textFieldMoyenNumberOfHiddenLayers);
-        setTextFormatterToTextField(regexFloat, textFieldMoyenLearningRate);
-
-        setTextFormatterToTextField(regexNumber, textFieldDifficileHiddenLayerSize);
-        setTextFormatterToTextField(regexNumber, textFieldDifficileNumberOfHiddenLayers);
-        setTextFormatterToTextField(regexFloat, textFieldDifficileLearningRate);
+        setEventHandlerToTextField(0, textFieldDifficileHiddenLayerSize);
+        setEventHandlerToTextField(0, textFieldDifficileNumberOfHiddenLayers);
+        setEventHandlerToTextField(1, textFieldDifficileLearningRate);
     }
 
+    private void setEventHandlerToTextField(int regexIndex, TextField textField) {
+        EventHandler<KeyEvent> eventHandler = new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if(textField.getText().matches(regexTable[regexIndex])) {
+                    // Champ correct
+                    errorLabel.setText("");
+                    textField.setStyle("-fx-border-color: none");
+                    okButton.setDisable(false);
+                    saveButton.setDisable(false);
+                } else {
+                    // Champ incorrect
+                    String errorMessage;
+                    switch (regexIndex) {
+                        case 0:
+                            errorMessage = "Erreur : Les champs doivent contenir des entiers";
+                            break;
+                        default :
+                            errorMessage = "Erreur : Les champs au milieu doivent contenir un nombre à point";
+                    }
+                    errorLabel.setText(errorMessage);
+                    textField.setStyle("-fx-border-color: red");
+                    okButton.setDisable(true);
+                    saveButton.setDisable(true);
+                }
+            }
+        };
+        textField.addEventHandler(KeyEvent.KEY_RELEASED, eventHandler);
+    }
+
+    /*
     private static void setTextFormatterToTextField(String regexNumber, TextField textField) {
         textField.setTextFormatter(new TextFormatter<>(change ->
                 (change.getControlNewText().matches(regexNumber)) ? change : null));
     }
+     */
 
     private void displayConfigContent() {
         ConfigFileLoader cfl = new ConfigFileLoader();
