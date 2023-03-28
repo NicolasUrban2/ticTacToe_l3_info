@@ -46,7 +46,7 @@ public class AiSettingsOverviewController implements Initializable {
 
     private MainController mainController = MainController.getInstance();
 
-    private final String[] regexTable = {"^([0-9]*)$", "^([0-9]*).(0|[0-9]*)$"};
+    private final String[] regexTable = {"^([0-9]+)$", "^([0-9]+)\\.([0-9]+)$"};
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
