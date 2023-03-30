@@ -38,7 +38,7 @@
                         <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>
                 </Button>
-                <Button alignment="CENTER" mnemonicParsing="false" text="Tutoriel">
+                <Button onAction="#onTutorialButtonClick" alignment="CENTER" mnemonicParsing="false" text="Tutoriel">
                     <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>

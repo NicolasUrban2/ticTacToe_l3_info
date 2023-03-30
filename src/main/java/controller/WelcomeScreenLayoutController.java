@@ -39,4 +39,9 @@ public class WelcomeScreenLayoutController implements Initializable {
         System.out.println("Affichage du choix des difficultés.");
         mainController.changeView("difficultyChoiceOverview");
     }
+
+    @FXML
+    private void onTutorialButtonClick() {
+        mainController.changeView("tutorialScreenLayout");
+    }
 }
