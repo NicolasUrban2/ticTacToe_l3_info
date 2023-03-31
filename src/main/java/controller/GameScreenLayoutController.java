@@ -16,7 +16,6 @@ import main.Main;
 import model.GameSettings;
 
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class GameScreenLayoutController implements Initializable {
@@ -84,7 +83,7 @@ public class GameScreenLayoutController implements Initializable {
     }
 
     private void accueilButtonInitialization() {
-        ImageView house = new ImageView(Main.class.getResource("/house.png").toString());
+        ImageView house = new ImageView(Main.class.getResource("/images/house.png").toString());
         accueilButton.setGraphic(house);
         house.setFitHeight(20);
         house.setFitWidth(20);
@@ -93,7 +92,7 @@ public class GameScreenLayoutController implements Initializable {
     private void fillEmptyImagesTable() {
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
-                ImageView image = new ImageView(new Image(Main.class.getResource("/white.jpg").toString()));
+                ImageView image = new ImageView(new Image(Main.class.getResource("/images/white.jpg").toString()));
                 image.setFitHeight(90);
                 image.setFitWidth(90);
                 image.setPreserveRatio(true);
@@ -411,7 +410,7 @@ public class GameScreenLayoutController implements Initializable {
     private void fillCircleTable() {
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
-                ImageView image = new ImageView(new Image(Main.class.getResource("/orange_circle.jpg").toString()));
+                ImageView image = new ImageView(new Image(Main.class.getResource("/images/orange_circle.jpg").toString()));
                 image.setFitHeight(90.0);
                 image.setFitWidth(90);
                 image.setPreserveRatio(true);
@@ -427,7 +426,7 @@ public class GameScreenLayoutController implements Initializable {
     private void fillCrossTable() {
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
-                ImageView image = new ImageView(new Image(Main.class.getResource("/blue_cross.jpg").toString()));
+                ImageView image = new ImageView(new Image(Main.class.getResource("/images/blue_cross.jpg").toString()));
                 image.setFitHeight(90);
                 image.setFitWidth(90);
                 image.setPreserveRatio(true);

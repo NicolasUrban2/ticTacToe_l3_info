@@ -23,7 +23,7 @@
         </Label>
         <ImageView fx:id="imageLoutre" fitHeight="175.0" fitWidth="175.0" layoutX="403.0" layoutY="190.0" pickOnBounds="true" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="22.0">
             <image>
-                <Image url="@minimalist_otter.png" />
+                <Image url="@images/minimalist_otter.png" />
             </image>
         </ImageView>
         <VBox alignment="CENTER" layoutX="34.0" layoutY="144.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="61.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="144.0">

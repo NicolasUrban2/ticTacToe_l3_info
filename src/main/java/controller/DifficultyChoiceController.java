@@ -48,7 +48,7 @@ public class DifficultyChoiceController implements Initializable {
     }
 
     private void accueilButtonInitialization() {
-        ImageView house = new ImageView(Main.class.getResource("/house.png").toString());
+        ImageView house = new ImageView(Main.class.getResource("/images/house.png").toString());
         accueilButton.setGraphic(house);
         house.setFitHeight(20);
         house.setFitWidth(20);
