@@ -1,6 +1,7 @@
 package controller;
 
 import ai.Coup;
+import ai.MultiLayerPerceptron;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -15,6 +16,7 @@ import main.Main;
 import model.GameSettings;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class GameScreenLayoutController implements Initializable {
@@ -94,57 +96,102 @@ public class GameScreenLayoutController implements Initializable {
 
                         if(playerRound) {
                             imageViewCrossTable[xClickedCase][yClickedCase].setVisible(true);
-                            tourJ2LabelDroite.setVisible(true);
-                            tourJ1LabelGauche.setVisible(false);
                             in[xClickedCase+yClickedCase*3] = -1;
-                            if(gameSettings.getGameMode() == "pve") {
-
-                            } else {
-                                playerRound = false;
-                            }
                         }
                         else {
-                            playerRound = true;
                             imageViewCircleTable[xClickedCase][yClickedCase].setVisible(true);
-                            tourJ2LabelDroite.setVisible(false);
-                            tourJ1LabelGauche.setVisible(true);
                             in[xClickedCase+yClickedCase*3] = 1;
                         }
                         coup.addInBoard(in);
                         //System.out.println(coup.toString());
-                        switch (gameFinished()) {
-                            case 0:
-                                winOrLose.setText("Match nul");
-                                replayButton.setVisible(true);
-                                isGamePlayable = false;
-                                break;
-                            case 1:
-                                if(gameSettings.getGameMode().equals("pve")) {
-                                    winOrLose.setText("Victoire !");
+                        turnConclusion();
+                    }
+                    // Changement de tour et tour de l'IA
+                    if(playerRound) {
+                        if(gameSettings.getGameMode() == "pve") {
+                            if(isGamePlayable) {
+                                System.out.println("Ai Turn");
+                                int index = getNextMoveIndex(getAiMoveTable());
+                                int xAiMoveCoordinates, yAiMoveCoordinates;
+                                if(index < 3) {
+                                    xAiMoveCoordinates = index;
+                                    yAiMoveCoordinates = 0;
+                                } else if(index < 6) {
+                                    xAiMoveCoordinates = index-3;
+                                    yAiMoveCoordinates = 1;
                                 } else {
-                                    winOrLose.setText("Victoire du joueur 1 !");
+                                    xAiMoveCoordinates = index-6;
+                                    yAiMoveCoordinates = 2;
                                 }
-                                replayButton.setVisible(true);
-                                isGamePlayable = false;
-                                break;
-                            case 2:
-                                if(gameSettings.getGameMode().equals("pve")) {
-                                    winOrLose.setText("Défaite...");
-                                } else {
-                                    winOrLose.setText("Victoire du joueur 2 !");
-                                }
-                                replayButton.setVisible(true);
-                                isGamePlayable = false;
-                                break;
-                            default:
-                                winOrLose.setText("");
+
+                                imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates].setVisible(true);
+                                in[index] = 1;
+                                coup.addInBoard(in);
+                                turnConclusion();
+                            }
+                        } else {
+                            tourJ2LabelDroite.setVisible(true);
+                            tourJ1LabelGauche.setVisible(false);
+                            playerRound = false;
                         }
+                    } else {
+                        tourJ2LabelDroite.setVisible(false);
+                        tourJ1LabelGauche.setVisible(true);
+                        playerRound = true;
+                        //System.out.println("Player Turn");
                     }
                 });
             }
         }
     }
 
+    private void turnConclusion() {
+        switch (gameFinished()) {
+            case 0:
+                winOrLose.setText("Match nul");
+                replayButton.setVisible(true);
+                isGamePlayable = false;
+                break;
+            case 1:
+                if(gameSettings.getGameMode().equals("pve")) {
+                    winOrLose.setText("Victoire !");
+                } else {
+                    winOrLose.setText("Victoire du joueur 1 !");
+                }
+                replayButton.setVisible(true);
+                isGamePlayable = false;
+                break;
+            case 2:
+                if(gameSettings.getGameMode().equals("pve")) {
+                    winOrLose.setText("Défaite...");
+                } else {
+                    winOrLose.setText("Victoire du joueur 2 !");
+                }
+                replayButton.setVisible(true);
+                isGamePlayable = false;
+                break;
+            default:
+                winOrLose.setText("");
+        }
+    }
+
+    private int getNextMoveIndex(double[] res) {
+        int index = 0;
+        double max = 0;
+        for(int i=0; i<9; i++) {
+            if(in[i] == 0.0 && res[i] > max) {
+                max = res[i];
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    private double[] getAiMoveTable() {
+        MultiLayerPerceptron multiLayerPerceptron = gameSettings.getMultiLayerPerceptron();
+        double[] res = multiLayerPerceptron.forwardPropagation(in);
+        return res;
+    }
     @FXML
     private void onRetourButtonClick() {
         mainController.changeView("welcomeScreenLayout");
