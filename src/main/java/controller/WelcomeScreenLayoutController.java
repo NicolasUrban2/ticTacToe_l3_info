@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import main.Main;
+import model.GameSettings;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,6 +15,8 @@ import java.util.ResourceBundle;
 public class WelcomeScreenLayoutController implements Initializable {
     @FXML
     private ImageView imageLoutre;
+
+    private GameSettings gameSettings = GameSettings.getInstance();
 
     private MainController mainController = MainController.getInstance();
 
@@ -38,12 +41,14 @@ public class WelcomeScreenLayoutController implements Initializable {
     public void onJoueurVsIAButtonClick() {
         System.out.println("Affichage du choix des difficultés.");
         mainController.changeView("difficultyChoiceOverview");
+        gameSettings.setGameMode("pve");
     }
 
     @FXML
     public void onJoueurVsJoueurButtonClick() {
         System.out.println("Affichage JVJ");
         mainController.changeView("gameScreenLayout");
+        gameSettings.setGameMode("pvp");
     }
 
     @FXML

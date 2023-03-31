@@ -35,7 +35,7 @@ public class Coup{
 	}
 
 	//CHAMPS ...
-	public String game ; 
+	public String game ;
 	public double[] in ;
 	public double[] out ;
 	//
