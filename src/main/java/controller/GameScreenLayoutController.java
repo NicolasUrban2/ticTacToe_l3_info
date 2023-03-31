@@ -62,10 +62,7 @@ public class GameScreenLayoutController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ImageView house = new ImageView(Main.class.getResource("/house.png").toString());
-        accueilButton.setGraphic(house);
-        house.setFitHeight(20);
-        house.setFitWidth(20);
+        accueilButtonInitialization();
         winOrLose.setText("");
         for(int t=0; t<in.length; t++) {
             in[t] = 0;
@@ -84,6 +81,13 @@ public class GameScreenLayoutController implements Initializable {
         for(int i=0; i<7; i+=3) {
             highlightCases(i, i+1, i+2, false);
         }
+    }
+
+    private void accueilButtonInitialization() {
+        ImageView house = new ImageView(Main.class.getResource("/house.png").toString());
+        accueilButton.setGraphic(house);
+        house.setFitHeight(20);
+        house.setFitWidth(20);
     }
 
     private void fillEmptyImagesTable() {
