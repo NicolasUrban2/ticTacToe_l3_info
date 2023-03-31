@@ -112,7 +112,7 @@
                                 <Font name="System Bold Italic" size="19.0" />
                             </font>
                         </Label>
-                        <Button fx:id="replayButton" mnemonicParsing="false" onAction="#onReplayButtonClick" prefHeight="26.0" prefWidth="178.0" text="Rejouer">
+                        <Button fx:id="replayButton" mnemonicParsing="false" onAction="#onReplayButtonClick" prefHeight="26.0" prefWidth="225.0" text="Recommencer" wrapText="true">
                             <HBox.margin>
                                 <Insets bottom="10.0" top="10.0" />
                             </HBox.margin></Button>
