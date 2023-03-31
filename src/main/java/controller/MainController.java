@@ -16,6 +16,17 @@ public class MainController {
 
     private MainLayoutController mainLayoutController;
 
+    public String getDarkStyle() {
+        return darkStyle;
+    }
+
+    public String getBrightStyle() {
+        return brightStyle;
+    }
+
+    private final String darkStyle = "-fx-background-color: rgba(0, 0, 0, 0.6)";
+    private final String brightStyle = "-fx-background-color: rgba(0, 0, 0, 0)";
+
     private MainController() {
 
     }

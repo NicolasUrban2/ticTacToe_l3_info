@@ -3,8 +3,10 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -18,15 +20,27 @@ import java.util.ResourceBundle;
 public class MainLayoutController implements Initializable {
     @FXML
     private MenuItem parametresMenuItem;
-
+    @FXML
+    private ToggleButton darkModeToggleButton;
     @FXML
     private BorderPane mainPane;
+
+    private Node mainView;
 
     private MainController mainController = MainController.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         changeView("welcomeScreenLayout");
+    }
+
+    @FXML
+    private void onDarkModeToggleButtonClick() {
+        if(darkModeToggleButton.isSelected()) {
+            mainView.setStyle(mainController.getDarkStyle());
+        } else {
+            mainView.setStyle(mainController.getBrightStyle());
+        }
     }
 
     @FXML
@@ -81,8 +95,14 @@ public class MainLayoutController implements Initializable {
 
     public void changeView(String viewName) {
         try {
-            System.out.println(viewName);
-            mainPane.setCenter(ViewLoader.getView(viewName));
+            //System.out.println(viewName);
+            mainView = ViewLoader.getView(viewName);
+            if(darkModeToggleButton.isSelected()) {
+                mainView.setStyle(mainController.getDarkStyle());
+            } else {
+                mainView.setStyle(mainController.getBrightStyle());
+            }
+            mainPane.setCenter(mainView);
         } catch(Exception e) {
             System.err.println("ChangeViewError :" + e.getMessage());
         }
