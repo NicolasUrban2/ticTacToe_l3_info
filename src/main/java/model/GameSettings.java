@@ -1,7 +1,11 @@
 package model;
 
+import ai.MultiLayerPerceptron;
+
 public class GameSettings {
     private static GameSettings INSTANCE;
+
+    private MultiLayerPerceptron multiLayerPerceptron;
 
     private String gameMode;
     private String difficulty;
@@ -37,5 +41,13 @@ public class GameSettings {
 
     public String getDifficulty() {
         return this.difficulty;
+    }
+
+    public MultiLayerPerceptron getMultiLayerPerceptron() {
+        return multiLayerPerceptron;
+    }
+
+    public void setMultiLayerPerceptron(MultiLayerPerceptron multiLayerPerceptron) {
+        this.multiLayerPerceptron = multiLayerPerceptron;
     }
 }

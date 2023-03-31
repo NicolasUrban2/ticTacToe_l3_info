@@ -2,6 +2,7 @@ package controller;
 
 import ai.Config;
 import ai.ConfigFileLoader;
+import ai.MultiLayerPerceptron;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -31,6 +32,7 @@ public class DifficultyChoiceController implements Initializable {
     private String choiceSelected;
 
     private GameSettings gameSettings = GameSettings.getInstance();
+    private MainController mainController = MainController.getInstance();
 
     ToggleGroup toggleGroup = new ToggleGroup();
     @Override
@@ -77,7 +79,9 @@ public class DifficultyChoiceController implements Initializable {
         String fileName = "model_" + l + "_" + h + "_" + lr + ".srl";
         System.out.println(fileName);
         if(fileExists(fileName)) {
-            System.out.println("Existe bien");
+            MultiLayerPerceptron multiLayerPerceptron = MultiLayerPerceptron.load("./resources/models/"+fileName);
+            gameSettings.setMultiLayerPerceptron(multiLayerPerceptron);
+            mainController.changeView("gameScreenLayout");
         }
         else {
             try {
