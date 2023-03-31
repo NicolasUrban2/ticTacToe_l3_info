@@ -45,7 +45,7 @@
                      </font></Label>
                         <ImageView fitHeight="93.0" fitWidth="97.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@blue_cross.png" />
+                                <Image url="@images/blue_cross.png" />
                             </image>
                         </ImageView>
                         <Label fx:id="tourJ1LabelGauche" alignment="CENTER" maxWidth="1.7976931348623157E308" text="A votre tour">
@@ -73,7 +73,7 @@
                      </font></Label>
                         <ImageView fitHeight="93.0" fitWidth="97.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@orange_circle.png" />
+                                <Image url="@images/orange_circle.png" />
                             </image>
                         </ImageView>
                         <Label fx:id="tourJ2LabelDroite" alignment="CENTER" maxWidth="1.7976931348623157E308" text="A votre tour">
