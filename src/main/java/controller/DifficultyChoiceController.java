@@ -6,10 +6,13 @@ import ai.MultiLayerPerceptron;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import main.Main;
 import model.GameSettings;
 
 import java.io.File;
@@ -34,10 +37,26 @@ public class DifficultyChoiceController implements Initializable {
     private GameSettings gameSettings = GameSettings.getInstance();
     private MainController mainController = MainController.getInstance();
 
+    @FXML
+    private Button accueilButton;
+
     ToggleGroup toggleGroup = new ToggleGroup();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        accueilButtonInitialization();
         setChoixFacile();
+    }
+
+    private void accueilButtonInitialization() {
+        ImageView house = new ImageView(Main.class.getResource("/house.png").toString());
+        accueilButton.setGraphic(house);
+        house.setFitHeight(20);
+        house.setFitWidth(20);
+    }
+
+    @FXML
+    private void onAccueilButtonClick() {
+        mainController.changeView("welcomeScreenLayout");
     }
 
     public void setChoixFacile() {

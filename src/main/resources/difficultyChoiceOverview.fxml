@@ -11,7 +11,7 @@
     <children>
             <VBox alignment="CENTER" layoutY="99.0" prefHeight="203.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                 <children>
-      <!--        <BorderPane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">-->
+                    <!--        <BorderPane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">-->
                   <Label text="Choix de la difficulté :" textAlignment="CENTER">
                <VBox.margin>
                   <Insets />
@@ -42,6 +42,7 @@
                     <Insets />
                 </opaqueInsets>
             </VBox>
+              <Button fx:id="accueilButton" mnemonicParsing="false" onAction="#onAccueilButtonClick" prefHeight="26.0" prefWidth="68.0" text="" />
 <!--        </BorderPane>-->
     </children>
 </AnchorPane>
