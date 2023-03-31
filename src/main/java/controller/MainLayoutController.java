@@ -31,10 +31,7 @@ public class MainLayoutController implements Initializable {
 
     @FXML
     public void onAiParametresButtonClick() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("/aiSettingsOverview.fxml"));
-        AnchorPane aiSettingsOverview = (AnchorPane) loader.load();
-        Scene scene = new Scene(aiSettingsOverview);
+        Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiSettingsOverview"));
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -52,10 +49,7 @@ public class MainLayoutController implements Initializable {
 
     @FXML
     public void onAiModelesButtonClick() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("/aiModelsOverview.fxml"));
-        AnchorPane aiSettingsOverview = (AnchorPane) loader.load();
-        Scene scene = new Scene(aiSettingsOverview);
+        Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiModelsOverview"));
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
