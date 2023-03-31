@@ -41,6 +41,12 @@ public class WelcomeScreenLayoutController implements Initializable {
     }
 
     @FXML
+    public void onJoueurVsJoueurButtonClick() {
+        System.out.println("Affichage JVJ");
+        mainController.changeView("gameScreenLayout");
+    }
+
+    @FXML
     private void onTutorialButtonClick() {
         mainController.changeView("tutorialScreenLayout");
     }

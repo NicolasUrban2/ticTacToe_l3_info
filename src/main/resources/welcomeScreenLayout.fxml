@@ -33,7 +33,7 @@
                         <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>
                 </Button>
-                <Button alignment="CENTER" mnemonicParsing="false" text="Joueur contre humain">
+                <Button onAction="#onJoueurVsJoueurButtonClick" alignment="CENTER" mnemonicParsing="false" text="Joueur contre humain">
                     <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>

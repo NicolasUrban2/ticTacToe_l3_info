@@ -88,7 +88,7 @@ public class MainLayoutController implements Initializable {
             System.out.println(viewName);
             mainPane.setCenter(ViewLoader.getView(viewName));
         } catch(Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println("ChangeViewError :" + e.getMessage());
         }
     }
 
