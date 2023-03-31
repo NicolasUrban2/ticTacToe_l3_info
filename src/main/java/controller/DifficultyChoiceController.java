@@ -17,7 +17,6 @@ import model.GameSettings;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -43,6 +42,7 @@ public class DifficultyChoiceController implements Initializable {
     ToggleGroup toggleGroup = new ToggleGroup();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainController.setDifficultyChoiceController(this);
         accueilButtonInitialization();
         setChoixFacile();
     }
@@ -80,7 +80,7 @@ public class DifficultyChoiceController implements Initializable {
         choiceSelected = "D";
     }
 
-    public void onButtonClickJouer() {
+    public void onJouerButtonClick() {
         gameSettings.setDifficulty(choiceSelected);
         searchFile();
         // Lancer le jeu
@@ -98,9 +98,7 @@ public class DifficultyChoiceController implements Initializable {
         String fileName = "model_" + l + "_" + h + "_" + lr + ".srl";
         System.out.println(fileName);
         if(fileExists(fileName)) {
-            MultiLayerPerceptron multiLayerPerceptron = MultiLayerPerceptron.load("./resources/models/"+fileName);
-            gameSettings.setMultiLayerPerceptron(multiLayerPerceptron);
-            mainController.changeView("gameScreenLayout");
+            jouer(fileName);
         }
         else {
             try {
@@ -114,6 +112,12 @@ public class DifficultyChoiceController implements Initializable {
             }
 
         }
+    }
+
+    private void jouer(String fileName) {
+        MultiLayerPerceptron multiLayerPerceptron = MultiLayerPerceptron.load("./resources/models/"+ fileName);
+        gameSettings.setMultiLayerPerceptron(multiLayerPerceptron);
+        mainController.changeView("gameScreenLayout");
     }
 
     private boolean fileExists(String fileName) {

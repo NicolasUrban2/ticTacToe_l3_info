@@ -16,6 +16,8 @@ public class MainController {
 
     private MainLayoutController mainLayoutController;
 
+    private DifficultyChoiceController difficultyChoiceController;
+
     private MainController() {
 
     }
@@ -57,5 +59,13 @@ public class MainController {
 
     public void changeView(String viewName) {
         mainLayoutController.changeView(viewName);
+    }
+
+    public DifficultyChoiceController getDifficultyChoiceController() {
+        return difficultyChoiceController;
+    }
+
+    public void setDifficultyChoiceController(DifficultyChoiceController difficultyChoiceController) {
+        this.difficultyChoiceController = difficultyChoiceController;
     }
 }
