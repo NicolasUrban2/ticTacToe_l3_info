@@ -6,6 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -24,6 +26,9 @@ public class GameScreenLayoutController implements Initializable {
 
     @FXML
     private Label winOrLose;
+
+    @FXML
+    private Label titleLabel;
 
     @FXML
     private GridPane gridPane;
@@ -56,22 +61,30 @@ public class GameScreenLayoutController implements Initializable {
         for(int t=0; t<in.length; t++) {
             in[t] = 0;
         }
+        titleLabel.setText("Mode de jeu : "+gameSettings.getGameMode());
+        tourJ1LabelGauche.setVisible(true);
+        tourJ2LabelDroite.setVisible(false);
         isGamePlayable = true;
         playerRound = true;
         replayButton.setVisible(false);
+        gridPane.getChildren().clear();
         fillEmptyImagesTable();
         fillCircleTable();
         fillCrossTable();
+
+        for(int i=0; i<7; i+=3) {
+            highlightCases(i, i+1, i+2, false);
+        }
     }
 
-    public void fillEmptyImagesTable() {
+    private void fillEmptyImagesTable() {
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
                 ImageView image = new ImageView(new Image(Main.class.getResource("/white.jpg").toString()));
-                image.setFitHeight(100);
-                image.setFitWidth(100);
+                image.setFitHeight(90);
+                image.setFitWidth(90);
                 image.setPreserveRatio(true);
-                image.setOpacity(0);
+                image.setOpacity(100);
                 gridPane.add(image, i , j);
                 image.setOnMouseClicked(event -> {
                     if(isGamePlayable) {
@@ -106,7 +119,7 @@ public class GameScreenLayoutController implements Initializable {
                                 isGamePlayable = false;
                                 break;
                             case 1:
-                                if(gameSettings.getGameMode()=="pve") {
+                                if(gameSettings.getGameMode().equals("pve")) {
                                     winOrLose.setText("Victoire !");
                                 } else {
                                     winOrLose.setText("Victoire du joueur 1 !");
@@ -115,7 +128,7 @@ public class GameScreenLayoutController implements Initializable {
                                 isGamePlayable = false;
                                 break;
                             case 2:
-                                if(gameSettings.getGameMode()=="pve") {
+                                if(gameSettings.getGameMode().equals("pve")) {
                                     winOrLose.setText("Défaite...");
                                 } else {
                                     winOrLose.setText("Victoire du joueur 2 !");
@@ -144,9 +157,9 @@ public class GameScreenLayoutController implements Initializable {
 
     // Retourne 2 pour victoire joueur 2, 1 pour victoire joueur 1 et 0 pour match nul, -1 pour partie non terminee
     private int gameFinished() {
-        Boolean allCasesPlayed = true;
+        boolean allCasesPlayed = true;
         int i = 0;
-        while (i != 9 && allCasesPlayed==true){
+        while (i != 9 && allCasesPlayed){
             if(in[i] == 0){
                 allCasesPlayed = false;
             }
@@ -159,80 +172,123 @@ public class GameScreenLayoutController implements Initializable {
         if(allCasesPlayed & (hasPlayerWon(1)!=1) & (hasPlayerWon(2)!=1)) {
             return 0;
         }
-        else if((hasPlayerWon(1)==1) & (hasPlayerWon(2)!=1)){
+        else if((hasPlayerWon(1)==-1) /*& (hasPlayerWon(2)!=1)*/){
             System.out.println("Joueur 1 a gagné");
             return 1;
         }
-        else if ((hasPlayerWon(1)!=1) & (hasPlayerWon(2)==1)) {
+        else if (/*(hasPlayerWon(1)!=1) &*/ (hasPlayerWon(2)==1)) {
             System.out.println("Joueur 2 a gagné");
             return 2;
         }
         return -1;
     }
 
+    /*
+    private int getVictoryForPlayerToken(int playerToken) {
+        return switch (playerToken) {
+            case -1 -> 1;
+            case 1 -> 2;
+            default -> -1;
+        };
+    }
+     */
+
     private int hasPlayerWon(int i) {
-        int x = 0;
+        int x = 1;
         if(i == 1) {
             x = -1;
-            if (in[0] == x) {
-                if ((in[1] == x) & (in[2] == x)) {
-                    return 1;
-                } else if ((in[3] == x) & (in[6] == x)) {
-                    return 1;
-                } else if ((in[4] == x) & (in[8] == x)) {
-                    return 1;
-                }
-            } else if ((in[1] == x) & (in[4] == x) & (in[7] == x)) {
-                return 1;
-            } else if ((in[3] == x) & (in[4] == x) & (in[5] == x)) {
-                return 1;
-            } else if ((in[6] == x) & (in[7] == x) & (in[8] == x)) {
-                return 1;
-            } else if (in[2] == x) {
-                if ((in[5] == x) & (in[8] == x)) {
-                    return 1;
-                } else if ((in[4] == x) & (in[6] == x)) {
-                    return 1;
-                }
-            } else {
-                return 0;
+        }
+
+        if (in[0] == x) {
+            if ((in[1] == x) & (in[2] == x)) {
+                highlightCases(0, 1, 2, true);
+                return x;
+            } else if ((in[3] == x) & (in[6] == x)) {
+                highlightCases(0, 3, 6, true);
+                return x;
+            } else if ((in[4] == x) & (in[8] == x)) {
+                highlightCases(0, 4, 8, true);
+                return x;
             }
         }
-        else if(i == 2) {
-            x = 1;
-            if (in[0] == x) {
-                if ((in[1] == x) & (in[2] == x)) {
-                    return 1;
-                } else if ((in[3] == x) & (in[6] == x)) {
-                    return 1;
-                } else if ((in[4] == x) & (in[8] == x)) {
-                    return 1;
-                }
+        else if ((in[1] == x) & (in[4] == x) & (in[7] == x)) {
+            highlightCases(1, 4, 7, true);
+            return x;
+        }
+        else if ((in[3] == x) & (in[4] == x) & (in[5] == x)) {
+            highlightCases(3, 4, 5, true);
+            return x;
+        }
+        else if ((in[6] == x) & (in[7] == x) & (in[8] == x)) {
+            highlightCases(6, 7, 8, true);
+            return x;
+        }
+        else if (in[2] == x) {
+            if ((in[5] == x) & (in[8] == x)) {
+                highlightCases(2, 5, 8, true);
+                return x;
+            } else if ((in[4] == x) & (in[6] == x)) {
+                highlightCases(2, 4, 6, true);
+                return x;
             }
-            else if ((in[1] == x) & (in[4] == x) & (in[7] == x)) {
-                return 1;
-            }
-            else if ((in[3] == x) & (in[4] == x) & (in[5] == x)) {
-                return 1;
-            }
-            else if ((in[6] == x) & (in[7] == x) & (in[8] == x)) {
-                return 1;
-            }
-            else if (in[2] == x) {
-                if ((in[5] == x) & (in[8] == x)) {
-                    return 1;
-                } else if ((in[4] == x) & (in[6] == x)) {
-                    return 1;
-                }
-            }
-            else {
-                return 0;
-            }
+        }
+        else {
+            return 0;
         }
         return 10;
     }
 
-    public void fillCircleTable() {
+    private void highlightCases(int a, int b, int c, boolean apply) {
+        int xA, yA, xB, yB, xC, yC;
+        if(a < 3) {
+            xA = a;
+            yA = 0;
+        } else if(a < 6) {
+            xA = a-3;
+            yA = 1;
+        } else {
+            xA = a-6;
+            yA = 2;
+        }
+
+        if(b < 3) {
+            xB = b;
+            yB = 0;
+        } else if(b < 6) {
+            xB = b-3;
+            yB = 1;
+        } else {
+            xB = b-6;
+            yB = 2;
+        }
+
+        if(c < 3) {
+            xC = c;
+            yC = 0;
+        } else if(c < 6) {
+            xC = c-3;
+            yC = 1;
+        } else {
+            xC = c-6;
+            yC = 2;
+        }
+
+        Effect effect;
+        if(apply) {
+            effect = new Bloom();
+        } else {
+            effect = null;
+        }
+        imageViewCircleTable[xA][yA].setEffect(effect);
+        imageViewCircleTable[xB][yB].setEffect(effect);
+        imageViewCircleTable[xC][yC].setEffect(effect);
+
+        imageViewCrossTable[xA][yA].setEffect(effect);
+        imageViewCrossTable[xB][yB].setEffect(effect);
+        imageViewCrossTable[xC][yC].setEffect(effect);
+    }
+
+    private void fillCircleTable() {
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
                 ImageView image = new ImageView(new Image(Main.class.getResource("/orange_circle.jpg").toString()));
@@ -248,7 +304,7 @@ public class GameScreenLayoutController implements Initializable {
         }
     }
 
-    public void fillCrossTable() {
+    private void fillCrossTable() {
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
                 ImageView image = new ImageView(new Image(Main.class.getResource("/blue_cross.jpg").toString()));

@@ -40,15 +40,15 @@ public class WelcomeScreenLayoutController implements Initializable {
     @FXML
     public void onJoueurVsIAButtonClick() {
         System.out.println("Affichage du choix des difficultés.");
-        mainController.changeView("difficultyChoiceOverview");
         gameSettings.setGameMode("pve");
+        mainController.changeView("difficultyChoiceOverview");
     }
 
     @FXML
     public void onJoueurVsJoueurButtonClick() {
         System.out.println("Affichage JVJ");
-        mainController.changeView("gameScreenLayout");
         gameSettings.setGameMode("pvp");
+        mainController.changeView("gameScreenLayout");
     }
 
     @FXML
