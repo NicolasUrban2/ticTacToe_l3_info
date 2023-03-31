@@ -92,7 +92,7 @@
             <top>
                 <HBox prefHeight="28.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#onRetourButtonClick" prefHeight="26.0" prefWidth="55.0" text="Retour" />
+                        <Button fx:id="accueilButton" mnemonicParsing="false" onAction="#onAccueilButtonClick" prefHeight="26.0" prefWidth="68.0" text="" />
                         <Label fx:id="titleLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="54.0" prefWidth="483.0" text="Mode de jeu :">
                             <font>
                                 <Font name="System Bold" size="20.0" />
