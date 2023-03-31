@@ -21,9 +21,12 @@ import java.util.*;
 public class AiModelsOverviewController implements Initializable {
     @FXML
     private GridPane gridPane;
-
+    @FXML
+    private CheckBox deleteAllCheckbox;
     @FXML
     private Button deleteButton;
+
+    List<CheckBox> checkBoxesList = new ArrayList<>();
 
     private List<String> modelsFilesNames = new ArrayList<>();
 
@@ -44,7 +47,7 @@ public class AiModelsOverviewController implements Initializable {
     }
 
     @FXML
-    public void onDeleteButtonClick() {
+    private void onDeleteButtonClick() {
         modelFilesToDelete.clear();
         for (int i = 0; i < modelsFilesNames.size(); i++) {
             if (((CheckBox) getNodeFromGridPane(1, i)).isSelected()) {
@@ -58,13 +61,26 @@ public class AiModelsOverviewController implements Initializable {
     }
 
     @FXML
-    public void onOkButtonClick() {
+    private void onDeleteAllCheckboxClick() {
+        if(deleteAllCheckbox.isSelected()) {
+            for (CheckBox checkbox: checkBoxesList) {
+                checkbox.setSelected(true);
+            }
+        } else {
+            for (CheckBox checkbox: checkBoxesList) {
+                checkbox.setSelected(false);
+            }
+        }
+    }
+
+    @FXML
+    private void onOkButtonClick() {
         deleteModelsFromModelFilesToDelete();
         closeWindow();
     }
 
     @FXML
-    public void onSauvegarderButtonClick() {
+    private void onSauvegarderButtonClick() {
         deleteModelsFromModelFilesToDelete();
     }
 
@@ -87,16 +103,19 @@ public class AiModelsOverviewController implements Initializable {
             checkBox.setScaleX(1.5);
             checkBox.setScaleY(1.5);
             checkBox.setAlignment(Pos.CENTER);
+            checkBoxesList.add(checkBox);
 
             Label label = new Label(modelsFilesNames.get(i));
             label.setFont(new Font(16));
 
-            gridPane.addRow(i, label, checkBox);
-            gridPane.setHalignment(label, HPos.CENTER);
+            gridPane.add(label, 0, i);
+            gridPane.add(checkBox, 1, i);
+            GridPane.setHalignment(label, HPos.CENTER);
         }
     }
 
     private void clearGridPane() {
+        checkBoxesList.clear();
         gridPane.getChildren().clear();
         gridPane.getRowConstraints().clear();
         gridPane.getColumnConstraints().clear();
