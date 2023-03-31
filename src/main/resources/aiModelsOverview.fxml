@@ -3,12 +3,16 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="442.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AiModelsOverviewController">
    <children>
@@ -26,6 +30,7 @@
                      </padding>
                      <rowConstraints>
                         <RowConstraints />
+                        <RowConstraints />
                      </rowConstraints>
                   </GridPane>
                </content>
@@ -42,14 +47,33 @@
          <bottom>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <buttons>
-                  <Button onAction="#onOkButtonClick" mnemonicParsing="false" text="OK" />
-                  <Button onAction="#onSauvegarderButtonClick" mnemonicParsing="false" text="Sauvegarder" />
+                  <Button mnemonicParsing="false" onAction="#onOkButtonClick" text="OK" />
+                  <Button mnemonicParsing="false" onAction="#onSauvegarderButtonClick" text="Sauvegarder" />
               </buttons>
                <padding>
                   <Insets right="10.0" />
                </padding>
             </ButtonBar>
          </bottom>
+         <top>
+            <HBox prefHeight="36.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="26.0" prefWidth="240.0" text="Tout sélectionner">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <CheckBox fx:id="deleteAllCheckbox" alignment="CENTER" mnemonicParsing="false" onAction="#onDeleteAllCheckboxClick">
+                     <HBox.margin>
+                        <Insets top="9.0" />
+                     </HBox.margin>
+                  </CheckBox>
+               </children>
+            </HBox>
+         </top>
       </BorderPane>
    </children>
 </AnchorPane>
