@@ -68,7 +68,7 @@ public class GameScreenLayoutController implements Initializable {
         tourJ2LabelDroite.setVisible(false);
         isGamePlayable = true;
         playerRound = true;
-        replayButton.setVisible(false);
+        replayButton.setText("Recommencer");
         gridPane.getChildren().clear();
         fillEmptyImagesTable();
         fillCircleTable();
@@ -150,7 +150,7 @@ public class GameScreenLayoutController implements Initializable {
         switch (gameFinished(x, y)) {
             case 0:
                 winOrLose.setText("Match nul");
-                replayButton.setVisible(true);
+                replayButton.setText("Rejouer");
                 isGamePlayable = false;
                 break;
             case 1:
@@ -159,7 +159,7 @@ public class GameScreenLayoutController implements Initializable {
                 } else {
                     winOrLose.setText("Victoire du joueur 1 !");
                 }
-                replayButton.setVisible(true);
+                replayButton.setText("Rejouer");
                 isGamePlayable = false;
                 break;
             case 2:
@@ -168,7 +168,7 @@ public class GameScreenLayoutController implements Initializable {
                 } else {
                     winOrLose.setText("Victoire du joueur 2 !");
                 }
-                replayButton.setVisible(true);
+                replayButton.setText("Rejouer");
                 isGamePlayable = false;
                 break;
             default:
