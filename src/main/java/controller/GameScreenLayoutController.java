@@ -104,49 +104,50 @@ public class GameScreenLayoutController implements Initializable {
                         }
                         coup.addInBoard(in);
                         //System.out.println(coup.toString());
-                        turnConclusion();
-                    }
-                    // Changement de tour et tour de l'IA
-                    if(playerRound) {
-                        if(gameSettings.getGameMode() == "pve") {
-                            if(isGamePlayable) {
-                                System.out.println("Ai Turn");
-                                int index = getNextMoveIndex(getAiMoveTable());
-                                int xAiMoveCoordinates, yAiMoveCoordinates;
-                                if(index < 3) {
-                                    xAiMoveCoordinates = index;
-                                    yAiMoveCoordinates = 0;
-                                } else if(index < 6) {
-                                    xAiMoveCoordinates = index-3;
-                                    yAiMoveCoordinates = 1;
-                                } else {
-                                    xAiMoveCoordinates = index-6;
-                                    yAiMoveCoordinates = 2;
-                                }
+                        turnConclusion(xClickedCase, yClickedCase);
+                        // Changement de tour et tour de l'IA
+                        if(playerRound) {
+                            if(gameSettings.getGameMode() == "pve") {
+                                if(isGamePlayable) {
+                                    System.out.println("Ai Turn");
+                                    int index = getNextMoveIndex(getAiMoveTable());
+                                    int xAiMoveCoordinates, yAiMoveCoordinates;
+                                    if(index < 3) {
+                                        xAiMoveCoordinates = index;
+                                        yAiMoveCoordinates = 0;
+                                    } else if(index < 6) {
+                                        xAiMoveCoordinates = index-3;
+                                        yAiMoveCoordinates = 1;
+                                    } else {
+                                        xAiMoveCoordinates = index-6;
+                                        yAiMoveCoordinates = 2;
+                                    }
 
-                                imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates].setVisible(true);
-                                in[index] = 1;
-                                coup.addInBoard(in);
-                                turnConclusion();
+                                    imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates].setVisible(true);
+                                    in[index] = 1;
+                                    coup.addInBoard(in);
+                                    turnConclusion(xAiMoveCoordinates, yAiMoveCoordinates);
+                                }
+                            } else {
+                                tourJ2LabelDroite.setVisible(true);
+                                tourJ1LabelGauche.setVisible(false);
+                                playerRound = false;
                             }
                         } else {
-                            tourJ2LabelDroite.setVisible(true);
-                            tourJ1LabelGauche.setVisible(false);
-                            playerRound = false;
+                            tourJ2LabelDroite.setVisible(false);
+                            tourJ1LabelGauche.setVisible(true);
+                            playerRound = true;
+                            //System.out.println("Player Turn");
                         }
-                    } else {
-                        tourJ2LabelDroite.setVisible(false);
-                        tourJ1LabelGauche.setVisible(true);
-                        playerRound = true;
-                        //System.out.println("Player Turn");
                     }
+
                 });
             }
         }
     }
 
-    private void turnConclusion() {
-        switch (gameFinished()) {
+    private void turnConclusion(int x, int y) {
+        switch (gameFinished(x, y)) {
             case 0:
                 winOrLose.setText("Match nul");
                 replayButton.setVisible(true);
@@ -202,6 +203,67 @@ public class GameScreenLayoutController implements Initializable {
         initialize(null, null);
     }
 
+    private int gameFinished(int x, int y) {
+        int playerToken = (int) in[x+3*y];
+        // Test horizontal
+        boolean isWiningLine = true;
+        int i=0;
+        while(i<3 && isWiningLine) {
+            if(in[i+3*y] != playerToken) {
+                isWiningLine = false;
+            }
+            i++;
+        }
+        if(isWiningLine) {
+            highlightCases(0+3*y, 1+3*y, 2+3*y, true);
+            return getVictoryForPlayerToken(playerToken);
+        }
+        // test vertical
+        isWiningLine = true;
+        i=0;
+        while(i<3 && isWiningLine) {
+            if(in[x+3*i] != playerToken) {
+                isWiningLine = false;
+            }
+            i++;
+        }
+        if(isWiningLine) {
+            highlightCases(x+3*0, x+3*1, x+3*2, true);
+            return getVictoryForPlayerToken(playerToken);
+        }
+        // Test diagonal from upper left
+        isWiningLine = true;
+        i=0;
+        while(i<3 && isWiningLine) {
+            if(in[i+3*i] != playerToken) {
+                isWiningLine = false;
+            }
+            i++;
+        }
+        if(isWiningLine) {
+            highlightCases(0+3*0, 1+3*1, 2+3*2, true);
+            return getVictoryForPlayerToken(playerToken);
+        }
+        // Test diagonal from upper right
+        isWiningLine = true;
+        i=2;
+        int j=0;
+        while(i>=0 && isWiningLine) {
+            if(in[i+3*j] != playerToken) {
+                isWiningLine = false;
+            }
+            i--;
+            j++;
+        }
+        if(isWiningLine) {
+            highlightCases(2+3*0, 1+3*1, 0+3*2, true);
+            return getVictoryForPlayerToken(playerToken);
+        }
+
+        return -1;
+    }
+
+    /*
     // Retourne 2 pour victoire joueur 2, 1 pour victoire joueur 1 et 0 pour match nul, -1 pour partie non terminee
     private int gameFinished() {
         boolean allCasesPlayed = true;
@@ -219,18 +281,18 @@ public class GameScreenLayoutController implements Initializable {
         if(allCasesPlayed & (hasPlayerWon(1)!=1) & (hasPlayerWon(2)!=1)) {
             return 0;
         }
-        else if((hasPlayerWon(1)==-1) /*& (hasPlayerWon(2)!=1)*/){
+        else if((hasPlayerWon(1)==-1)){
             System.out.println("Joueur 1 a gagné");
             return 1;
         }
-        else if (/*(hasPlayerWon(1)!=1) &*/ (hasPlayerWon(2)==1)) {
+        else if ((hasPlayerWon(2)==1)) {
             System.out.println("Joueur 2 a gagné");
             return 2;
         }
         return -1;
     }
+    */
 
-    /*
     private int getVictoryForPlayerToken(int playerToken) {
         return switch (playerToken) {
             case -1 -> 1;
@@ -238,7 +300,7 @@ public class GameScreenLayoutController implements Initializable {
             default -> -1;
         };
     }
-     */
+
 
     private int hasPlayerWon(int i) {
         int x = 1;
