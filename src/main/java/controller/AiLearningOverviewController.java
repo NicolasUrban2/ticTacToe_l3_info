@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
+import main.Main;
 import model.GameSettings;
 
 import java.io.BufferedReader;
@@ -36,6 +37,10 @@ public class AiLearningOverviewController implements Initializable {
 
     private String newModelFileName;
 
+    private DifficultyChoiceController difficultyChoiceController;
+
+    private MainController mainController = MainController.getInstance();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -50,6 +55,7 @@ public class AiLearningOverviewController implements Initializable {
 
     @FXML
     private void onOkButtonCLick() {
+        mainController.getDifficultyChoiceController().onJouerButtonClick();
         closeWindow();
     }
 
