@@ -106,6 +106,7 @@ public class DifficultyChoiceController implements Initializable {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.setTitle("Entraînement de l'IA");
+                stage.setResizable(false);
                 stage.show();
             } catch (Exception e) {
                 System.err.println(e.getMessage());

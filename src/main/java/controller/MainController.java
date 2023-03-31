@@ -38,6 +38,7 @@ public class MainController {
         Scene scene = new Scene(rootAnchorPane);
         root.setTitle("Tic Tac Toe");
         root.setScene(scene);
+        root.setResizable(false);
         root.show();
     }
 
