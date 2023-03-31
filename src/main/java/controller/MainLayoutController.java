@@ -37,6 +37,7 @@ public class MainLayoutController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Paramètres");
         stage.setScene(scene);
+        stage.setResizable(false);
 
         stage.setOnCloseRequest(event -> {
             enableMainWindow();
@@ -55,6 +56,7 @@ public class MainLayoutController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Modèles");
         stage.setScene(scene);
+        stage.setResizable(false);
 
         stage.setOnCloseRequest(event -> {
             enableMainWindow();
