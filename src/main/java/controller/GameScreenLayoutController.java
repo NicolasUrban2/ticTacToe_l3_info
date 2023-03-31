@@ -24,6 +24,9 @@ public class GameScreenLayoutController implements Initializable {
     private Label tourJ1LabelGauche;
 
     @FXML
+    private Button accueilButton;
+
+    @FXML
     private Label tourJ2LabelDroite;
 
     @FXML
@@ -59,6 +62,10 @@ public class GameScreenLayoutController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ImageView house = new ImageView(Main.class.getResource("/house.png").toString());
+        accueilButton.setGraphic(house);
+        house.setFitHeight(20);
+        house.setFitWidth(20);
         winOrLose.setText("");
         for(int t=0; t<in.length; t++) {
             in[t] = 0;
@@ -194,7 +201,7 @@ public class GameScreenLayoutController implements Initializable {
         return res;
     }
     @FXML
-    private void onRetourButtonClick() {
+    private void onAccueilButtonClick() {
         mainController.changeView("welcomeScreenLayout");
     }
 
