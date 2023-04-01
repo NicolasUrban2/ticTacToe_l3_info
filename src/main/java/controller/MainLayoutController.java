@@ -110,7 +110,9 @@ public class MainLayoutController implements Initializable {
 
     @FXML
     private void onCommentJouerButtonClick() throws IOException {
-        Scene scene = new Scene((AnchorPane) ViewLoader.getView("tutorialScreenLayoutSmall"));
+        AnchorPane view = (AnchorPane) ViewLoader.getView("tutorialScreenLayoutSmall");
+        mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
+        Scene scene = new Scene(view);
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.setTitle("Comment jouer");

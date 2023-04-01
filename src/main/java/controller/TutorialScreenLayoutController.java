@@ -38,14 +38,6 @@ public class TutorialScreenLayoutController implements Initializable, CanSetDark
     private Label tutorialLabel3;
     @FXML
     private Label tutorialLabel4;
-    @FXML
-    private GridPane gridPane1;
-    @FXML
-    private GridPane gridPane2;
-    @FXML
-    private GridPane gridPane3;
-    @FXML
-    private GridPane gridPane4;
 
 
     private MainController mainController = MainController.getInstance();
@@ -85,7 +77,6 @@ public class TutorialScreenLayoutController implements Initializable, CanSetDark
             tutorialLabel2.setTextFill(Color.WHITE);
             tutorialLabel3.setTextFill(Color.WHITE);
             tutorialLabel4.setTextFill(Color.WHITE);
-            gridPane1.setStyle("-fx-grid-lines-color: white;");
 
         } else {
             backgroundAnchorPane.setStyle(mainController.getBrightStyle1());
@@ -96,7 +87,6 @@ public class TutorialScreenLayoutController implements Initializable, CanSetDark
             tutorialLabel2.setTextFill(Color.BLACK);
             tutorialLabel3.setTextFill(Color.BLACK);
             tutorialLabel4.setTextFill(Color.BLACK);
-            gridPane1.setStyle("-fx-grid-lines-color: black;");
         }
     }
 }
