@@ -29,7 +29,7 @@
                       </Menu>
                       <Menu mnemonicParsing="false" text="À propos">
                         <items>
-                          <MenuItem mnemonicParsing="false" text="Nous" />
+                          <MenuItem onAction="#onNousButtonClick" mnemonicParsing="false" text="Nous" />
                               <MenuItem onAction="#onGithubButtonClick" mnemonicParsing="false" text="Github" />
                         </items>
                       </Menu>

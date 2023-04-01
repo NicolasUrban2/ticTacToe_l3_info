@@ -119,6 +119,25 @@ public class MainLayoutController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    private void onNousButtonClick() throws IOException {
+        Scene scene = new Scene((AnchorPane) ViewLoader.getView("nousOverview"));
+        Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Nous");
+        stage.setScene(scene);
+        stage.setResizable(false);
+
+        stage.setOnCloseRequest(event -> {
+            enableMainWindow();
+        });
+
+        stage.show();
+        mainController.getRootAnchorPane().getStyle();
+        disableMainWindow();
+    }
+
     public void disableMainWindow(){
         Stage root = mainController.getRoot();
         root.setResizable(false);
