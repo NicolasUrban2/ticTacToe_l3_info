@@ -98,60 +98,96 @@ public class GameScreenLayoutController implements Initializable {
                 image.setPreserveRatio(true);
                 image.setOpacity(100);
                 gridPane.add(image, i , j);
-                image.setOnMouseClicked(event -> {
-                    if(isGamePlayable) {
-                        xClickedCase = GridPane.getColumnIndex(image);
-                        yClickedCase = GridPane.getRowIndex(image);
-                        //System.out.println(xClickedCase + " " + yClickedCase);
+                setClickListenerOnImage(image);
+            }
+        }
+    }
 
-                        if(playerRound) {
-                            imageViewCrossTable[xClickedCase][yClickedCase].setVisible(true);
-                            in[xClickedCase+yClickedCase*3] = -1;
-                        }
-                        else {
-                            imageViewCircleTable[xClickedCase][yClickedCase].setVisible(true);
-                            in[xClickedCase+yClickedCase*3] = 1;
-                        }
-                        coup.addInBoard(in);
-                        //System.out.println(coup.toString());
-                        turnConclusion(xClickedCase, yClickedCase);
-                        // Changement de tour et tour de l'IA
-                        if(playerRound) {
-                            if(gameSettings.getGameMode() == "pve") {
-                                if(isGamePlayable) {
-                                    System.out.println("Ai Turn");
-                                    int index = getNextMoveIndex(getAiMoveTable());
-                                    int xAiMoveCoordinates, yAiMoveCoordinates;
-                                    if(index < 3) {
-                                        xAiMoveCoordinates = index;
-                                        yAiMoveCoordinates = 0;
-                                    } else if(index < 6) {
-                                        xAiMoveCoordinates = index-3;
-                                        yAiMoveCoordinates = 1;
-                                    } else {
-                                        xAiMoveCoordinates = index-6;
-                                        yAiMoveCoordinates = 2;
-                                    }
+    private void setClickListenerOnImage(ImageView image) {
+        image.setOnMouseClicked(event -> {
+            if(isGamePlayable) {
+                xClickedCase = GridPane.getColumnIndex(image);
+                yClickedCase = GridPane.getRowIndex(image);
+                //System.out.println(xClickedCase + " " + yClickedCase);
 
-                                    imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates].setVisible(true);
-                                    in[index] = 1;
-                                    coup.addInBoard(in);
-                                    turnConclusion(xAiMoveCoordinates, yAiMoveCoordinates);
-                                }
+                if(playerRound) {
+                    imageViewCrossTable[xClickedCase][yClickedCase].setVisible(true);
+                    in[xClickedCase+yClickedCase*3] = -1;
+                }
+                else {
+                    imageViewCircleTable[xClickedCase][yClickedCase].setVisible(true);
+                    in[xClickedCase+yClickedCase*3] = 1;
+                }
+                coup.addInBoard(in);
+                //System.out.println(coup.toString());
+                turnConclusion(xClickedCase, yClickedCase);
+                // Changement de tour et tour de l'IA
+                if(playerRound) {
+                    if(gameSettings.getGameMode() == "pve") {
+                        if(isGamePlayable) {
+                            System.out.println("Ai Turn");
+                            int index = getNextMoveIndex(getAiMoveTable());
+                            int xAiMoveCoordinates, yAiMoveCoordinates;
+                            if(index < 3) {
+                                xAiMoveCoordinates = index;
+                                yAiMoveCoordinates = 0;
+                            } else if(index < 6) {
+                                xAiMoveCoordinates = index-3;
+                                yAiMoveCoordinates = 1;
                             } else {
-                                tourJ2LabelDroite.setVisible(true);
-                                tourJ1LabelGauche.setVisible(false);
-                                playerRound = false;
+                                xAiMoveCoordinates = index-6;
+                                yAiMoveCoordinates = 2;
                             }
-                        } else {
-                            tourJ2LabelDroite.setVisible(false);
-                            tourJ1LabelGauche.setVisible(true);
-                            playerRound = true;
-                            //System.out.println("Player Turn");
-                        }
-                    }
 
-                });
+                            imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates].setVisible(true);
+                            in[index] = 1;
+                            coup.addInBoard(in);
+                            turnConclusion(xAiMoveCoordinates, yAiMoveCoordinates);
+                        }
+                    } else {
+                        tourJ2LabelDroite.setVisible(true);
+                        tourJ1LabelGauche.setVisible(false);
+                        playerRound = false;
+                    }
+                } else {
+                    tourJ2LabelDroite.setVisible(false);
+                    tourJ1LabelGauche.setVisible(true);
+                    playerRound = true;
+                    //System.out.println("Player Turn");
+                }
+            }
+
+        });
+    }
+
+    private void fillCircleTable() {
+        for (int i=0; i<3; i++) {
+            for (int j=0; j<3; j++) {
+                ImageView image = new ImageView(new Image(Main.class.getResource("/images/orange_circle.jpg").toString()));
+                image.setFitHeight(90.0);
+                image.setFitWidth(90);
+                image.setPreserveRatio(true);
+                image.setVisible(false);
+                Insets insets = new Insets(5);
+                gridPane.setMargin(image, insets);
+                imageViewCircleTable[i][j] = image;
+                gridPane.add(imageViewCircleTable[i][j], i , j);
+            }
+        }
+    }
+
+    private void fillCrossTable() {
+        for (int i=0; i<3; i++) {
+            for (int j=0; j<3; j++) {
+                ImageView image = new ImageView(new Image(Main.class.getResource("/images/blue_cross.jpg").toString()));
+                image.setFitHeight(90);
+                image.setFitWidth(90);
+                image.setPreserveRatio(true);
+                image.setVisible(false);
+                Insets insets = new Insets(5);
+                gridPane.setMargin(image, insets);
+                imageViewCrossTable[i][j] = image;
+                gridPane.add(imageViewCrossTable[i][j], i , j);
             }
         }
     }
@@ -416,37 +452,5 @@ public class GameScreenLayoutController implements Initializable {
         imageViewCrossTable[xA][yA].setEffect(effect);
         imageViewCrossTable[xB][yB].setEffect(effect);
         imageViewCrossTable[xC][yC].setEffect(effect);
-    }
-
-    private void fillCircleTable() {
-        for (int i=0; i<3; i++) {
-            for (int j=0; j<3; j++) {
-                ImageView image = new ImageView(new Image(Main.class.getResource("/images/orange_circle.jpg").toString()));
-                image.setFitHeight(90.0);
-                image.setFitWidth(90);
-                image.setPreserveRatio(true);
-                image.setVisible(false);
-                Insets insets = new Insets(5);
-                gridPane.setMargin(image, insets);
-                imageViewCircleTable[i][j] = image;
-                gridPane.add(imageViewCircleTable[i][j], i , j);
-            }
-        }
-    }
-
-    private void fillCrossTable() {
-        for (int i=0; i<3; i++) {
-            for (int j=0; j<3; j++) {
-                ImageView image = new ImageView(new Image(Main.class.getResource("/images/blue_cross.jpg").toString()));
-                image.setFitHeight(90);
-                image.setFitWidth(90);
-                image.setPreserveRatio(true);
-                image.setVisible(false);
-                Insets insets = new Insets(5);
-                gridPane.setMargin(image, insets);
-                imageViewCrossTable[i][j] = image;
-                gridPane.add(imageViewCrossTable[i][j], i , j);
-            }
-        }
     }
 }
