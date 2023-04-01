@@ -57,7 +57,7 @@ public class MainController {
     }
 
     private final String darkStyle1 = "-fx-background-color: rgba(0, 0, 0, 0.8)";
-    private final String darkStyle2 = "-fx-background-color: rgba(0, 0, 0, 0.6)";
+    private final String darkStyle2 = "-fx-background-color: rgba(0, 0, 0, 0.75)";
     private final String darkStyle3 = "-fx-background-color: rgba(0, 0, 0, 0.4)";
     private final String brightStyle1 = "-fx-background-color: rgba(0, 0, 0, 0)";
     private final String brightStyle2 = "-fx-background-color: rgba(0, 0, 0, 1)";
