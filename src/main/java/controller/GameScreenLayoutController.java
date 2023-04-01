@@ -74,6 +74,11 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         titleLabel.setText("Mode de jeu : "+gameSettings.getGameMode());
         tourJ1LabelGauche.setVisible(true);
         tourJ2LabelDroite.setVisible(false);
+        if(gameSettings.getGameMode() == "pve") {
+            player1Label.setText("Vous");
+            player2Label.setText("IA");
+            tourJ1LabelGauche.setText("A votre tour");
+        }
         isGamePlayable = true;
         playerRound = true;
         replayButton.setText("Recommencer");
@@ -129,6 +134,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 // Changement de tour et tour de l'IA
                 if(playerRound) {
                     if(gameSettings.getGameMode() == "pve") {
+                        tourJ1LabelGauche.setVisible(false);
                         if(isGamePlayable) {
                             System.out.println("Ai Turn");
                             int index = getNextMoveIndex(getAiMoveTable());
@@ -150,14 +156,22 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                             turnConclusion(xAiMoveCoordinates, yAiMoveCoordinates);
                         }
                     } else {
-                        tourJ2LabelDroite.setVisible(true);
-                        tourJ1LabelGauche.setVisible(false);
-                        playerRound = false;
+                        if(gameFinished(xClickedCase, yClickedCase) == -1) {
+                            tourJ1LabelGauche.setVisible(false);
+                            tourJ2LabelDroite.setVisible(true);
+                            playerRound = false;
+                        }
+                        else{
+                            tourJ1LabelGauche.setVisible(false);
+                            tourJ2LabelDroite.setVisible(false);
+                        }
                     }
                 } else {
-                    tourJ2LabelDroite.setVisible(false);
-                    tourJ1LabelGauche.setVisible(true);
-                    playerRound = true;
+                    if(gameFinished(xClickedCase, yClickedCase) == -1) {
+                        tourJ1LabelGauche.setVisible(true);
+                        tourJ2LabelDroite.setVisible(false);
+                        playerRound = true;
+                    }
                     //System.out.println("Player Turn");
                 }
             }
