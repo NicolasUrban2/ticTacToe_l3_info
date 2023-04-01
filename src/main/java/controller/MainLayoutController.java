@@ -18,6 +18,7 @@ import javafx.util.Duration;
 import main.Main;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -50,7 +51,7 @@ public class MainLayoutController implements Initializable {
     }
 
     @FXML
-    public void onAiParametresButtonClick() throws IOException {
+    private void onAiParametresButtonClick() throws IOException {
         Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiSettingsOverview"));
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
@@ -69,7 +70,7 @@ public class MainLayoutController implements Initializable {
     }
 
     @FXML
-    public void onAiModelesButtonClick() throws IOException {
+    private void onAiModelesButtonClick() throws IOException {
         Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiModelsOverview"));
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
@@ -85,6 +86,16 @@ public class MainLayoutController implements Initializable {
         stage.show();
         mainController.getRootAnchorPane().getStyle();
         disableMainWindow();
+    }
+
+    @FXML
+    private void onGithubButtonClick() {
+        String githubUrl = "https://github.com/NicolasUrban2/ticTacToe_l3_info.git";
+        try {
+            java.awt.Desktop.getDesktop().browse(new URI(githubUrl));
+        } catch (Exception e) {
+            System.err.println("Github link error : " + e.getMessage());
+        }
     }
 
     public void disableMainWindow(){

@@ -30,7 +30,7 @@
                       <Menu mnemonicParsing="false" text="À propos">
                         <items>
                           <MenuItem mnemonicParsing="false" text="Nous" />
-                              <MenuItem mnemonicParsing="false" text="Github" />
+                              <MenuItem onAction="#onGithubButtonClick" mnemonicParsing="false" text="Github" />
                         </items>
                       </Menu>
                     </menus>
