@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import main.Main;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainController {
     private static MainController INSTANCE;
@@ -18,6 +20,19 @@ public class MainController {
 
 
     private DifficultyChoiceController difficultyChoiceController;
+    private List<CanSetDarkmode> darkModeObserversList = new ArrayList<>();
+
+    public void registerAsDarkModeObserver(CanSetDarkmode object) {
+        if(object != null) {
+            darkModeObserversList.add(object);
+        }
+    }
+
+    public void setDarkModeToAllObservers(boolean applyDarkMode) {
+        for (CanSetDarkmode object:darkModeObserversList) {
+            object.setDarkMode(applyDarkMode);
+        }
+    }
 
     public String getDarkStyle() {
         return darkStyle;

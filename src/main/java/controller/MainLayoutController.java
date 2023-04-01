@@ -44,9 +44,9 @@ public class MainLayoutController implements Initializable {
     @FXML
     private void onDarkModeToggleButtonClick() {
         if(darkModeToggleButton.isSelected()) {
-            mainView.setStyle(mainController.getDarkStyle());
+            mainController.setDarkModeToAllObservers(true);
         } else {
-            mainView.setStyle(mainController.getBrightStyle());
+            mainController.setDarkModeToAllObservers(false);
         }
     }
 
@@ -151,7 +151,6 @@ public class MainLayoutController implements Initializable {
     }
 
     public void changeView(String viewName) {
-
         //System.out.println(viewName);
         if (mainView != null) {
             FadeTransition fadeTransitionOut = new FadeTransition(Duration.millis(200), mainView);
