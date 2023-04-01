@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import main.Main;
 
 import java.io.IOException;
@@ -98,17 +100,42 @@ public class MainLayoutController implements Initializable {
     }
 
     public void changeView(String viewName) {
-        try {
-            //System.out.println(viewName);
-            mainView = ViewLoader.getView(viewName);
-            if(darkModeToggleButton.isSelected()) {
-                mainView.setStyle(mainController.getDarkStyle());
-            } else {
-                mainView.setStyle(mainController.getBrightStyle());
+
+        //System.out.println(viewName);
+        if (mainView != null) {
+            FadeTransition fadeTransitionOut = new FadeTransition(Duration.millis(200), mainView);
+            fadeTransitionOut.setFromValue(1);
+            fadeTransitionOut.setToValue(0);
+            fadeTransitionOut.play();
+            fadeTransitionOut.setOnFinished(actionEvent -> {
+                try {
+                    mainView = ViewLoader.getView(viewName);
+                    if (darkModeToggleButton.isSelected()) {
+                        mainView.setStyle(mainController.getDarkStyle());
+                    } else {
+                        mainView.setStyle(mainController.getBrightStyle());
+                    }
+                    FadeTransition fadeTransitionIn = new FadeTransition(Duration.millis(200), mainView);
+                    fadeTransitionIn.setFromValue(0);
+                    fadeTransitionIn.setToValue(1);
+                    fadeTransitionIn.play();
+                    mainPane.setCenter(mainView);
+                } catch (Exception e) {
+                    System.err.println("ChangeViewError :" + e.getMessage());
+                }
+            });
+        } else {
+            try {
+                mainView = ViewLoader.getView(viewName);
+                if (darkModeToggleButton.isSelected()) {
+                    mainView.setStyle(mainController.getDarkStyle());
+                } else {
+                    mainView.setStyle(mainController.getBrightStyle());
+                }
+                mainPane.setCenter(mainView);
+            } catch (Exception e) {
+                System.err.println("ChangeViewError :" + e.getMessage());
             }
-            mainPane.setCenter(mainView);
-        } catch(Exception e) {
-            System.err.println("ChangeViewError :" + e.getMessage());
         }
     }
 
