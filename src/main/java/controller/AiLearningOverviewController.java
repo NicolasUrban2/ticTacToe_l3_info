@@ -25,9 +25,6 @@ public class AiLearningOverviewController implements Initializable {
 
     @FXML
     private ProgressBar progressBar;
-
-    @FXML
-    private Button cancelButton;
     @FXML
     private Button okButton;
 
@@ -40,10 +37,12 @@ public class AiLearningOverviewController implements Initializable {
     private DifficultyChoiceController difficultyChoiceController;
 
     private MainController mainController = MainController.getInstance();
+    private boolean trainingComplete;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
+            trainingComplete = false;
             createNewModel();
         } catch (Exception e) {
             System.out.println("Test.main()");
@@ -55,7 +54,9 @@ public class AiLearningOverviewController implements Initializable {
 
     @FXML
     private void onOkButtonCLick() {
-        mainController.getDifficultyChoiceController().onJouerButtonClick();
+        if(trainingComplete) {
+            mainController.getDifficultyChoiceController().onJouerButtonClick();
+        }
         closeWindow();
     }
 
@@ -121,8 +122,10 @@ public class AiLearningOverviewController implements Initializable {
                 }
                 if(Thread.currentThread().isInterrupted()) {
                     updateMessage("Apprentissage annulé");
+                    trainingComplete = false;
                 } else {
                     updateMessage("Apprentissage terminé !");
+                    trainingComplete = true;
                 }
                 okButton.setDisable(false);
                 return null;
