@@ -270,6 +270,17 @@ public class GameScreenLayoutController implements Initializable {
             return getVictoryForPlayerToken(playerToken);
         }
 
+        boolean isDraw = true;
+        int t=0;
+        while(t < in.length && isDraw) {
+            if(in[t] == 0) {
+                isDraw = false;
+            }
+            t++;
+        }
+        if(isDraw) {
+            return 0;
+        }
         return -1;
     }
 
