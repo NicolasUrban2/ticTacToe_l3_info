@@ -6,12 +6,10 @@ import ai.MultiLayerPerceptron;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Main;
 import model.GameSettings;
@@ -21,7 +19,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DifficultyChoiceController implements Initializable {
+public class DifficultyChoiceController implements Initializable, CanSetDarkmode {
 
     @FXML
     CheckBox choixFacile;
@@ -33,6 +31,10 @@ public class DifficultyChoiceController implements Initializable {
     CheckBox choixDifficile;
     @FXML
     private Button playButton;
+    @FXML
+    private AnchorPane backgroundAnchorPane;
+    @FXML
+    private Label titleLabel;
 
     private String choiceSelected;
 
@@ -45,6 +47,7 @@ public class DifficultyChoiceController implements Initializable {
     ToggleGroup toggleGroup = new ToggleGroup();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainController.registerAsDarkModeObserver(this);
         Tooltip tooltipPLayButton = new Tooltip("Lancer la partie ou lancer l'entraînement du nouveau modèle.");
         Tooltip.install(playButton, tooltipPLayButton);
         mainController.setDifficultyChoiceController(this);
@@ -143,5 +146,22 @@ public class DifficultyChoiceController implements Initializable {
             }
         }
         return false;
+    }
+
+    @Override
+    public void setDarkMode(boolean applyDarkMode) {
+        if(applyDarkMode) {
+            backgroundAnchorPane.setStyle(mainController.getDarkStyle1());
+            choixFacile.setTextFill(Color.WHITE);
+            choixMoyen.setTextFill(Color.WHITE);
+            choixDifficile.setTextFill(Color.WHITE);
+            titleLabel.setTextFill(Color.WHITE);
+        } else {
+            backgroundAnchorPane.setStyle(mainController.getBrightStyle1());
+            choixFacile.setTextFill(Color.BLACK);
+            choixMoyen.setTextFill(Color.BLACK);
+            choixDifficile.setTextFill(Color.BLACK);
+            titleLabel.setTextFill(Color.BLACK);
+        }
     }
 }
