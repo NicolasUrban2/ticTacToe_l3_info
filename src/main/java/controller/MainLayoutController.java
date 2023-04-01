@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -23,8 +20,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainLayoutController implements Initializable {
-    @FXML
-    private MenuItem parametresMenuItem;
     @FXML
     private ToggleButton darkModeToggleButton;
     @FXML
@@ -176,5 +171,4 @@ public class MainLayoutController implements Initializable {
             }
         }
     }
-
 }

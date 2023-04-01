@@ -34,7 +34,6 @@ public class MainController {
             object.setDarkMode(applyDarkMode);
         }
     }
-
     public String getDarkStyle1() { return darkStyle1; }
 
     public String getBrightStyle1() {
@@ -67,6 +66,7 @@ public class MainController {
     }
 
     private boolean isDarkModeToggleButtonSelected;
+
     private final String darkStyle1 = "-fx-background-color: rgba(0, 0, 0, 0.8)";
     private final String darkStyle2 = "-fx-background-color: rgba(0, 0, 0, 0.75)";
     private final String darkStyle3 = "-fx-background-color: rgba(0, 0, 0, 0.4)";

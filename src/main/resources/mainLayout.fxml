@@ -13,9 +13,9 @@
          <top>
             <AnchorPane prefHeight="22.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <MenuBar prefHeight="26.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <MenuBar fx:id="menuBar" prefHeight="26.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <menus>
-                      <Menu mnemonicParsing="false" text="IA">
+                      <Menu fx:id="menuAi" mnemonicParsing="false" text="IA">
                         <items>
                           <MenuItem mnemonicParsing="false" onAction="#onAiModelesButtonClick" text="Modèles" />
                             <MenuItem fx:id="parametresMenuItem" mnemonicParsing="false" onAction="#onAiParametresButtonClick" text="Paramètres" />
