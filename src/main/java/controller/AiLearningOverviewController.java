@@ -7,6 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import main.Main;
 import model.GameSettings;
@@ -19,10 +21,11 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class AiLearningOverviewController implements Initializable {
+public class AiLearningOverviewController implements Initializable, CanSetDarkmode {
     @FXML
     private Label messageLabel;
-
+    @FXML
+    private AnchorPane backgroundAnchorPane;
     @FXML
     private ProgressBar progressBar;
     @FXML
@@ -41,6 +44,7 @@ public class AiLearningOverviewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainController.registerAsDarkModeObserver(this);
         try {
             trainingComplete = false;
             createNewModel();
@@ -176,5 +180,16 @@ public class AiLearningOverviewController implements Initializable {
             System.exit(-1);
         }
         return map ;
+    }
+
+    @Override
+    public void setDarkMode(boolean applyDarkMode) {
+        if(applyDarkMode) {
+            backgroundAnchorPane.setStyle(mainController.getDarkStyle1());
+            messageLabel.setTextFill(Color.WHITE);
+        } else {
+            backgroundAnchorPane.setStyle(mainController.getBrightStyle1());
+            messageLabel.setTextFill(Color.BLACK);
+        }
     }
 }

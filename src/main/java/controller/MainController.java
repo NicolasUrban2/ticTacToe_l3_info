@@ -25,6 +25,7 @@ public class MainController {
     public void registerAsDarkModeObserver(CanSetDarkmode object) {
         if(object != null) {
             darkModeObserversList.add(object);
+            setDarkModeToAllObservers(isDarkModeToggleButtonSelected());
         }
     }
 
@@ -56,6 +57,16 @@ public class MainController {
         return brightStyle3;
     }
 
+    public boolean isDarkModeToggleButtonSelected() {
+        return isDarkModeToggleButtonSelected;
+    }
+
+    public void setDarkModeToggleButtonSelected(boolean darkModeToggleButtonSelected) {
+        isDarkModeToggleButtonSelected = darkModeToggleButtonSelected;
+        setDarkModeToAllObservers(isDarkModeToggleButtonSelected());
+    }
+
+    private boolean isDarkModeToggleButtonSelected;
     private final String darkStyle1 = "-fx-background-color: rgba(0, 0, 0, 0.8)";
     private final String darkStyle2 = "-fx-background-color: rgba(0, 0, 0, 0.75)";
     private final String darkStyle3 = "-fx-background-color: rgba(0, 0, 0, 0.4)";

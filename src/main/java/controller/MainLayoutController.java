@@ -43,11 +43,7 @@ public class MainLayoutController implements Initializable {
 
     @FXML
     private void onDarkModeToggleButtonClick() {
-        if(darkModeToggleButton.isSelected()) {
-            mainController.setDarkModeToAllObservers(true);
-        } else {
-            mainController.setDarkModeToAllObservers(false);
-        }
+        mainController.setDarkModeToggleButtonSelected(darkModeToggleButton.isSelected());
     }
 
     @FXML
@@ -110,9 +106,7 @@ public class MainLayoutController implements Initializable {
 
     @FXML
     private void onCommentJouerButtonClick() throws IOException {
-        AnchorPane view = (AnchorPane) ViewLoader.getView("tutorialScreenLayoutSmall");
-        mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
-        Scene scene = new Scene(view);
+        Scene scene = new Scene((AnchorPane) ViewLoader.getView("tutorialScreenLayoutSmall"));
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.setTitle("Comment jouer");
@@ -162,7 +156,7 @@ public class MainLayoutController implements Initializable {
             fadeTransitionOut.setOnFinished(actionEvent -> {
                 try {
                     mainView = ViewLoader.getView(viewName);
-                    mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
+                    //mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
                     FadeTransition fadeTransitionIn = new FadeTransition(Duration.millis(200), mainView);
                     fadeTransitionIn.setFromValue(0);
                     fadeTransitionIn.setToValue(1);
@@ -175,7 +169,7 @@ public class MainLayoutController implements Initializable {
         } else {
             try {
                 mainView = ViewLoader.getView(viewName);
-                mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
+                //mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
                 mainPane.setCenter(mainView);
             } catch (Exception e) {
                 System.err.println("ChangeViewError :" + e.getMessage());
