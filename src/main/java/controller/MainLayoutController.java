@@ -108,6 +108,17 @@ public class MainLayoutController implements Initializable {
         }
     }
 
+    @FXML
+    private void onCommentJouerButtonClick() throws IOException {
+        Scene scene = new Scene((AnchorPane) ViewLoader.getView("tutorialScreenLayoutSmall"));
+        Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.setTitle("Comment jouer");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
     public void disableMainWindow(){
         Stage root = mainController.getRoot();
         root.setResizable(false);
