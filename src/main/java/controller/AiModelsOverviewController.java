@@ -1,16 +1,14 @@
 package controller;
 
-import javafx.beans.binding.ListBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -18,13 +16,18 @@ import java.io.File;
 import java.net.URL;
 import java.util.*;
 
-public class AiModelsOverviewController implements Initializable {
+public class AiModelsOverviewController implements Initializable, CanSetDarkmode {
     @FXML
     private GridPane gridPane;
     @FXML
     private CheckBox deleteAllCheckbox;
     @FXML
-    private Button deleteButton;
+    private AnchorPane backgroundAnchorPane;
+    @FXML
+    private Label selectAllLabel;
+    private List<Label> fileNamesLabelsList = new ArrayList<>();
+
+    private MainController mainController = MainController.getInstance();
 
     List<CheckBox> checkBoxesList = new ArrayList<>();
 
@@ -34,7 +37,6 @@ public class AiModelsOverviewController implements Initializable {
 
     private String modelsPath = "./resources/models";
 
-    private MainController mainController = MainController.getInstance();
 
     private void searchModels() {
         this.modelsFilesNames.clear();
@@ -61,15 +63,9 @@ public class AiModelsOverviewController implements Initializable {
     }
 
     @FXML
-    private void onDeleteAllCheckboxClick() {
-        if(deleteAllCheckbox.isSelected()) {
-            for (CheckBox checkbox: checkBoxesList) {
-                checkbox.setSelected(true);
-            }
-        } else {
-            for (CheckBox checkbox: checkBoxesList) {
-                checkbox.setSelected(false);
-            }
+    private void onSelectAllCheckboxClick() {
+        for (CheckBox checkbox: checkBoxesList) {
+            checkbox.setSelected(deleteAllCheckbox.isSelected());
         }
     }
 
@@ -107,14 +103,18 @@ public class AiModelsOverviewController implements Initializable {
 
             Label label = new Label(modelsFilesNames.get(i));
             label.setFont(new Font(16));
+            fileNamesLabelsList.add(label);
 
             gridPane.add(label, 0, i);
             gridPane.add(checkBox, 1, i);
             GridPane.setHalignment(label, HPos.CENTER);
         }
+        setDarkMode(mainController.isDarkModeToggleButtonSelected());
     }
 
     private void clearGridPane() {
+        fileNamesLabelsList.clear();
+        System.out.println(fileNamesLabelsList.size());
         checkBoxesList.clear();
         gridPane.getChildren().clear();
         gridPane.getRowConstraints().clear();
@@ -123,7 +123,7 @@ public class AiModelsOverviewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        mainController.registerAsDarkModeObserver(this);
         searchModels();
         fillGridPane();
     }
@@ -135,5 +135,24 @@ public class AiModelsOverviewController implements Initializable {
             }
         }
         return null;
+    }
+
+    @Override
+    public void setDarkMode(boolean applyDarkMode) {
+        if(applyDarkMode) {
+            backgroundAnchorPane.setStyle(mainController.getDarkStyle1());
+            gridPane.setStyle(mainController.getDarkStyle2());
+            selectAllLabel.setTextFill(Color.WHITE);
+            for (Label label:fileNamesLabelsList) {
+                label.setTextFill(Color.WHITE);
+            }
+        } else {
+            backgroundAnchorPane.setStyle(mainController.getBrightStyle1());
+            gridPane.setStyle(mainController.getBrightStyle1());
+            selectAllLabel.setTextFill(Color.BLACK);
+            for (Label label:fileNamesLabelsList) {
+                label.setTextFill(Color.BLACK);
+            }
+        }
     }
 }
