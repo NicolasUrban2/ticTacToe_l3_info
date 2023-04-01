@@ -160,11 +160,6 @@ public class MainLayoutController implements Initializable {
             fadeTransitionOut.setOnFinished(actionEvent -> {
                 try {
                     mainView = ViewLoader.getView(viewName);
-                    if (darkModeToggleButton.isSelected()) {
-                        mainView.setStyle(mainController.getDarkStyle());
-                    } else {
-                        mainView.setStyle(mainController.getBrightStyle());
-                    }
                     FadeTransition fadeTransitionIn = new FadeTransition(Duration.millis(200), mainView);
                     fadeTransitionIn.setFromValue(0);
                     fadeTransitionIn.setToValue(1);
