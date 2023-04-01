@@ -203,6 +203,11 @@
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Polyline>
+                              <ImageView fx:id="arrowImageView" fitHeight="67.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
+                                 <GridPane.margin>
+                                    <Insets left="120.0" top="190.0" />
+                                 </GridPane.margin>
+                              </ImageView>
                            </children>
                         </GridPane>
                      </children>
