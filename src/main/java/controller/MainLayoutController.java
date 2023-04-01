@@ -98,6 +98,16 @@ public class MainLayoutController implements Initializable {
         }
     }
 
+    @FXML
+    private void onWikipediaButtonClick() {
+        String wikipediaUrl = "https://fr.wikipedia.org/wiki/Tic-tac-toe";
+        try {
+            java.awt.Desktop.getDesktop().browse(new URI(wikipediaUrl));
+        } catch (Exception e) {
+            System.err.println("Wikipedia link error : " + e.getMessage());
+        }
+    }
+
     public void disableMainWindow(){
         Stage root = mainController.getRoot();
         root.setResizable(false);

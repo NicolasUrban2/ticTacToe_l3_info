@@ -24,7 +24,7 @@
                       <Menu mnemonicParsing="false" text="Règles">
                         <items>
                           <MenuItem mnemonicParsing="false" text="Comment jouer" />
-                              <MenuItem mnemonicParsing="false" text="Wikipedia" />
+                              <MenuItem onAction="#onWikipediaButtonClick" mnemonicParsing="false" text="Wikipedia" />
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="À propos">
