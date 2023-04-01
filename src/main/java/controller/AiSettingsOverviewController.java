@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -18,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AiSettingsOverviewController implements Initializable {
+public class AiSettingsOverviewController implements Initializable, CanSetDarkmode {
     @FXML
     private TextField textFieldFacileNumberOfHiddenLayers;
     @FXML
@@ -43,6 +45,21 @@ public class AiSettingsOverviewController implements Initializable {
     private Button saveButton;
     @FXML
     private Label errorLabel;
+    @FXML
+    private AnchorPane backgroundAnchorPane;
+    @FXML
+    private Label lLabel;
+    @FXML
+    private Label hLabel;
+    @FXML
+    private Label lrLabel;
+    @FXML
+    private Label facileLabel;
+    @FXML
+    private Label moyenLabel;
+    @FXML
+    private Label difficileLabel;
+
 
     private MainController mainController = MainController.getInstance();
 
@@ -50,6 +67,7 @@ public class AiSettingsOverviewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainController.registerAsDarkModeObserver(this);
         displayConfigContent();
         setTextVerifiersToAllTextFields();
     }
@@ -170,5 +188,26 @@ public class AiSettingsOverviewController implements Initializable {
     public void onOkButtonClick(){
         onSaveButtonClick();
         closeWindow();
+    }
+
+    @Override
+    public void setDarkMode(boolean applyDarkMode) {
+        if(applyDarkMode) {
+            backgroundAnchorPane.setStyle(mainController.getDarkStyle1());
+            facileLabel.setTextFill(Color.WHITE);
+            moyenLabel.setTextFill(Color.WHITE);
+            difficileLabel.setTextFill(Color.WHITE);
+            lLabel.setTextFill(Color.WHITE);
+            lrLabel.setTextFill(Color.WHITE);
+            hLabel.setTextFill(Color.WHITE);
+        } else {
+            backgroundAnchorPane.setStyle(mainController.getBrightStyle1());
+            facileLabel.setTextFill(Color.BLACK);
+            moyenLabel.setTextFill(Color.BLACK);
+            difficileLabel.setTextFill(Color.BLACK);
+            lLabel.setTextFill(Color.BLACK);
+            lrLabel.setTextFill(Color.BLACK);
+            hLabel.setTextFill(Color.BLACK);
+        }
     }
 }
