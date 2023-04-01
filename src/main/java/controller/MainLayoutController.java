@@ -160,6 +160,7 @@ public class MainLayoutController implements Initializable {
             fadeTransitionOut.setOnFinished(actionEvent -> {
                 try {
                     mainView = ViewLoader.getView(viewName);
+                    mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
                     FadeTransition fadeTransitionIn = new FadeTransition(Duration.millis(200), mainView);
                     fadeTransitionIn.setFromValue(0);
                     fadeTransitionIn.setToValue(1);
@@ -172,11 +173,7 @@ public class MainLayoutController implements Initializable {
         } else {
             try {
                 mainView = ViewLoader.getView(viewName);
-                if (darkModeToggleButton.isSelected()) {
-                    mainView.setStyle(mainController.getDarkStyle());
-                } else {
-                    mainView.setStyle(mainController.getBrightStyle());
-                }
+                mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
                 mainPane.setCenter(mainView);
             } catch (Exception e) {
                 System.err.println("ChangeViewError :" + e.getMessage());

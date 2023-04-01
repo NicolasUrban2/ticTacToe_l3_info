@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WelcomeScreenLayoutController">
+<AnchorPane fx:id="anchorPaneBackground" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WelcomeScreenLayoutController">
     <children>
-        <Label alignment="CENTER" layoutX="207.0" layoutY="50.0" prefHeight="60.0" prefWidth="184.0" text="Tic Tac Toe" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
+        <Label fx:id="title1Label" alignment="CENTER" layoutX="207.0" layoutY="50.0" prefHeight="60.0" prefWidth="184.0" text="Tic Tac Toe" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0">
             <font>
                 <Font name="System Bold" size="34.0" />
             </font>
         </Label>
-        <Label alignment="CENTER" layoutX="130.0" layoutY="97.0" text="TURBOFLEX" textAlignment="CENTER" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+        <Label fx:id="title2Label" alignment="CENTER" layoutX="130.0" layoutY="97.0" text="TURBOFLEX" textAlignment="CENTER" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
             <font>
                 <Font name="Elephant" size="47.0" />
             </font>

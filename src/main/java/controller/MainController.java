@@ -34,16 +34,34 @@ public class MainController {
         }
     }
 
-    public String getDarkStyle() {
-        return darkStyle;
+    public String getDarkStyle1() { return darkStyle1; }
+
+    public String getBrightStyle1() {
+        return brightStyle1;
     }
 
-    public String getBrightStyle() {
-        return brightStyle;
+    public String getDarkStyle2() {
+        return darkStyle2;
     }
 
-    private final String darkStyle = "-fx-background-color: rgba(0, 0, 0, 0.6)";
-    private final String brightStyle = "-fx-background-color: rgba(0, 0, 0, 0)";
+    public String getDarkStyle3() {
+        return darkStyle3;
+    }
+
+    public String getBrightStyle2() {
+        return brightStyle2;
+    }
+
+    public String getBrightStyle3() {
+        return brightStyle3;
+    }
+
+    private final String darkStyle1 = "-fx-background-color: rgba(0, 0, 0, 0.8)";
+    private final String darkStyle2 = "-fx-background-color: rgba(0, 0, 0, 0.6)";
+    private final String darkStyle3 = "-fx-background-color: rgba(0, 0, 0, 0.4)";
+    private final String brightStyle1 = "-fx-background-color: rgba(0, 0, 0, 0)";
+    private final String brightStyle2 = "-fx-background-color: rgba(0, 0, 0, 1)";
+    private final String brightStyle3 = "-fx-background-color: rgba(0, 0, 0, 2)";
 
     private MainController() {
 
