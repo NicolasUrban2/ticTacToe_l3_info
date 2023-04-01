@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -19,7 +20,7 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainLayoutController implements Initializable {
+public class MainLayoutController implements Initializable, CanSetDarkmode {
     @FXML
     private ToggleButton darkModeToggleButton;
     @FXML
@@ -31,6 +32,7 @@ public class MainLayoutController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainController.registerAsDarkModeObserver(this);
         Tooltip tooltipDarkModeToggleButton = new Tooltip("Alterner entre le thème sombre et le thème clair");
         Tooltip.install(darkModeToggleButton, tooltipDarkModeToggleButton);
         changeView("welcomeScreenLayout");
@@ -169,6 +171,15 @@ public class MainLayoutController implements Initializable {
             } catch (Exception e) {
                 System.err.println("ChangeViewError :" + e.getMessage());
             }
+        }
+    }
+
+    @Override
+    public void setDarkMode(boolean applyDarkMode) {
+        if(applyDarkMode) {
+            mainPane.setStyle(mainController.getDarkStyle3());
+        } else {
+            mainPane.setStyle(mainController.getBrightStyle1());
         }
     }
 }
