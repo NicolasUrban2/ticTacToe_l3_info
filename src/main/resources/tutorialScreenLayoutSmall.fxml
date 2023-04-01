@@ -13,11 +13,11 @@
 <?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TutorialScreenLayoutController">
+<AnchorPane prefHeight="293.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TutorialScreenLayoutSmallController">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <ScrollPane prefHeight="364.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <ScrollPane prefHeight="364.0" prefWidth="618.0" BorderPane.alignment="CENTER">
               <content>
                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1280.0" prefWidth="584.0">
                      <children>
@@ -59,7 +59,7 @@
                                     </ImageView>
                                  </children>
                               </GridPane>
-                              <GridPane gridLinesVisible="true" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                              <GridPane gridLinesVisible="true" prefHeight="210.0" prefWidth="192.0" GridPane.columnIndex="1">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -74,7 +74,7 @@
                                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                  </GridPane.margin>
                               </GridPane>
-                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Le terrain de jeu comporte 9 cases. Les joueurs posent leur signe dans une case libre chacun leur tour." wrapText="true">
+                              <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="216.0" prefWidth="184.0" text="Le terrain de jeu comporte 9 cases. Les joueurs posent leur signe dans une case libre chacun leur tour." wrapText="true">
                                  <GridPane.margin>
                                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                  </GridPane.margin>
@@ -201,6 +201,11 @@
                                     <Insets left="20.0" />
                                  </GridPane.margin>
                               </Polyline>
+                              <ImageView fx:id="arrowImageView" fitHeight="67.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true">
+                                 <GridPane.margin>
+                                    <Insets left="120.0" top="190.0" />
+                                 </GridPane.margin>
+                              </ImageView>
                            </children>
                         </GridPane>
                      </children>
