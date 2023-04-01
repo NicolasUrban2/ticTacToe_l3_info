@@ -4,6 +4,8 @@ import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import main.Main;
@@ -16,6 +18,13 @@ public class WelcomeScreenLayoutController implements Initializable {
     @FXML
     private ImageView imageLoutre;
 
+    @FXML
+    private Button humanVsAiButton;
+    @FXML
+    private Button humanVsHumanButton;
+    @FXML
+    private Button tutorialButton;
+
     private GameSettings gameSettings = GameSettings.getInstance();
 
     private MainController mainController = MainController.getInstance();
@@ -23,6 +32,13 @@ public class WelcomeScreenLayoutController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loutreAnimationSetup();
+        Tooltip tooltipHumanVsAiButton = new Tooltip("Jouer contre une intelligence artificielle");
+        Tooltip tooltipHumanVsAiHuman = new Tooltip("Jouer contre un autre joueur sur le même écran");
+        Tooltip tooltipTutorialButton = new Tooltip("Voir comment jouer au jeu du Tic Tac Toe");
+        Tooltip.install(humanVsAiButton, tooltipHumanVsAiButton);
+        Tooltip.install(humanVsHumanButton, tooltipHumanVsAiHuman);
+        Tooltip.install(tutorialButton, tooltipTutorialButton);
+
     }
 
     private void loutreAnimationSetup() {

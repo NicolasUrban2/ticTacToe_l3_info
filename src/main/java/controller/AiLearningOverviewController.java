@@ -67,6 +67,7 @@ public class AiLearningOverviewController implements Initializable {
 
     @FXML
     private void onCancelButtonClick() {
+        trainingComplete = false;
         thread.interrupt();
         File file = new File(newModelFileName);
         file.delete();

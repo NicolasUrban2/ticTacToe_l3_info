@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -30,6 +31,8 @@ public class DifficultyChoiceController implements Initializable {
 
     @FXML
     CheckBox choixDifficile;
+    @FXML
+    private Button playButton;
 
     private String choiceSelected;
 
@@ -42,6 +45,8 @@ public class DifficultyChoiceController implements Initializable {
     ToggleGroup toggleGroup = new ToggleGroup();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Tooltip tooltipPLayButton = new Tooltip("Lancer la partie ou lancer l'entraînement du nouveau modèle.");
+        Tooltip.install(playButton, tooltipPLayButton);
         mainController.setDifficultyChoiceController(this);
         accueilButtonInitialization();
         setChoixFacile();

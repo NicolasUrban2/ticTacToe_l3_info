@@ -18,7 +18,7 @@
                       <Menu mnemonicParsing="false" text="IA">
                         <items>
                           <MenuItem mnemonicParsing="false" onAction="#onAiModelesButtonClick" text="Modèles" />
-                              <MenuItem fx:id="parametresMenuItem" mnemonicParsing="false" onAction="#onAiParametresButtonClick" text="Paramètres" />
+                            <MenuItem fx:id="parametresMenuItem" mnemonicParsing="false" onAction="#onAiParametresButtonClick" text="Paramètres" />
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Règles">
