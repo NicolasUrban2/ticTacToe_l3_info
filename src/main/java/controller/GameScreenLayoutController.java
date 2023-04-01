@@ -11,26 +11,30 @@ import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import main.Main;
 import model.GameSettings;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameScreenLayoutController implements Initializable {
+public class GameScreenLayoutController implements Initializable, CanSetDarkmode {
     @FXML
     private Label tourJ1LabelGauche;
-
-    @FXML
-    private Button accueilButton;
-
     @FXML
     private Label tourJ2LabelDroite;
-
+    @FXML
+    private AnchorPane backgroundAnchorPane;
+    @FXML
+    private Button accueilButton;
     @FXML
     private Label winOrLose;
-
+    @FXML
+    private Label player1Label;
+    @FXML
+    private Label player2Label;
     @FXML
     private Label titleLabel;
 
@@ -61,6 +65,7 @@ public class GameScreenLayoutController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainController.registerAsDarkModeObserver(this);
         accueilButtonInitialization();
         winOrLose.setText("");
         for(int t=0; t<in.length; t++) {
@@ -452,5 +457,26 @@ public class GameScreenLayoutController implements Initializable {
         imageViewCrossTable[xA][yA].setEffect(effect);
         imageViewCrossTable[xB][yB].setEffect(effect);
         imageViewCrossTable[xC][yC].setEffect(effect);
+    }
+
+    @Override
+    public void setDarkMode(boolean applyDarkMode) {
+        if(applyDarkMode) {
+            backgroundAnchorPane.setStyle(mainController.getDarkStyle1());
+            titleLabel.setTextFill(Color.WHITE);
+            tourJ1LabelGauche.setTextFill(Color.WHITE);
+            tourJ2LabelDroite.setTextFill(Color.WHITE);
+            winOrLose.setTextFill(Color.WHITE);
+            player1Label.setTextFill(Color.WHITE);
+            player2Label.setTextFill(Color.WHITE);
+        } else {
+            backgroundAnchorPane.setStyle(mainController.getBrightStyle1());
+            titleLabel.setTextFill(Color.BLACK);
+            tourJ1LabelGauche.setTextFill(Color.BLACK);
+            tourJ2LabelDroite.setTextFill(Color.BLACK);
+            winOrLose.setTextFill(Color.BLACK);
+            player1Label.setTextFill(Color.BLACK);
+            player2Label.setTextFill(Color.BLACK);
+        }
     }
 }
