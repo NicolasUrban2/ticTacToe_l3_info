@@ -98,27 +98,34 @@ public class DifficultyChoiceController implements Initializable {
         String fileName = "model_" + l + "_" + h + "_" + lr + ".srl";
         System.out.println(fileName);
         if(fileExists(fileName)) {
-            jouer(fileName);
+            MultiLayerPerceptron multiLayerPerceptron = MultiLayerPerceptron.load("./resources/models/"+ fileName);
+            if(multiLayerPerceptron == null) {
+                System.out.println("Fichier de modèle corrompu, suppression du fichier.");
+                File file = new File("./resources/models/"+ fileName);
+                file.delete();
+                callTrainingWindow();
+            } else {
+                gameSettings.setMultiLayerPerceptron(multiLayerPerceptron);
+                mainController.changeView("gameScreenLayout");
+            }
         }
         else {
-            try {
-                Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiLearningOverview"));
-                Stage stage = new Stage();
-                stage.setScene(scene);
-                stage.setTitle("Entraînement de l'IA");
-                stage.setResizable(false);
-                stage.show();
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-            }
+            callTrainingWindow();
 
         }
     }
 
-    private void jouer(String fileName) {
-        MultiLayerPerceptron multiLayerPerceptron = MultiLayerPerceptron.load("./resources/models/"+ fileName);
-        gameSettings.setMultiLayerPerceptron(multiLayerPerceptron);
-        mainController.changeView("gameScreenLayout");
+    private static void callTrainingWindow() {
+        try {
+            Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiLearningOverview"));
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Entraînement de l'IA");
+            stage.setResizable(false);
+            stage.show();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     private boolean fileExists(String fileName) {
