@@ -2,19 +2,20 @@ package controller;
 
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import main.Main;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -29,9 +30,12 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
     private Node mainView;
 
     private MainController mainController = MainController.getInstance();
+    private final String darkModeToggleButtonSelectedStyle =    "-fx-background-radius : 20; -fx-background-color: black; -fx-border-color :  black; -fx-border-radius : 20; -fx-text-fill : white";
+    private final String darkModeToggleButtonUnselectedStyle =  "-fx-background-radius : 20; -fx-background-color:  white; -fx-border-color :  black; -fx-border-radius : 20; -fx-text-fill : black";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setDarkModeToggleButtonStyle();
         mainController.registerAsDarkModeObserver(this);
         Tooltip tooltipDarkModeToggleButton = new Tooltip("Alterner entre le thème sombre et le thème clair");
         Tooltip.install(darkModeToggleButton, tooltipDarkModeToggleButton);
@@ -40,7 +44,23 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
 
     @FXML
     private void onDarkModeToggleButtonClick() {
+        setDarkModeToggleButtonStyle();
         mainController.setDarkModeToggleButtonSelected(darkModeToggleButton.isSelected());
+    }
+
+    private void setDarkModeToggleButtonStyle() {
+        String imageName;
+        if(darkModeToggleButton.isSelected()) {
+            imageName = "sunIcon.png";
+            darkModeToggleButton.setStyle(darkModeToggleButtonSelectedStyle);
+        } else {
+            darkModeToggleButton.setStyle(darkModeToggleButtonUnselectedStyle);
+            imageName = "moonIcon.png";
+        }
+        ImageView newIcon = new ImageView(new Image(Main.class.getResource("/images/"+imageName).toString()));
+        newIcon.setPreserveRatio(true);
+        newIcon.setFitWidth(15);
+        darkModeToggleButton.setGraphic(newIcon);
     }
 
     @FXML

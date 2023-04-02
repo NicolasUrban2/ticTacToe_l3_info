@@ -36,7 +36,7 @@
                       </Menu>
                     </menus>
                   </MenuBar>
-                  <ToggleButton fx:id="darkModeToggleButton" layoutX="511.0" layoutY="1.0" mnemonicParsing="false" onAction="#onDarkModeToggleButtonClick" text="Dark mode" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ToggleButton fx:id="darkModeToggleButton" contentDisplay="CENTER" layoutX="511.0" layoutY="1.0" mnemonicParsing="false" onAction="#onDarkModeToggleButtonClick" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></ToggleButton>
