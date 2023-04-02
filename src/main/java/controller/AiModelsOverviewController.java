@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -99,6 +100,7 @@ public class AiModelsOverviewController implements Initializable, CanSetDarkmode
             checkBox.setScaleX(1.5);
             checkBox.setScaleY(1.5);
             checkBox.setAlignment(Pos.CENTER);
+            checkBox.setCursor(Cursor.HAND);
             checkBoxesList.add(checkBox);
 
             Label label = new Label(modelsFilesNames.get(i));

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -32,16 +33,25 @@
                     <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </Button>
                 <Button fx:id="humanVsHumanButton" alignment="CENTER" mnemonicParsing="false" onAction="#onJoueurVsJoueurButtonClick" style="-fx-background-color: linear-gradient(to bottom, #222, #333); -fx-background-radius: 20; -fx-border-color: #fff; -fx-border-radius: 20; -fx-border-width: 2px; -fx-text-fill: #fff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 8px 16px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);" text="Joueur contre Joueur">
                     <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </Button>
-                <Button fx:id="tutorialButton" alignment="CENTER" mnemonicParsing="false" onAction="#onTutorialButtonClick" text="Tutoriel" style="-fx-background-color: #5e5e5e; -fx-background-radius: 5; -fx-border-color: #fff; -fx-border-radius: 5; -fx-border-width: 1px; -fx-text-fill: #fff; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 8px 16px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);">
+                <Button fx:id="tutorialButton" alignment="CENTER" mnemonicParsing="false" onAction="#onTutorialButtonClick" style="-fx-background-color: #5e5e5e; -fx-background-radius: 5; -fx-border-color: #fff; -fx-border-radius: 5; -fx-border-width: 1px; -fx-text-fill: #fff; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 8px 16px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);" text="Tutoriel">
                     <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                 </Button>
             </children>
         </VBox>

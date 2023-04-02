@@ -5,6 +5,7 @@ import ai.MultiLayerPerceptron;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Bloom;
@@ -115,6 +116,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 image.setFitHeight(90);
                 image.setFitWidth(90);
                 image.setPreserveRatio(true);
+                image.setCursor(Cursor.HAND);
                 imageViewEmptyTable[i][j] = image;
                 gridPane.add(imageViewEmptyTable[i][j], i , j);
                 Insets insets = new Insets(5);
