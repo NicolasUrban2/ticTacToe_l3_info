@@ -449,7 +449,7 @@
          <top>
             <HBox prefHeight="63.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onRetourButtonClicked" prefHeight="26.0" prefWidth="55.0" text="Retour">
+                  <Button fx:id="accueilButton" mnemonicParsing="false" onAction="#onAccueilButtonClicked" prefHeight="26.0" prefWidth="55.0" text="">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>

@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -39,18 +40,29 @@ public class TutorialScreenLayoutController implements Initializable, CanSetDark
     @FXML
     private Label tutorialLabel4;
 
+    @FXML
+    private Button accueilButton;
+
 
     private MainController mainController = MainController.getInstance();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        accueilButtonInitialization();
         mainController.registerAsDarkModeObserver(this);
         Image image = new Image(Main.class.getResource("/images/arrow.png").toString());
         arrowImageView.setImage(image);
         ArrowAnimationSetup();
     }
 
+    private void accueilButtonInitialization() {
+        ImageView house = new ImageView(Main.class.getResource("/images/house.png").toString());
+        accueilButton.setGraphic(house);
+        house.setFitHeight(20);
+        house.setFitWidth(20);
+    }
+
     @FXML
-    private void onRetourButtonClicked() {
+    private void onAccueilButtonClicked() {
         mainController.changeView("welcomeScreenLayout");
     }
 
