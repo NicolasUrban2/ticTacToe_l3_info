@@ -183,8 +183,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
                 ImageView image = new ImageView(new Image(Main.class.getResource("/images/orange_circle.jpg").toString()));
-                image.setFitHeight(90.0);
-                image.setFitWidth(90);
+                image.setFitHeight(80.0);
+                image.setFitWidth(80.0);
                 image.setPreserveRatio(true);
                 image.setVisible(false);
                 Insets insets = new Insets(5);
@@ -199,8 +199,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
                 ImageView image = new ImageView(new Image(Main.class.getResource("/images/blue_cross.jpg").toString()));
-                image.setFitHeight(90);
-                image.setFitWidth(90);
+                image.setFitHeight(80.0);
+                image.setFitWidth(80.0);
                 image.setPreserveRatio(true);
                 image.setVisible(false);
                 Insets insets = new Insets(5);
