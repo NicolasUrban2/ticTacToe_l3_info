@@ -95,21 +95,31 @@ public class AiModelsOverviewController implements Initializable, CanSetDarkmode
     }
 
     private void fillGridPane() {
-        for (int i = 0; i < modelsFilesNames.size(); i++) {
-            CheckBox checkBox = new CheckBox();
-            checkBox.setScaleX(1.5);
-            checkBox.setScaleY(1.5);
-            checkBox.setAlignment(Pos.CENTER);
-            checkBox.setCursor(Cursor.HAND);
-            checkBoxesList.add(checkBox);
-
-            Label label = new Label(modelsFilesNames.get(i));
+        if(modelsFilesNames.size() == 0) {
+            Label label = new Label("Aucun fichier trouvé");
             label.setFont(new Font(16));
             fileNamesLabelsList.add(label);
 
-            gridPane.add(label, 0, i);
-            gridPane.add(checkBox, 1, i);
+            gridPane.add(label, 0, 0);
+
             GridPane.setHalignment(label, HPos.CENTER);
+        } else {
+            for (int i = 0; i < modelsFilesNames.size(); i++) {
+                CheckBox checkBox = new CheckBox();
+                checkBox.setScaleX(1.5);
+                checkBox.setScaleY(1.5);
+                checkBox.setAlignment(Pos.CENTER);
+                checkBox.setCursor(Cursor.HAND);
+                checkBoxesList.add(checkBox);
+
+                Label label = new Label(modelsFilesNames.get(i));
+                label.setFont(new Font(16));
+                fileNamesLabelsList.add(label);
+
+                gridPane.add(label, 0, i);
+                gridPane.add(checkBox, 1, i);
+                GridPane.setHalignment(label, HPos.CENTER);
+            }
         }
         setDarkMode(mainController.isDarkModeToggleButtonSelected());
     }
