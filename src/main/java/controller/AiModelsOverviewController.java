@@ -1,5 +1,6 @@
 package controller;
 
+import ai.MultiLayerPerceptron;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -41,8 +42,22 @@ public class AiModelsOverviewController implements Initializable, CanSetDarkmode
 
     private void searchModels() {
         this.modelsFilesNames.clear();
+
         File modelsDirectory = new File(modelsPath);
-        this.modelsFilesNames.addAll(Arrays.asList(modelsDirectory.list()));
+
+        boolean directoryExists = true;
+
+        if(!modelsDirectory.exists()) {
+            directoryExists = modelsDirectory.mkdir();
+        }
+
+        if(directoryExists) {
+            for (String fileName: modelsDirectory.list()) {
+                if(fileName.matches("^model_([0-9]+)_([0-9]+)_([0-9]+)\\.([0-9]+)\\.srl$")) {
+                    this.modelsFilesNames.add(fileName);
+                }
+            }
+        }
     }
 
     private void removeModelsToDeleteFromModelsFilesNames() {
