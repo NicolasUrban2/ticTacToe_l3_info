@@ -134,13 +134,13 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
     public void disableMainWindow(){
         Stage root = mainController.getRoot();
         root.setResizable(false);
-        mainController.getRootAnchorPane().setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
+        mainController.getRootAnchorPane().setStyle(mainController.getDarkStyle1());
     }
 
     public void enableMainWindow(){
         Stage root = mainController.getRoot();
         root.setResizable(true);
-        mainController.getRootAnchorPane().setStyle("-fx-background-color: rgba(0, 0, 0, 0)");
+        mainController.getRootAnchorPane().setStyle(mainController.getRootDefaultStyle());
     }
 
     public void changeView(String viewName) {

@@ -352,88 +352,12 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         return -1;
     }
 
-    /*
-    // Retourne 2 pour victoire joueur 2, 1 pour victoire joueur 1 et 0 pour match nul, -1 pour partie non terminee
-    private int gameFinished() {
-        boolean allCasesPlayed = true;
-        int i = 0;
-        while (i != 9 && allCasesPlayed){
-            if(in[i] == 0){
-                allCasesPlayed = false;
-            }
-            i++;
-        }
-
-        System.out.println("Cas joueur 1 : " + hasPlayerWon(1));
-        System.out.println("Cas joueur 2 : " + hasPlayerWon(2));
-
-        if(allCasesPlayed & (hasPlayerWon(1)!=1) & (hasPlayerWon(2)!=1)) {
-            return 0;
-        }
-        else if((hasPlayerWon(1)==-1)){
-            System.out.println("Joueur 1 a gagné");
-            return 1;
-        }
-        else if ((hasPlayerWon(2)==1)) {
-            System.out.println("Joueur 2 a gagné");
-            return 2;
-        }
-        return -1;
-    }
-    */
-
     private int getVictoryForPlayerToken(int playerToken) {
         return switch (playerToken) {
             case -1 -> 1;
             case 1 -> 2;
             default -> -1;
         };
-    }
-
-
-    private int hasPlayerWon(int i) {
-        int x = 1;
-        if(i == 1) {
-            x = -1;
-        }
-
-        if (in[0] == x) {
-            if ((in[1] == x) & (in[2] == x)) {
-                highlightCases(0, 1, 2, true);
-                return x;
-            } else if ((in[3] == x) & (in[6] == x)) {
-                highlightCases(0, 3, 6, true);
-                return x;
-            } else if ((in[4] == x) & (in[8] == x)) {
-                highlightCases(0, 4, 8, true);
-                return x;
-            }
-        }
-        else if ((in[1] == x) & (in[4] == x) & (in[7] == x)) {
-            highlightCases(1, 4, 7, true);
-            return x;
-        }
-        else if ((in[3] == x) & (in[4] == x) & (in[5] == x)) {
-            highlightCases(3, 4, 5, true);
-            return x;
-        }
-        else if ((in[6] == x) & (in[7] == x) & (in[8] == x)) {
-            highlightCases(6, 7, 8, true);
-            return x;
-        }
-        else if (in[2] == x) {
-            if ((in[5] == x) & (in[8] == x)) {
-                highlightCases(2, 5, 8, true);
-                return x;
-            } else if ((in[4] == x) & (in[6] == x)) {
-                highlightCases(2, 4, 6, true);
-                return x;
-            }
-        }
-        else {
-            return 0;
-        }
-        return 10;
     }
 
     private void highlightCases(int a, int b, int c, boolean apply) {

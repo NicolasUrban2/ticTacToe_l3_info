@@ -72,6 +72,11 @@ public class MainController {
     private final String brightStyle1 = "-fx-background-color: rgba(0, 0, 0, 0)";
     private final String brightStyle2 = "-fx-background-color: rgba(0, 0, 0, 1)";
     private final String brightStyle3 = "-fx-background-color: rgba(0, 0, 0, 2)";
+    private final String rootDefaultStyle = "-fx-background-color: rgba(0, 0, 0, 0.05)";
+
+    public String getRootDefaultStyle() {
+        return rootDefaultStyle;
+    }
 
     private MainController() {
 
@@ -87,8 +92,8 @@ public class MainController {
         root = stage;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Main.class.getResource("/mainLayout.fxml"));
-        //System.out.println(mainLayoutController);
         this.rootAnchorPane = (AnchorPane) loader.load();
+        rootAnchorPane.setStyle(rootDefaultStyle);
         mainLayoutController = loader.getController();
         Scene scene = new Scene(rootAnchorPane);
         root.setTitle("Tic Tac Toe");
