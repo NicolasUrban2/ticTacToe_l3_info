@@ -106,10 +106,6 @@ public class MainController {
         return rootAnchorPane;
     }
 
-    public Stage getRoot() {
-        return root;
-    }
-
     public void enableMainWindow() {
         mainLayoutController.enableMainWindow();
     }
