@@ -2,6 +2,8 @@ package controller;
 
 import ai.Coup;
 import ai.MultiLayerPerceptron;
+import javafx.animation.FadeTransition;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -15,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import main.Main;
 import model.GameSettings;
 
@@ -65,10 +68,12 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     private MainController mainController = MainController.getInstance();
 
     private boolean isGamePlayable;
+    private boolean isGameFinished;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mainController.registerAsDarkModeObserver(this);
+        isGameFinished = false;
         accueilButtonInitialization();
         winOrLose.setText("");
         for(int t=0; t<in.length; t++) {
@@ -134,10 +139,18 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 //System.out.println(xClickedCase + " " + yClickedCase);
 
                 if(playerRound) {
+                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCrossTable[xClickedCase][yClickedCase]);
+                    fadeTransition.setFromValue(0);
+                    fadeTransition.setToValue(1);
+                    fadeTransition.play();
                     imageViewCrossTable[xClickedCase][yClickedCase].setVisible(true);
                     in[xClickedCase+yClickedCase*3] = -1;
                 }
                 else {
+                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCircleTable[xClickedCase][yClickedCase]);
+                    fadeTransition.setFromValue(0);
+                    fadeTransition.setToValue(1);
+                    fadeTransition.play();
                     imageViewCircleTable[xClickedCase][yClickedCase].setVisible(true);
                     in[xClickedCase+yClickedCase*3] = 1;
                 }
@@ -162,8 +175,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                                 xAiMoveCoordinates = index-6;
                                 yAiMoveCoordinates = 2;
                             }
+                            displayAiMove(xAiMoveCoordinates, yAiMoveCoordinates);
 
-                            imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates].setVisible(true);
                             in[index] = 1;
                             coup.addInBoard(in);
                             turnConclusion(xAiMoveCoordinates, yAiMoveCoordinates);
@@ -190,6 +203,25 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
             }
 
         });
+    }
+
+    private void displayAiMove(int xAiMoveCoordinates, int yAiMoveCoordinates) {
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                isGamePlayable = false;
+                Thread.sleep(500);
+                FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates]);
+                fadeTransition.setFromValue(0);
+                fadeTransition.setToValue(1);
+                fadeTransition.play();
+                imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates].setVisible(true);
+                isGamePlayable = !isGameFinished;
+                return null;
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.start();
     }
 
     private void fillCircleTable() {
@@ -230,6 +262,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 winOrLose.setText("Match nul");
                 replayButton.setText("Rejouer");
                 isGamePlayable = false;
+                isGameFinished = true;
                 break;
             case 1:
                 if(gameSettings.getGameMode().equals("pve")) {
@@ -239,6 +272,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 }
                 replayButton.setText("Rejouer");
                 isGamePlayable = false;
+                isGameFinished = true;
                 break;
             case 2:
                 if(gameSettings.getGameMode().equals("pve")) {
@@ -248,6 +282,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 }
                 replayButton.setText("Rejouer");
                 isGamePlayable = false;
+                isGameFinished = true;
                 break;
             default:
                 winOrLose.setText("");
