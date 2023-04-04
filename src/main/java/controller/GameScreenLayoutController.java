@@ -72,6 +72,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        replayButtonInitialization();
+
         mainController.registerAsDarkModeObserver(this);
         isGameFinished = false;
         accueilButtonInitialization();
@@ -79,9 +81,21 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         for(int t=0; t<in.length; t++) {
             in[t] = 0;
         }
-        titleLabel.setText("Mode de jeu : "+gameSettings.getGameMode());
+
+        switch (gameSettings.getGameMode()) {
+            case "pvp" :
+                titleLabel.setText("Mode de jeu : Joueur contre joueur");
+                break;
+            case "pve" :
+                titleLabel.setText("Mode de jeu : Joueur contre IA");
+                break;
+            default:
+                titleLabel.setText("Mode de jeu : Erreur");
+        }
+
         tourJ1LabelGauche.setVisible(true);
         tourJ2LabelDroite.setVisible(false);
+
         if(gameSettings.getGameMode() == "pve") {
             player1Label.setText("Vous");
             player2Label.setText("IA");
@@ -89,7 +103,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         }
         isGamePlayable = true;
         playerRound = true;
-        replayButton.setText("Recommencer");
+        //replayButton.setText("Recommencer");
         gridPane.getChildren().clear();
         fillEmptyImagesTable();
         fillCircleTable();
@@ -105,6 +119,13 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         for(int i=0; i<7; i+=3) {
             highlightCases(i, i+1, i+2, false);
         }
+    }
+
+    private void replayButtonInitialization() {
+        ImageView imageView = new ImageView(new Image(Main.class.getResource("/images/replayIcon.png").toString()));
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(20);
+        replayButton.setGraphic(imageView);
     }
 
     private void accueilButtonInitialization() {
@@ -260,7 +281,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         switch (gameFinished(x, y)) {
             case 0:
                 winOrLose.setText("Match nul");
-                replayButton.setText("Rejouer");
+                //replayButton.setText("Rejouer");
                 isGamePlayable = false;
                 isGameFinished = true;
                 break;
@@ -270,7 +291,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 } else {
                     winOrLose.setText("Victoire du joueur 1 !");
                 }
-                replayButton.setText("Rejouer");
+                //replayButton.setText("Rejouer");
                 isGamePlayable = false;
                 isGameFinished = true;
                 break;
@@ -280,7 +301,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 } else {
                     winOrLose.setText("Victoire du joueur 2 !");
                 }
-                replayButton.setText("Rejouer");
+                //replayButton.setText("Rejouer");
                 isGamePlayable = false;
                 isGameFinished = true;
                 break;
