@@ -45,7 +45,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                 </Button>
-                <Button fx:id="tutorialButton" alignment="CENTER" mnemonicParsing="false" onAction="#onTutorialButtonClick" style="-fx-background-color: #5e5e5e; -fx-background-radius: 5; -fx-border-color: #fff; -fx-border-radius: 5; -fx-border-width: 1px; -fx-text-fill: #fff; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 8px 16px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);" text="Tutoriel">
+                <Button fx:id="tutorialButton" alignment="CENTER" mnemonicParsing="false" onAction="#onTutorialButtonClick" style="-fx-background-color: linear-gradient(to bottom, #222, #333); -fx-background-radius: 5; -fx-border-color: #fff; -fx-border-radius: 5; -fx-border-width: 2px; -fx-text-fill: #fff; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 8px 16px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);" text="Tutoriel">
                     <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                     </VBox.margin>
