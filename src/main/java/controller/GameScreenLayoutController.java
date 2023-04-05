@@ -100,8 +100,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         if(gameSettings.getGameMode() == "pve") {
             player1Label.setText("Vous");
             player2Label.setText("IA");
-            tourJ1LabelGauche.setText("A votre tour");
         }
+
         isGamePlayable = true;
         playerRound = true;
         //replayButton.setText("Recommencer");
@@ -190,7 +190,6 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     private void makeHumanToPlay(ImageView image) {
         int xClickedCase = GridPane.getColumnIndex(image);
         int yClickedCase = GridPane.getRowIndex(image);
-        //System.out.println(xClickedCase + " " + yClickedCase);
 
         if(playerRound) {
             FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCrossTable[xClickedCase][yClickedCase]);
@@ -237,6 +236,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
+                tourJ1LabelGauche.setVisible(false);
+                tourJ2LabelDroite.setVisible(true);
                 isGamePlayable = false;
                 Thread.sleep(500);
                 FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates]);
@@ -245,6 +246,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 fadeTransition.play();
                 imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates].setVisible(true);
                 isGamePlayable = !isGameFinished;
+                tourJ1LabelGauche.setVisible(true);
+                tourJ2LabelDroite.setVisible(false);
                 return null;
             }
         };
