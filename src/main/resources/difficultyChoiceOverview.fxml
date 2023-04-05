@@ -6,12 +6,15 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="backgroundAnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DifficultyChoiceController">
     <children>
-            <VBox alignment="CENTER" layoutY="99.0" prefHeight="203.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <VBox alignment="CENTER" layoutY="99.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                 <children>
                     <!--        <BorderPane fx:id="mainPane" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">-->
                   <Label fx:id="titleLabel" text="Choix de la difficulté :" textAlignment="CENTER">
@@ -22,30 +25,61 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-                    <CheckBox fx:id="choixFacile" alignment="BOTTOM_LEFT" maxWidth="-Infinity" mnemonicParsing="false" onAction="#setChoixFacile" prefHeight="50.0" prefWidth="65.0" text="Facile">
-                        <VBox.margin>
-                            <Insets top="20.0" />
-                        </VBox.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                    </CheckBox>
-                    <CheckBox fx:id="choixMoyen" alignment="BOTTOM_LEFT" maxWidth="-Infinity" mnemonicParsing="false" onAction="#setChoixMoyen" prefHeight="50.0" prefWidth="65.0" text="Moyen">
-                        <VBox.margin>
-                            <Insets top="20.0" />
-                        </VBox.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                    </CheckBox>
-                    <CheckBox fx:id="choixDifficile" alignment="BOTTOM_LEFT" maxWidth="-Infinity" mnemonicParsing="false" onAction="#setChoixDifficile" prefHeight="50.0" prefWidth="65.0" text="Difficile">
-                        <VBox.margin>
-                            <Insets top="20.0" />
-                        </VBox.margin>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                    </CheckBox>
+            <GridPane alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                          <CheckBox fx:id="choixFacile" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setChoixFacile" prefHeight="50.0" prefWidth="65.0" text="Facile">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                          </CheckBox>
+                          <CheckBox fx:id="choixMoyen" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setChoixMoyen" prefHeight="50.0" prefWidth="65.0" text="Moyen" GridPane.rowIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                          </CheckBox>
+                          <CheckBox fx:id="choixDifficile" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#setChoixDifficile" prefHeight="50.0" prefWidth="65.0" text="Difficile" GridPane.rowIndex="2">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                          </CheckBox>
+                  <Label fx:id="labelStatusFacile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="LabelFacile" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="labelStatusMoyen" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="LabelMoyen" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="labelStatusDifficile" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="LabelDifficile" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </GridPane>
             <Button fx:id="playButton" mnemonicParsing="false" onAction="#onJouerButtonClick" prefHeight="41.0" prefWidth="96.0" style="-fx-background-color: linear-gradient(to bottom, #222, #333); -fx-background-radius: 20; -fx-border-color: #fff; -fx-border-radius: 20; -fx-border-width: 2px; -fx-text-fill: #fff; -fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 8px 16px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);" text="Jouer">
                <VBox.margin>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />

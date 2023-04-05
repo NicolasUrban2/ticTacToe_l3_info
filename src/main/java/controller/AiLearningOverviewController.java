@@ -59,6 +59,7 @@ public class AiLearningOverviewController implements Initializable, CanSetDarkmo
     @FXML
     private void onOkButtonCLick() {
         if(trainingComplete) {
+            mainController.getDifficultyChoiceController().updateAllDifficultyStatus();
             mainController.getDifficultyChoiceController().onJouerButtonClick();
         }
         closeWindow();

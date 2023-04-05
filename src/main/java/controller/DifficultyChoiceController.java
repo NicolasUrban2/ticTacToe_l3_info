@@ -23,10 +23,8 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
 
     @FXML
     CheckBox choixFacile;
-
     @FXML
     CheckBox choixMoyen;
-
     @FXML
     CheckBox choixDifficile;
     @FXML
@@ -35,6 +33,13 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
     private AnchorPane backgroundAnchorPane;
     @FXML
     private Label titleLabel;
+    @FXML
+    private Label labelStatusFacile;
+    @FXML
+    private Label labelStatusMoyen;
+    @FXML
+    private Label labelStatusDifficile;
+
 
     private String choiceSelected;
 
@@ -51,7 +56,30 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
 
         mainController.setDifficultyChoiceController(this);
         accueilButtonInitialization();
+
+        updateAllDifficultyStatus();
+
         setChoixFacile();
+    }
+
+    public void updateAllDifficultyStatus() {
+        updateDifficultyStatus("F", labelStatusFacile);
+        updateDifficultyStatus("M", labelStatusMoyen);
+        updateDifficultyStatus("D", labelStatusDifficile);
+    }
+
+    private void updateDifficultyStatus(String difficulty, Label label) {
+        String fileName = recupFileName(difficulty);
+        if(verifyFileIntegrity(fileName)) {
+            label.setText("Prêt");
+            label.setTextFill(Color.GREEN);
+        } else if(fileExists(fileName)){
+            label.setText("Modèle corrompu");
+            label.setTextFill(Color.ORANGE);
+        } else {
+            label.setText("Non entraîné");
+            label.setTextFill(Color.ORANGE);
+        }
     }
 
     private void accueilButtonInitialization() {
@@ -94,19 +122,13 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
     }
 
     private void searchFile() {
-        ConfigFileLoader cfl = new ConfigFileLoader();
-        cfl.loadConfigFile("./resources/config.txt");
-        Config config = cfl.get(gameSettings.getDifficulty());
+        String difficulty = gameSettings.getDifficulty();
 
-        int l = config.numberOfhiddenLayers;
-        int h = config.hiddenLayerSize;
-        double lr = config.learningRate;
+        String fileName = recupFileName(difficulty);
 
-        String fileName = "model_" + l + "_" + h + "_" + lr + ".srl";
-        System.out.println(fileName);
         if(fileExists(fileName)) {
             MultiLayerPerceptron multiLayerPerceptron = MultiLayerPerceptron.load("./resources/models/"+ fileName);
-            if(multiLayerPerceptron == null) {
+            if(!verifyFileIntegrity(fileName)) {
                 System.out.println("Fichier de modèle corrompu, suppression du fichier.");
                 File file = new File("./resources/models/"+ fileName);
                 file.delete();
@@ -118,8 +140,29 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
         }
         else {
             callTrainingWindow();
-
         }
+    }
+
+    public String recupFileName(String difficulty) {
+        ConfigFileLoader cfl = new ConfigFileLoader();
+        cfl.loadConfigFile("./resources/config.txt");
+        Config config = cfl.get(difficulty);
+
+        int l = config.numberOfhiddenLayers;
+        int h = config.hiddenLayerSize;
+        double lr = config.learningRate;
+
+        return "model_" + l + "_" + h + "_" + lr + ".srl";
+    }
+
+    private boolean verifyFileIntegrity(String fileName) {
+        if(fileExists(fileName)) {
+            MultiLayerPerceptron multiLayerPerceptron = MultiLayerPerceptron.load("./resources/models/"+ fileName);
+            if(multiLayerPerceptron != null) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void callTrainingWindow() {

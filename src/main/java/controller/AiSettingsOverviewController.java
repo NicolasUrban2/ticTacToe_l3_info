@@ -174,6 +174,8 @@ public class AiSettingsOverviewController implements Initializable, CanSetDarkmo
             throw new RuntimeException(e);
         }
 
+        mainController.getDifficultyChoiceController().updateAllDifficultyStatus();
+
         // Lié aux sauvegardes
         // Voir les classes pour écrire dedans (vu qu'on a déjà des classes pour les lire)
         // on récupère tous les champs, on efface tout le fichier config et on écrit dedans

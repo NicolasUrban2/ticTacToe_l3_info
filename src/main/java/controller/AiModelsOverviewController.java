@@ -87,13 +87,14 @@ public class AiModelsOverviewController implements Initializable, CanSetDarkmode
 
     @FXML
     private void onOkButtonClick() {
-        deleteModelsFromModelFilesToDelete();
+        onSauvegarderButtonClick();
         closeWindow();
     }
 
     @FXML
     private void onSauvegarderButtonClick() {
         deleteModelsFromModelFilesToDelete();
+        mainController.getDifficultyChoiceController().updateAllDifficultyStatus();
     }
 
     private void deleteModelsFromModelFilesToDelete() {
