@@ -111,7 +111,10 @@
          <bottom>
             <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                <children>
-                  <CheckBox onAction="#setPlayerOnePlaysFirstCheckboxClick" fx:id="playerOnePlaysFirstCheckbox" mnemonicParsing="false" prefHeight="18.0" prefWidth="148.0" text="Jouer en premier" />
+                  <CheckBox fx:id="playerOnePlaysFirstCheckbox" mnemonicParsing="false" onAction="#setPlayerOnePlaysFirstCheckboxClick" prefHeight="18.0" prefWidth="148.0" text="Jouer en premier">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></CheckBox>
                         <Label fx:id="winOrLose" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="33.0" prefWidth="323.0">
                             <font>
                                 <Font name="System Bold Italic" size="19.0" />

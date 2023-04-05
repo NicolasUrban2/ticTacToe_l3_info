@@ -48,8 +48,7 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mainController.registerAsDarkModeObserver(this);
-        Tooltip tooltipPLayButton = new Tooltip("Lancer la partie ou lancer l'entraînement du nouveau modèle.");
-        Tooltip.install(playButton, tooltipPLayButton);
+
         mainController.setDifficultyChoiceController(this);
         accueilButtonInitialization();
         setChoixFacile();
