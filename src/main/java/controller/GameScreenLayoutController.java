@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.effect.Bloom;
 import javafx.scene.effect.Effect;
@@ -22,6 +23,7 @@ import main.Main;
 import model.GameSettings;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class GameScreenLayoutController implements Initializable, CanSetDarkmode {
@@ -41,12 +43,12 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     private Label player2Label;
     @FXML
     private Label titleLabel;
-
     @FXML
     private GridPane gridPane;
-
     @FXML
     private Button replayButton;
+    @FXML
+    private CheckBox playerOnePlaysFirstCheckbox;
 
     private ImageView[][] imageViewCircleTable = new ImageView[3][3];
 
@@ -54,8 +56,6 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
 
     private ImageView[][] imageViewEmptyTable = new ImageView[3][3];
 
-    private int xClickedCase;
-    private int yClickedCase;
     private boolean playerRound = true; // True = Player 1 (Left)
                                         // False = Player 2 (Right)
 
@@ -78,19 +78,20 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         isGameFinished = false;
         accueilButtonInitialization();
         winOrLose.setText("");
-        for(int t=0; t<in.length; t++) {
-            in[t] = 0;
-        }
+        Arrays.fill(in, 0);
 
         switch (gameSettings.getGameMode()) {
             case "pvp" :
                 titleLabel.setText("Mode de jeu : Joueur contre joueur");
+                playerOnePlaysFirstCheckbox.setVisible(false);
                 break;
             case "pve" :
                 titleLabel.setText("Mode de jeu : Joueur contre IA");
+                playerOnePlaysFirstCheckbox.setVisible(true);
                 break;
             default:
                 titleLabel.setText("Mode de jeu : Erreur");
+                playerOnePlaysFirstCheckbox.setVisible(false);
         }
 
         tourJ1LabelGauche.setVisible(true);
@@ -109,18 +110,19 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         fillCircleTable();
         fillCrossTable();
 
-//        for (int i=0; i<3; i++) {
-//            for (int j=0; j<3; j++) {
-//                imageViewEmptyTable[i][j].setVisible(true);
-//                imageViewEmptyTable[i][j].setOpacity(1);
-//            }
-//        }
-
         for(int i=0; i<7; i+=3) {
             highlightCases(i, i+1, i+2, false);
         }
+
+        if(!playerOnePlaysFirstCheckbox.isSelected() && gameSettings.getGameMode().equals("pve")) {
+            makeAiToPlay();
+        }
     }
 
+    @FXML
+    private void setPlayerOnePlaysFirstCheckboxClick() {
+        initialize(null, null);
+    }
     private void replayButtonInitialization() {
         ImageView imageView = new ImageView(new Image(Main.class.getResource("/images/replayIcon.png").toString()));
         imageView.setPreserveRatio(true);
@@ -155,75 +157,80 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     private void setClickListenerOnImage(ImageView image) {
         image.setOnMouseClicked(event -> {
             if(isGamePlayable) {
-                xClickedCase = GridPane.getColumnIndex(image);
-                yClickedCase = GridPane.getRowIndex(image);
-                //System.out.println(xClickedCase + " " + yClickedCase);
-
-                if(playerRound) {
-                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCrossTable[xClickedCase][yClickedCase]);
-                    fadeTransition.setFromValue(0);
-                    fadeTransition.setToValue(1);
-                    fadeTransition.play();
-                    imageViewCrossTable[xClickedCase][yClickedCase].setVisible(true);
-                    in[xClickedCase+yClickedCase*3] = -1;
-                }
-                else {
-                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCircleTable[xClickedCase][yClickedCase]);
-                    fadeTransition.setFromValue(0);
-                    fadeTransition.setToValue(1);
-                    fadeTransition.play();
-                    imageViewCircleTable[xClickedCase][yClickedCase].setVisible(true);
-                    in[xClickedCase+yClickedCase*3] = 1;
-                }
-                coup.addInBoard(in);
-                //System.out.println(coup.toString());
-                turnConclusion(xClickedCase, yClickedCase);
-                // Changement de tour et tour de l'IA
-                if(playerRound) {
-                    if(gameSettings.getGameMode() == "pve") {
-                        tourJ1LabelGauche.setVisible(false);
-                        if(isGamePlayable) {
-                            System.out.println("Ai Turn");
-                            int index = getNextMoveIndex(getAiMoveTable());
-                            int xAiMoveCoordinates, yAiMoveCoordinates;
-                            if(index < 3) {
-                                xAiMoveCoordinates = index;
-                                yAiMoveCoordinates = 0;
-                            } else if(index < 6) {
-                                xAiMoveCoordinates = index-3;
-                                yAiMoveCoordinates = 1;
-                            } else {
-                                xAiMoveCoordinates = index-6;
-                                yAiMoveCoordinates = 2;
-                            }
-                            displayAiMove(xAiMoveCoordinates, yAiMoveCoordinates);
-
-                            in[index] = 1;
-                            coup.addInBoard(in);
-                            turnConclusion(xAiMoveCoordinates, yAiMoveCoordinates);
-                        }
-                    } else {
-                        if(gameFinished(xClickedCase, yClickedCase) == -1) {
-                            tourJ1LabelGauche.setVisible(false);
-                            tourJ2LabelDroite.setVisible(true);
-                            playerRound = false;
-                        }
-                        else{
-                            tourJ1LabelGauche.setVisible(false);
-                            tourJ2LabelDroite.setVisible(false);
-                        }
-                    }
-                } else {
-                    if(gameFinished(xClickedCase, yClickedCase) == -1) {
-                        tourJ1LabelGauche.setVisible(true);
-                        tourJ2LabelDroite.setVisible(false);
-                        playerRound = true;
-                    }
-                    //System.out.println("Player Turn");
-                }
+                makeHumanToPlay(image);
             }
 
+            // Changement de tour ou tour de l'IA
+            if(gameSettings.getGameMode().equals("pve")) {
+                tourJ1LabelGauche.setVisible(false);
+                if(isGamePlayable) {
+                    makeAiToPlay();
+                }
+            } else if(!isGameFinished) {
+                changeTurn();
+            } else {
+                tourJ1LabelGauche.setVisible(false);
+                tourJ2LabelDroite.setVisible(false);
+            }
         });
+    }
+
+    private void changeTurn() {
+        if(playerRound) {
+            tourJ1LabelGauche.setVisible(false);
+            tourJ2LabelDroite.setVisible(true);
+            playerRound = false;
+        } else {
+            tourJ1LabelGauche.setVisible(true);
+            tourJ2LabelDroite.setVisible(false);
+            playerRound = true;
+        }
+    }
+
+    private void makeHumanToPlay(ImageView image) {
+        int xClickedCase = GridPane.getColumnIndex(image);
+        int yClickedCase = GridPane.getRowIndex(image);
+        //System.out.println(xClickedCase + " " + yClickedCase);
+
+        if(playerRound) {
+            FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCrossTable[xClickedCase][yClickedCase]);
+            fadeTransition.setFromValue(0);
+            fadeTransition.setToValue(1);
+            fadeTransition.play();
+            imageViewCrossTable[xClickedCase][yClickedCase].setVisible(true);
+            in[xClickedCase + yClickedCase *3] = -1;
+        }
+        else {
+            FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCircleTable[xClickedCase][yClickedCase]);
+            fadeTransition.setFromValue(0);
+            fadeTransition.setToValue(1);
+            fadeTransition.play();
+            imageViewCircleTable[xClickedCase][yClickedCase].setVisible(true);
+            in[xClickedCase + yClickedCase *3] = 1;
+        }
+        coup.addInBoard(in);
+        turnConclusion(xClickedCase, yClickedCase);
+    }
+
+    private void makeAiToPlay() {
+        System.out.println("Ai Turn");
+        int index = getNextMoveIndex(getAiMoveTable());
+        int xAiMoveCoordinates, yAiMoveCoordinates;
+        if(index < 3) {
+            xAiMoveCoordinates = index;
+            yAiMoveCoordinates = 0;
+        } else if(index < 6) {
+            xAiMoveCoordinates = index-3;
+            yAiMoveCoordinates = 1;
+        } else {
+            xAiMoveCoordinates = index-6;
+            yAiMoveCoordinates = 2;
+        }
+        displayAiMove(xAiMoveCoordinates, yAiMoveCoordinates);
+
+        in[index] = 1;
+        coup.addInBoard(in);
+        turnConclusion(xAiMoveCoordinates, yAiMoveCoordinates);
     }
 
     private void displayAiMove(int xAiMoveCoordinates, int yAiMoveCoordinates) {
@@ -476,6 +483,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
             winOrLose.setTextFill(Color.WHITE);
             player1Label.setTextFill(Color.WHITE);
             player2Label.setTextFill(Color.WHITE);
+            playerOnePlaysFirstCheckbox.setTextFill(Color.WHITE);
         } else {
             backgroundAnchorPane.setStyle(mainController.getBrightStyle1());
             titleLabel.setTextFill(Color.BLACK);
@@ -484,6 +492,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
             winOrLose.setTextFill(Color.BLACK);
             player1Label.setTextFill(Color.BLACK);
             player2Label.setTextFill(Color.BLACK);
+            playerOnePlaysFirstCheckbox.setTextFill(Color.BLACK);
         }
     }
 }
