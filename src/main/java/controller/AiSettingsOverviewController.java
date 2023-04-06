@@ -142,7 +142,8 @@ public class AiSettingsOverviewController implements Initializable, CanSetDarkmo
         textFieldDifficileLearningRate.setText(Double.toString(configDifficile.learningRate));
     }
 
-    public void onSaveButtonClick(){
+    @FXML
+    private void onSaveButtonClick(){
         int fl, fh, ml, mh, dl, dh;
         double flr, mlr, dlr;
         fl = Integer.parseInt(textFieldFacileNumberOfHiddenLayers.getText());
@@ -175,19 +176,17 @@ public class AiSettingsOverviewController implements Initializable, CanSetDarkmo
         }
 
         mainController.getDifficultyChoiceController().updateAllDifficultyStatus();
-
-        // Lié aux sauvegardes
-        // Voir les classes pour écrire dedans (vu qu'on a déjà des classes pour les lire)
-        // on récupère tous les champs, on efface tout le fichier config et on écrit dedans
-        // avec un printwriter
     }
 
-    public void closeWindow(){
+    private void closeWindow(){
+        mainController.removeFromDarkModeObservers(this);
         Stage stage = (Stage) okButton.getScene().getWindow();
         mainController.enableMainWindow();
         stage.close();
     }
-    public void onOkButtonClick(){
+
+    @FXML
+    private void onOkButtonClick(){
         onSaveButtonClick();
         closeWindow();
     }

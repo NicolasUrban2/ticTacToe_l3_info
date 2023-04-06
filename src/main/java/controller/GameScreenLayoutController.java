@@ -112,11 +112,6 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
             makeAiToPlay();
         }
     }
-
-    @FXML
-    private void setPlayerOnePlaysFirstCheckboxClick() {
-        initialize(null, null);
-    }
     private void replayButtonInitialization() {
         ImageView imageView = new ImageView(new Image(Main.class.getResource("/images/replayIcon.png").toString()));
         imageView.setPreserveRatio(true);
@@ -306,10 +301,14 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     private void onAccueilButtonClick() {
         mainController.changeView("welcomeScreenLayout");
     }
-
     @FXML
     private void onReplayButtonClick() {
+        mainController.removeFromDarkModeObservers(this);
         initialize(null, null);
+    }
+    @FXML
+    private void setPlayerOnePlaysFirstCheckboxClick() {
+        onReplayButtonClick();
     }
 
     private void highlightCases(int xA, int yA, int xB, int yB, int xC, int yC, boolean apply) {

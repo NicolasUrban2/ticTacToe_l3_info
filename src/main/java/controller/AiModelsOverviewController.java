@@ -105,6 +105,7 @@ public class AiModelsOverviewController implements Initializable, CanSetDarkmode
     }
 
     public void closeWindow(){
+        mainController.removeFromDarkModeObservers(this);
         Stage stage = (Stage) gridPane.getScene().getWindow();
         mainController.enableMainWindow();
         stage.close();

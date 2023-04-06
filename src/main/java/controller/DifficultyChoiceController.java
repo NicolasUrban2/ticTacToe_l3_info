@@ -3,6 +3,7 @@ package controller;
 import ai.Config;
 import ai.ConfigFileLoader;
 import ai.MultiLayerPerceptron;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -11,8 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import main.Main;
 import model.GameSettings;
+import model.ViewAndController;
 
 import java.io.File;
 import java.net.URL;
@@ -165,14 +168,32 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
         return false;
     }
 
-    private static void callTrainingWindow() {
+    private void callTrainingWindow() {
         try {
-            Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiLearningOverview").node);
+            ViewAndController viewAndController = ViewLoader.getView("aiLearningOverview");
+            Object controller = viewAndController.controller;
+            Scene scene = new Scene((AnchorPane) viewAndController.node);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Entraînement de l'IA");
             stage.setResizable(false);
             stage.show();
+
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    if(controller instanceof AiLearningOverviewController) {
+                        if(!((AiLearningOverviewController) controller).isTrainingComplete()) {
+                            // Entraînement incomplet
+                        }
+                    }
+                    if(controller != null) {
+                        if(controller instanceof CanSetDarkmode) {
+                            mainController.removeFromDarkModeObservers((CanSetDarkmode) controller);
+                        }
+                    }
+                }
+            });
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

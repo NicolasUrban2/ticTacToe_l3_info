@@ -29,6 +29,14 @@ public class MainController {
         }
     }
 
+    public void removeFromDarkModeObservers(CanSetDarkmode object) {
+        if(object != null) {
+            if(darkModeObserversList.contains(object)) {
+                darkModeObserversList.remove(object);
+            }
+        }
+    }
+
     public void setDarkModeToAllObservers(boolean applyDarkMode) {
         for (CanSetDarkmode object:darkModeObserversList) {
             object.setDarkMode(applyDarkMode);

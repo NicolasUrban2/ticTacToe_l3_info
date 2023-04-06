@@ -56,6 +56,10 @@ public class AiLearningOverviewController implements Initializable, CanSetDarkmo
         okButton.setDisable(true);
     }
 
+    public boolean isTrainingComplete() {
+        return trainingComplete;
+    }
+
     @FXML
     private void onOkButtonCLick() {
         if(trainingComplete) {
@@ -66,6 +70,7 @@ public class AiLearningOverviewController implements Initializable, CanSetDarkmo
     }
 
     public void closeWindow(){
+        mainController.removeFromDarkModeObservers(this);
         Stage stage = (Stage) okButton.getScene().getWindow();
         stage.close();
     }

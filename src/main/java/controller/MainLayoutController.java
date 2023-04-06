@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.animation.FadeTransition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -12,9 +13,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import main.Main;
+import model.ViewAndController;
 
+import javax.swing.text.View;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -28,6 +32,7 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
     private BorderPane mainPane;
 
     private Node mainView;
+    private Object mainViewController;
 
     private MainController mainController = MainController.getInstance();
     private final String darkModeToggleButtonSelectedStyle =    "-fx-background-radius : 20; -fx-background-color: black; -fx-border-color :  black; -fx-border-radius : 20; -fx-text-fill : white";
@@ -65,40 +70,12 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
 
     @FXML
     private void onAiParametresButtonClick() throws IOException {
-        Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiSettingsOverview").node);
-        Stage stage = new Stage();
-        stage.setAlwaysOnTop(true);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Paramètres");
-        stage.setScene(scene);
-        stage.setResizable(false);
-
-        stage.setOnCloseRequest(event -> {
-            enableMainWindow();
-        });
-
-        stage.show();
-        mainController.getRootAnchorPane().getStyle();
-        disableMainWindow();
+        openModalWindow("Paramètres", "aiSettingsOverview");
     }
 
     @FXML
     private void onAiModelesButtonClick() throws IOException {
-        Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiModelsOverview").node);
-        Stage stage = new Stage();
-        stage.setAlwaysOnTop(true);
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Modèles");
-        stage.setScene(scene);
-        stage.setResizable(false);
-
-        stage.setOnCloseRequest(event -> {
-            enableMainWindow();
-        });
-
-        stage.show();
-        mainController.getRootAnchorPane().getStyle();
-        disableMainWindow();
+        openModalWindow("Modèles", "aiModelsOverview");
     }
 
     @FXML
@@ -123,27 +100,57 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
 
     @FXML
     private void onCommentJouerButtonClick() throws IOException {
-        Scene scene = new Scene((AnchorPane) ViewLoader.getView("tutorialScreenLayoutSmall").node);
-        Stage stage = new Stage();
-        stage.setAlwaysOnTop(true);
-        stage.setTitle("Comment jouer");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+        openWindow("Comment jouer", "tutorialScreenLayoutSmall");
     }
 
     @FXML
     private void onNousButtonClick() throws IOException {
-        Scene scene = new Scene((AnchorPane) ViewLoader.getView("nousOverview").node);
+        openModalWindow("A propos de nous", "nousOverview");
+    }
+
+    private void openWindow(String windowName, String fxmlFileName) throws IOException {
+        ViewAndController viewAndController = ViewLoader.getView(fxmlFileName);
+        Object controller = viewAndController.controller;
+        Scene scene = new Scene((AnchorPane) viewAndController.node);
+        Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.setTitle(windowName);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                if(controller != null) {
+                    if(controller instanceof CanSetDarkmode) {
+                        mainController.removeFromDarkModeObservers((CanSetDarkmode) controller);
+                    }
+                }
+            }
+        });
+    }
+
+    private void openModalWindow(String windowName, String fxmlFileName) throws IOException {
+        ViewAndController viewAndController = ViewLoader.getView(fxmlFileName);
+        Object controller = viewAndController.controller;
+        Scene scene = new Scene((AnchorPane) viewAndController.node);
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Nous");
+        stage.setTitle(windowName);
         stage.setScene(scene);
         stage.setResizable(false);
 
-        stage.setOnCloseRequest(event -> {
-            enableMainWindow();
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                enableMainWindow();
+                if(controller != null) {
+                    if(controller instanceof CanSetDarkmode) {
+                        mainController.removeFromDarkModeObservers((CanSetDarkmode) controller);
+                    }
+                }
+            }
         });
 
         stage.show();
@@ -160,32 +167,44 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
     }
 
     public void changeView(String viewName) {
-        //System.out.println(viewName);
-        if (mainView != null) {
+        if (mainView == null) {
+            // Premier affichage
+            try {
+                ViewAndController viewAndController = ViewLoader.getView(viewName);
+                mainViewController = viewAndController.controller;
+                mainView = viewAndController.node;
+
+                mainPane.setCenter(mainView);
+            } catch (Exception e) {
+                System.err.println("ChangeView Error1 :" + e.getMessage());
+            }
+        } else {
+            // Tous les affichages suivants
             FadeTransition fadeTransitionOut = new FadeTransition(Duration.millis(200), mainView);
             fadeTransitionOut.setFromValue(1);
             fadeTransitionOut.setToValue(0);
             fadeTransitionOut.play();
             fadeTransitionOut.setOnFinished(actionEvent -> {
                 try {
-                    mainView = ViewLoader.getView(viewName).node;
+                    if(mainViewController != null) {
+                        if(mainViewController instanceof CanSetDarkmode) {
+                            mainController.removeFromDarkModeObservers((CanSetDarkmode) mainViewController);
+                        }
+                    }
+
+                    ViewAndController viewAndController = ViewLoader.getView(viewName);
+                    mainViewController = viewAndController.controller;
+                    mainView = viewAndController.node;
                     FadeTransition fadeTransitionIn = new FadeTransition(Duration.millis(200), mainView);
                     fadeTransitionIn.setFromValue(0);
                     fadeTransitionIn.setToValue(1);
                     fadeTransitionIn.play();
+
                     mainPane.setCenter(mainView);
                 } catch (Exception e) {
                     System.err.println("ChangeView Error2 :" + e.getMessage());
                 }
             });
-        } else {
-            try {
-                mainView = ViewLoader.getView(viewName).node;
-                //mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
-                mainPane.setCenter(mainView);
-            } catch (Exception e) {
-                System.err.println("ChangeView Error1 :" + e.getMessage());
-            }
         }
     }
 
