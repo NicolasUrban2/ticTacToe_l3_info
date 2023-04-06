@@ -167,7 +167,7 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
 
     private static void callTrainingWindow() {
         try {
-            Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiLearningOverview"));
+            Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiLearningOverview").node);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setTitle("Entraînement de l'IA");

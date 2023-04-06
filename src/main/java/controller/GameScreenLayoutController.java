@@ -20,7 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import main.Main;
-import model.GameSettings;
+import model.*;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -59,12 +59,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     private boolean playerRound = true; // True = Player 1 (Left)
                                         // False = Player 2 (Right)
 
-    private double[] in = new double[9];
-
-    private Coup coup = new Coup(9,"");
-
     private GameSettings gameSettings = GameSettings.getInstance();
-
+    private GameManager gameManager = GameManager.getInstance();
     private MainController mainController = MainController.getInstance();
 
     private boolean isGamePlayable;
@@ -72,14 +68,19 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        replayButtonInitialization();
 
         mainController.registerAsDarkModeObserver(this);
-        isGameFinished = false;
-        accueilButtonInitialization();
-        winOrLose.setText("");
-        Arrays.fill(in, 0);
 
+        gameManager.emptyCoup();
+
+        replayButtonInitialization();
+        accueilButtonInitialization();
+
+        isGameFinished = false;
+        isGamePlayable = true;
+        playerRound = true;
+
+        winOrLose.setText("");
         switch (gameSettings.getGameMode()) {
             case "pvp" :
                 titleLabel.setText("Mode de jeu : Joueur contre joueur");
@@ -87,6 +88,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 break;
             case "pve" :
                 titleLabel.setText("Mode de jeu : Joueur contre IA");
+                player1Label.setText("Vous");
+                player2Label.setText("IA");
                 playerOnePlaysFirstCheckbox.setVisible(true);
                 break;
             default:
@@ -94,25 +97,16 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 playerOnePlaysFirstCheckbox.setVisible(false);
         }
 
-        tourJ1LabelGauche.setVisible(true);
-        tourJ2LabelDroite.setVisible(false);
-
-        if(gameSettings.getGameMode() == "pve") {
-            player1Label.setText("Vous");
-            player2Label.setText("IA");
-        }
-
-        isGamePlayable = true;
-        playerRound = true;
-        //replayButton.setText("Recommencer");
         gridPane.getChildren().clear();
         fillEmptyImagesTable();
         fillCircleTable();
         fillCrossTable();
-
-        for(int i=0; i<7; i+=3) {
-            highlightCases(i, i+1, i+2, false);
+        for(int i=0; i<3; i++) {
+            highlightCases(i, 0, i, 1, i, 2, false);
         }
+
+        tourJ1LabelGauche.setVisible(true);
+        tourJ2LabelDroite.setVisible(false);
 
         if(!playerOnePlaysFirstCheckbox.isSelected() && gameSettings.getGameMode().equals("pve")) {
             makeAiToPlay();
@@ -179,12 +173,11 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         if(playerRound) {
             tourJ1LabelGauche.setVisible(false);
             tourJ2LabelDroite.setVisible(true);
-            playerRound = false;
         } else {
             tourJ1LabelGauche.setVisible(true);
             tourJ2LabelDroite.setVisible(false);
-            playerRound = true;
         }
+        playerRound = ! playerRound;
     }
 
     private void makeHumanToPlay(ImageView image) {
@@ -192,44 +185,31 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         int yClickedCase = GridPane.getRowIndex(image);
 
         if(playerRound) {
-            FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCrossTable[xClickedCase][yClickedCase]);
-            fadeTransition.setFromValue(0);
-            fadeTransition.setToValue(1);
-            fadeTransition.play();
-            imageViewCrossTable[xClickedCase][yClickedCase].setVisible(true);
-            in[xClickedCase + yClickedCase *3] = -1;
+            displayMove(imageViewCrossTable[xClickedCase][yClickedCase]);
+            gameManager.addMoveToCoup(xClickedCase, yClickedCase, -1);
         }
         else {
-            FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCircleTable[xClickedCase][yClickedCase]);
-            fadeTransition.setFromValue(0);
-            fadeTransition.setToValue(1);
-            fadeTransition.play();
-            imageViewCircleTable[xClickedCase][yClickedCase].setVisible(true);
-            in[xClickedCase + yClickedCase *3] = 1;
+            displayMove(imageViewCircleTable[xClickedCase][yClickedCase]);
+            gameManager.addMoveToCoup(xClickedCase, yClickedCase, 1);
         }
-        coup.addInBoard(in);
+        //System.out.println(gameManager.getCoup());
         turnConclusion(xClickedCase, yClickedCase);
     }
 
-    private void makeAiToPlay() {
-        System.out.println("Ai Turn");
-        int index = getNextMoveIndex(getAiMoveTable());
-        int xAiMoveCoordinates, yAiMoveCoordinates;
-        if(index < 3) {
-            xAiMoveCoordinates = index;
-            yAiMoveCoordinates = 0;
-        } else if(index < 6) {
-            xAiMoveCoordinates = index-3;
-            yAiMoveCoordinates = 1;
-        } else {
-            xAiMoveCoordinates = index-6;
-            yAiMoveCoordinates = 2;
-        }
-        displayAiMove(xAiMoveCoordinates, yAiMoveCoordinates);
+    private static void displayMove(ImageView imageView) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageView);
+        fadeTransition.setFromValue(0);
+        fadeTransition.setToValue(1);
+        fadeTransition.play();
+        imageView.setVisible(true);
+    }
 
-        in[index] = 1;
-        coup.addInBoard(in);
-        turnConclusion(xAiMoveCoordinates, yAiMoveCoordinates);
+    private void makeAiToPlay() {
+        MoveCoordinates moveCoordinates = AiPlayer.getInstance(gameSettings.getMultiLayerPerceptron()).getNextMoveCoordinates(gameManager.getCoup());
+        displayAiMove(moveCoordinates.x, moveCoordinates.y);
+
+        gameManager.addMoveToCoup(moveCoordinates.x, moveCoordinates.y, 1);
+        turnConclusion(moveCoordinates.x, moveCoordinates.y);
     }
 
     private void displayAiMove(int xAiMoveCoordinates, int yAiMoveCoordinates) {
@@ -240,11 +220,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 tourJ2LabelDroite.setVisible(true);
                 isGamePlayable = false;
                 Thread.sleep(500);
-                FadeTransition fadeTransition = new FadeTransition(Duration.millis(200), imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates]);
-                fadeTransition.setFromValue(0);
-                fadeTransition.setToValue(1);
-                fadeTransition.play();
-                imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates].setVisible(true);
+                displayMove(imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates]);
                 isGamePlayable = !isGameFinished;
                 tourJ1LabelGauche.setVisible(true);
                 tourJ2LabelDroite.setVisible(false);
@@ -288,55 +264,44 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     }
 
     private void turnConclusion(int x, int y) {
-        switch (gameFinished(x, y)) {
-            case 0:
+        WinningMove winningMove = gameManager.gameFinished(x, y);
+
+        if(winningMove != null) {
+            //System.out.println("Fin");
+            //System.out.println(winningMove.victoryToken);
+            if(winningMove.isDraw) {
                 winOrLose.setText("Match nul");
-                //replayButton.setText("Rejouer");
                 isGamePlayable = false;
                 isGameFinished = true;
-                break;
-            case 1:
+            } else if(winningMove.victoryToken == 1) {
+                highlightCases(winningMove.xA, winningMove.yA, winningMove.xB, winningMove.yB, winningMove.xC, winningMove.yC, true);
                 if(gameSettings.getGameMode().equals("pve")) {
                     winOrLose.setText("Victoire !");
                 } else {
                     winOrLose.setText("Victoire du joueur 1 !");
                 }
-                //replayButton.setText("Rejouer");
                 isGamePlayable = false;
                 isGameFinished = true;
-                break;
-            case 2:
+            } else if(winningMove.victoryToken == 2) {
+                highlightCases(winningMove.xA, winningMove.yA, winningMove.xB, winningMove.yB, winningMove.xC, winningMove.yC, true);
                 if(gameSettings.getGameMode().equals("pve")) {
                     winOrLose.setText("Défaite...");
                 } else {
                     winOrLose.setText("Victoire du joueur 2 !");
                 }
-                //replayButton.setText("Rejouer");
                 isGamePlayable = false;
                 isGameFinished = true;
-                break;
-            default:
-                winOrLose.setText("");
-        }
-    }
-
-    private int getNextMoveIndex(double[] res) {
-        int index = 0;
-        double max = 0;
-        for(int i=0; i<9; i++) {
-            if(in[i] == 0.0 && res[i] > max) {
-                max = res[i];
-                index = i;
+            } else {
+                winOrLose.setText("Erreur...");
+                isGamePlayable = false;
+                isGameFinished = true;
             }
+        } else {
+            // System.out.println("Continue");
+            winOrLose.setText("");
         }
-        return index;
     }
 
-    private double[] getAiMoveTable() {
-        MultiLayerPerceptron multiLayerPerceptron = gameSettings.getMultiLayerPerceptron();
-        double[] res = multiLayerPerceptron.forwardPropagation(in);
-        return res;
-    }
     @FXML
     private void onAccueilButtonClick() {
         mainController.changeView("welcomeScreenLayout");
@@ -347,120 +312,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         initialize(null, null);
     }
 
-    private int gameFinished(int x, int y) {
-        int playerToken = (int) in[x+3*y];
-        // Test horizontal
-        boolean isWiningLine = true;
-        int i=0;
-        while(i<3 && isWiningLine) {
-            if(in[i+3*y] != playerToken) {
-                isWiningLine = false;
-            }
-            i++;
-        }
-        if(isWiningLine) {
-            highlightCases(0+3*y, 1+3*y, 2+3*y, true);
-            return getVictoryForPlayerToken(playerToken);
-        }
-        // test vertical
-        isWiningLine = true;
-        i=0;
-        while(i<3 && isWiningLine) {
-            if(in[x+3*i] != playerToken) {
-                isWiningLine = false;
-            }
-            i++;
-        }
-        if(isWiningLine) {
-            highlightCases(x+3*0, x+3*1, x+3*2, true);
-            return getVictoryForPlayerToken(playerToken);
-        }
-        // Test diagonal from upper left
-        isWiningLine = true;
-        i=0;
-        while(i<3 && isWiningLine) {
-            if(in[i+3*i] != playerToken) {
-                isWiningLine = false;
-            }
-            i++;
-        }
-        if(isWiningLine) {
-            highlightCases(0+3*0, 1+3*1, 2+3*2, true);
-            return getVictoryForPlayerToken(playerToken);
-        }
-        // Test diagonal from upper right
-        isWiningLine = true;
-        i=2;
-        int j=0;
-        while(i>=0 && isWiningLine) {
-            if(in[i+3*j] != playerToken) {
-                isWiningLine = false;
-            }
-            i--;
-            j++;
-        }
-        if(isWiningLine) {
-            highlightCases(2+3*0, 1+3*1, 0+3*2, true);
-            return getVictoryForPlayerToken(playerToken);
-        }
-
-        boolean isDraw = true;
-        int t=0;
-        while(t < in.length && isDraw) {
-            if(in[t] == 0) {
-                isDraw = false;
-            }
-            t++;
-        }
-        if(isDraw) {
-            return 0;
-        }
-        return -1;
-    }
-
-    private int getVictoryForPlayerToken(int playerToken) {
-        return switch (playerToken) {
-            case -1 -> 1;
-            case 1 -> 2;
-            default -> -1;
-        };
-    }
-
-    private void highlightCases(int a, int b, int c, boolean apply) {
-        int xA, yA, xB, yB, xC, yC;
-        if(a < 3) {
-            xA = a;
-            yA = 0;
-        } else if(a < 6) {
-            xA = a-3;
-            yA = 1;
-        } else {
-            xA = a-6;
-            yA = 2;
-        }
-
-        if(b < 3) {
-            xB = b;
-            yB = 0;
-        } else if(b < 6) {
-            xB = b-3;
-            yB = 1;
-        } else {
-            xB = b-6;
-            yB = 2;
-        }
-
-        if(c < 3) {
-            xC = c;
-            yC = 0;
-        } else if(c < 6) {
-            xC = c-3;
-            yC = 1;
-        } else {
-            xC = c-6;
-            yC = 2;
-        }
-
+    private void highlightCases(int xA, int yA, int xB, int yB, int xC, int yC, boolean apply) {
         Effect effect;
         if(apply) {
             effect = new Bloom();

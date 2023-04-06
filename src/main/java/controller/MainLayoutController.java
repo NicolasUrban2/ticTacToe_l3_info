@@ -65,7 +65,7 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
 
     @FXML
     private void onAiParametresButtonClick() throws IOException {
-        Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiSettingsOverview"));
+        Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiSettingsOverview").node);
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -84,7 +84,7 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
 
     @FXML
     private void onAiModelesButtonClick() throws IOException {
-        Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiModelsOverview"));
+        Scene scene = new Scene((AnchorPane) ViewLoader.getView("aiModelsOverview").node);
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -123,7 +123,7 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
 
     @FXML
     private void onCommentJouerButtonClick() throws IOException {
-        Scene scene = new Scene((AnchorPane) ViewLoader.getView("tutorialScreenLayoutSmall"));
+        Scene scene = new Scene((AnchorPane) ViewLoader.getView("tutorialScreenLayoutSmall").node);
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.setTitle("Comment jouer");
@@ -134,7 +134,7 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
 
     @FXML
     private void onNousButtonClick() throws IOException {
-        Scene scene = new Scene((AnchorPane) ViewLoader.getView("nousOverview"));
+        Scene scene = new Scene((AnchorPane) ViewLoader.getView("nousOverview").node);
         Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -168,24 +168,23 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
             fadeTransitionOut.play();
             fadeTransitionOut.setOnFinished(actionEvent -> {
                 try {
-                    mainView = ViewLoader.getView(viewName);
-                    //mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
+                    mainView = ViewLoader.getView(viewName).node;
                     FadeTransition fadeTransitionIn = new FadeTransition(Duration.millis(200), mainView);
                     fadeTransitionIn.setFromValue(0);
                     fadeTransitionIn.setToValue(1);
                     fadeTransitionIn.play();
                     mainPane.setCenter(mainView);
                 } catch (Exception e) {
-                    System.err.println("ChangeViewError :" + e.getMessage());
+                    System.err.println("ChangeView Error2 :" + e.getMessage());
                 }
             });
         } else {
             try {
-                mainView = ViewLoader.getView(viewName);
+                mainView = ViewLoader.getView(viewName).node;
                 //mainController.setDarkModeToAllObservers(darkModeToggleButton.isSelected());
                 mainPane.setCenter(mainView);
             } catch (Exception e) {
-                System.err.println("ChangeViewError :" + e.getMessage());
+                System.err.println("ChangeView Error1 :" + e.getMessage());
             }
         }
     }
