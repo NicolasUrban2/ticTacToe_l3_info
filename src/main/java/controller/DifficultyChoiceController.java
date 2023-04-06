@@ -135,14 +135,14 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
                 System.out.println("Fichier de modèle corrompu, suppression du fichier.");
                 File file = new File("./resources/models/"+ fileName);
                 file.delete();
-                callTrainingWindow();
+                callTrainingWindow(difficulty);
             } else {
                 gameSettings.setMultiLayerPerceptron(multiLayerPerceptron);
                 mainController.changeView("gameScreenLayout");
             }
         }
         else {
-            callTrainingWindow();
+            callTrainingWindow(difficulty);
         }
     }
 
@@ -168,7 +168,7 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
         return false;
     }
 
-    private void callTrainingWindow() {
+    private void callTrainingWindow(String difficulty) {
         try {
             ViewAndController viewAndController = ViewLoader.getView("aiLearningOverview");
             Object controller = viewAndController.controller;
@@ -184,7 +184,9 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
                 public void handle(WindowEvent windowEvent) {
                     if(controller instanceof AiLearningOverviewController) {
                         if(!((AiLearningOverviewController) controller).isTrainingComplete()) {
-                            // Entraînement incomplet
+                            System.out.println("Entraînement incomplet -> suppression du modèle");
+                            File file = new File("./resources/models/"+recupFileName(difficulty));
+                            file.delete();
                         }
                     }
                     if(controller != null) {
