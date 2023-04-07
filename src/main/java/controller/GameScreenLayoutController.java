@@ -101,9 +101,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         fillEmptyImagesTable();
         fillCircleTable();
         fillCrossTable();
-        for(int i=0; i<3; i++) {
-            highlightCases(i, 0, i, 1, i, 2, false);
-        }
+        removeHighlightCases();
 
         tourJ1LabelGauche.setVisible(true);
         tourJ2LabelDroite.setVisible(false);
@@ -112,6 +110,13 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
             makeAiToPlay();
         }
     }
+
+    private void removeHighlightCases() {
+        for(int i=0; i<3; i++) {
+            highlightCases(i, 0, i, 1, i, 2, false);
+        }
+    }
+
     private void replayButtonInitialization() {
         ImageView imageView = new ImageView(new Image(Main.class.getResource("/images/replayIcon.png").toString()));
         imageView.setPreserveRatio(true);
