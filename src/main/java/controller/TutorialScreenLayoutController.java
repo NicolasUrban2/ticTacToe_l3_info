@@ -66,6 +66,7 @@ public class TutorialScreenLayoutController implements Initializable, CanSetDark
         mainController.changeView("welcomeScreenLayout");
     }
 
+    // Transition
     private void ArrowAnimationSetup() {
         int longueurAnimation = 10;
 

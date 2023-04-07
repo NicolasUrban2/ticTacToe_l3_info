@@ -30,15 +30,10 @@ public class AiLearningOverviewController implements Initializable, CanSetDarkmo
     private ProgressBar progressBar;
     @FXML
     private Button okButton;
-
     private GameSettings gameSettings = GameSettings.getInstance();
-
     private Thread thread;
-
     private String newModelFileName;
-
     private DifficultyChoiceController difficultyChoiceController;
-
     private MainController mainController = MainController.getInstance();
     private boolean trainingComplete;
 
@@ -86,9 +81,8 @@ public class AiLearningOverviewController implements Initializable, CanSetDarkmo
     private void createNewModel() {
         int size = 9;
         messageLabel.setText("START TRAINING ...");
-        //
-        //			int[] layers = new int[]{ size, 128, 128, size };
 
+        // On récupère le fichier de configuration
         ConfigFileLoader cfl = new ConfigFileLoader();
         cfl.loadConfigFile("./resources/config.txt");
         Config config = cfl.get(gameSettings.getDifficulty());
@@ -99,6 +93,8 @@ public class AiLearningOverviewController implements Initializable, CanSetDarkmo
         int h = config.hiddenLayerSize;
         double lr = config.learningRate;
         double epochs = 10000 ;
+
+        // Données d'entrainement
         HashMap<Integer, Coup> mapTrain = loadCoupsFromFile("./resources/train_dev_test/train.txt");
 
         int[] layers = new int[l + 2];
@@ -107,11 +103,12 @@ public class AiLearningOverviewController implements Initializable, CanSetDarkmo
             layers[i + 1] = h;
         }
         layers[layers.length - 1] = size;
-        //
+
         MultiLayerPerceptron net = new MultiLayerPerceptron(layers, lr, new SigmoidalTransferFunction());
 
         messageLabel.setText("Load data ...");
 
+        // Création d'une tâche que l'on va associer à un thread
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
@@ -142,10 +139,13 @@ public class AiLearningOverviewController implements Initializable, CanSetDarkmo
                 return null;
             }
         };
+        // Mise à jour de la progressBar
         progressBar.progressProperty().bind(task.progressProperty());
         task.messageProperty().addListener((obs, oldMsg, newMsg) -> {
             messageLabel.setText(newMsg);
         });
+
+        // Création d'un thread (processus) contenant la tâche
         thread = new Thread(task);
         thread.start();
         newModelFileName = "./resources/models/model_" + l + "_" + h + "_" + lr + ".srl";

@@ -43,25 +43,19 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
     @FXML
     private Label labelStatusDifficile;
 
-
     private String choiceSelected;
-
     private GameSettings gameSettings = GameSettings.getInstance();
     private MainController mainController = MainController.getInstance();
 
     @FXML
     private Button accueilButton;
 
-    ToggleGroup toggleGroup = new ToggleGroup();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         mainController.registerAsDarkModeObserver(this);
-
         mainController.setDifficultyChoiceController(this);
         accueilButtonInitialization();
-
         updateAllDifficultyStatus();
-
         setChoixFacile();
     }
 
@@ -97,6 +91,11 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
         mainController.changeView("welcomeScreenLayout");
     }
 
+    public void onJouerButtonClick() {
+        gameSettings.setDifficulty(choiceSelected);
+        searchFile();
+    }
+
     public void setChoixFacile() {
         choixFacile.setSelected(true);
         choixMoyen.setSelected(false);
@@ -116,12 +115,6 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
         choixFacile.setSelected(false);
         choixMoyen.setSelected(false);
         choiceSelected = "D";
-    }
-
-    public void onJouerButtonClick() {
-        gameSettings.setDifficulty(choiceSelected);
-        searchFile();
-        // Lancer le jeu
     }
 
     private void searchFile() {
@@ -158,6 +151,19 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
         return "model_" + l + "_" + h + "_" + lr + ".srl";
     }
 
+    private boolean fileExists(String fileName) {
+        File directory = new File("./resources/models");
+        List<String> modelsFilesList = List.of(directory.list());
+
+        for (String file : modelsFilesList) {
+            if(file.equals(fileName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Vérifie que le fichier est correct (utilisable)
     private boolean verifyFileIntegrity(String fileName) {
         if(fileExists(fileName)) {
             MultiLayerPerceptron multiLayerPerceptron = MultiLayerPerceptron.load("./resources/models/"+ fileName);
@@ -199,18 +205,6 @@ public class DifficultyChoiceController implements Initializable, CanSetDarkmode
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-    }
-
-    private boolean fileExists(String fileName) {
-        File directory = new File("./resources/models");
-        List<String> modelsFilesList = List.of(directory.list());
-
-        for (String file : modelsFilesList) {
-            if(file.equals(fileName)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

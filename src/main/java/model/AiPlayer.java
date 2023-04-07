@@ -7,15 +7,15 @@ public class AiPlayer {
     private static AiPlayer INSTANCE;
     private MultiLayerPerceptron multiLayerPerceptron;
 
-    private AiPlayer(MultiLayerPerceptron multiLayerPerceptron) {
-        setMultiLayerPerceptron(multiLayerPerceptron);
-    }
-
     public static AiPlayer getInstance(MultiLayerPerceptron multiLayerPerceptron) {
         if(INSTANCE == null) {
             INSTANCE = new AiPlayer(multiLayerPerceptron);
         }
         return INSTANCE;
+    }
+
+    private AiPlayer(MultiLayerPerceptron multiLayerPerceptron) {
+        setMultiLayerPerceptron(multiLayerPerceptron);
     }
 
     public void setMultiLayerPerceptron(MultiLayerPerceptron multiLayerPerceptron) {
@@ -24,6 +24,7 @@ public class AiPlayer {
         }
     }
 
+    // On récupère les coordonnées du prochain mouvement qu'elle va réaliser
     public MoveCoordinates getNextMoveCoordinates(Coup coup) {
         double[] res = getAiMoveTable(coup);
 
@@ -51,6 +52,7 @@ public class AiPlayer {
         return new MoveCoordinates(xAiMoveCoordinates, yAiMoveCoordinates);
     }
 
+    // Donne la table des mouvements de l'IA
     private double[] getAiMoveTable(Coup coup) {
         double[] res = multiLayerPerceptron.forwardPropagation(coup.in);
         return res;

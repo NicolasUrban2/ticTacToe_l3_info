@@ -28,18 +28,20 @@ public class AiModelsOverviewController implements Initializable, CanSetDarkmode
     @FXML
     private Label selectAllLabel;
     private List<Label> fileNamesLabelsList = new ArrayList<>();
-
     private MainController mainController = MainController.getInstance();
-
     List<CheckBox> checkBoxesList = new ArrayList<>();
-
     private List<String> modelsFilesNames = new ArrayList<>();
-
     private List<String> modelFilesToDelete = new ArrayList<>();
-
     private String modelsPath = "./resources/models";
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        mainController.registerAsDarkModeObserver(this);
+        searchModels();
+        fillGridPane();
+    }
 
+    // Récupération des modèles dans le répertoire associé.
     private void searchModels() {
         this.modelsFilesNames.clear();
 
@@ -60,57 +62,7 @@ public class AiModelsOverviewController implements Initializable, CanSetDarkmode
         }
     }
 
-    private void removeModelsToDeleteFromModelsFilesNames() {
-        modelsFilesNames.removeAll(modelFilesToDelete);
-    }
-
-    @FXML
-    private void onDeleteButtonClick() {
-        modelFilesToDelete.clear();
-        for (int i = 0; i < modelsFilesNames.size(); i++) {
-            if (((CheckBox) getNodeFromGridPane(1, i)).isSelected()) {
-                modelFilesToDelete.add(modelsFilesNames.get(i));
-            }
-        }
-        removeModelsToDeleteFromModelsFilesNames();
-        //searchModels();
-        clearGridPane();
-        fillGridPane();
-    }
-
-    @FXML
-    private void onSelectAllCheckboxClick() {
-        for (CheckBox checkbox: checkBoxesList) {
-            checkbox.setSelected(deleteAllCheckbox.isSelected());
-        }
-    }
-
-    @FXML
-    private void onOkButtonClick() {
-        onSauvegarderButtonClick();
-        closeWindow();
-    }
-
-    @FXML
-    private void onSauvegarderButtonClick() {
-        deleteModelsFromModelFilesToDelete();
-        mainController.getDifficultyChoiceController().updateAllDifficultyStatus();
-    }
-
-    private void deleteModelsFromModelFilesToDelete() {
-        for(int i=0; i<modelFilesToDelete.size(); i++) {
-            File fileToDelete = new File(modelsPath + "/" + modelFilesToDelete.get(i));
-            fileToDelete.delete();
-        }
-    }
-
-    public void closeWindow(){
-        mainController.removeFromDarkModeObservers(this);
-        Stage stage = (Stage) gridPane.getScene().getWindow();
-        mainController.enableMainWindow();
-        stage.close();
-    }
-
+    // Remplissage de la grid pane avec les noms (labels) et checkboxes associés à chaque fichier.
     private void fillGridPane() {
         if(modelsFilesNames.size() == 0) {
             Label label = new Label("Aucun fichier trouvé");
@@ -141,6 +93,7 @@ public class AiModelsOverviewController implements Initializable, CanSetDarkmode
         setDarkMode(mainController.isDarkModeToggleButtonSelected());
     }
 
+    // Vidage de la GridPane
     private void clearGridPane() {
         fileNamesLabelsList.clear();
         System.out.println(fileNamesLabelsList.size());
@@ -150,11 +103,15 @@ public class AiModelsOverviewController implements Initializable, CanSetDarkmode
         gridPane.getColumnConstraints().clear();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        mainController.registerAsDarkModeObserver(this);
-        searchModels();
-        fillGridPane();
+    private void removeModelsToDeleteFromModelsFilesNames() {
+        modelsFilesNames.removeAll(modelFilesToDelete);
+    }
+
+    @FXML
+    private void onSelectAllCheckboxClick() {
+        for (CheckBox checkbox: checkBoxesList) {
+            checkbox.setSelected(deleteAllCheckbox.isSelected());
+        }
     }
 
     public Node getNodeFromGridPane(int col, int row) {
@@ -164,6 +121,45 @@ public class AiModelsOverviewController implements Initializable, CanSetDarkmode
             }
         }
         return null;
+    }
+
+    @FXML
+    private void onDeleteButtonClick() {
+        modelFilesToDelete.clear();
+        for (int i = 0; i < modelsFilesNames.size(); i++) {
+            if (((CheckBox) getNodeFromGridPane(1, i)).isSelected()) {
+                modelFilesToDelete.add(modelsFilesNames.get(i));
+            }
+        }
+        removeModelsToDeleteFromModelsFilesNames();
+        clearGridPane();
+        fillGridPane();
+    }
+
+    private void deleteModelsFromModelFilesToDelete() {
+        for(int i=0; i<modelFilesToDelete.size(); i++) {
+            File fileToDelete = new File(modelsPath + "/" + modelFilesToDelete.get(i));
+            fileToDelete.delete();
+        }
+    }
+
+    @FXML
+    private void onSauvegarderButtonClick() {
+        deleteModelsFromModelFilesToDelete();
+        mainController.getDifficultyChoiceController().updateAllDifficultyStatus();
+    }
+
+    @FXML
+    private void onOkButtonClick() {
+        onSauvegarderButtonClick();
+        closeWindow();
+    }
+
+    public void closeWindow(){
+        mainController.removeFromDarkModeObservers(this);
+        Stage stage = (Stage) gridPane.getScene().getWindow();
+        mainController.enableMainWindow();
+        stage.close();
     }
 
     @Override

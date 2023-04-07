@@ -48,17 +48,6 @@ public class WelcomeScreenLayoutController implements Initializable, CanSetDarkm
         Tooltip.install(humanVsAiButton, tooltipHumanVsAiButton);
         Tooltip.install(humanVsHumanButton, tooltipHumanVsAiHuman);
         Tooltip.install(tutorialButton, tooltipTutorialButton);
-
-    }
-
-    private void loutreAnimationSetup() {
-        int longueurAnimation = 10;
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(2), imageLoutre);
-        transition.setFromY(imageLoutre.getY());
-        transition.setToY(imageLoutre.getY()+longueurAnimation);
-        transition.setCycleCount(Animation.INDEFINITE);
-        transition.setAutoReverse(true);
-        transition.play();
     }
 
     @FXML
@@ -78,6 +67,17 @@ public class WelcomeScreenLayoutController implements Initializable, CanSetDarkm
     @FXML
     private void onTutorialButtonClick() {
         mainController.changeView("tutorialScreenLayout");
+    }
+
+    // Transition
+    private void loutreAnimationSetup() {
+        int longueurAnimation = 10;
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(2), imageLoutre);
+        transition.setFromY(imageLoutre.getY());
+        transition.setToY(imageLoutre.getY()+longueurAnimation);
+        transition.setCycleCount(Animation.INDEFINITE);
+        transition.setAutoReverse(true);
+        transition.play();
     }
 
     @Override

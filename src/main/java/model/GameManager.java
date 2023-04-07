@@ -9,9 +9,7 @@ public class GameManager {
 
     private Coup coup = new Coup(9, "");
 
-    private GameManager() {
-
-    }
+    private GameManager() {}
 
     public static GameManager getInstance() {
         if(INSTANCE == null) {
@@ -39,8 +37,10 @@ public class GameManager {
         }
     }
 
+    // Réalise tous les tests afin de savoir
     public WinningMove gameFinished(int x, int y) {
         int playerToken = (int) coup.in[x+3*y];
+
         // Test horizontal
         boolean isWiningLine = true;
         int i=0;
@@ -54,7 +54,8 @@ public class GameManager {
         if(isWiningLine) {
             return new WinningMove(0, y, 1, y, 2, y, getVictoryForPlayerToken(playerToken));
         }
-        // test vertical
+
+        // Test vertical
         isWiningLine = true;
         i=0;
         while(i<3 && isWiningLine) {
@@ -67,6 +68,7 @@ public class GameManager {
         if(isWiningLine) {
             return new WinningMove(x, 0, x, 1, x, 2, getVictoryForPlayerToken(playerToken));
         }
+
         // Test diagonal from upper left
         isWiningLine = true;
         i=0;
@@ -80,6 +82,7 @@ public class GameManager {
         if(isWiningLine) {
             return new WinningMove(0, 0, 1, 1, 2, 2, getVictoryForPlayerToken(playerToken));
         }
+
         // Test diagonal from upper right
         isWiningLine = true;
         i=2;
@@ -98,6 +101,7 @@ public class GameManager {
 
         boolean isDraw = true;
         int t=0;
+
         while(t < coup.in.length && isDraw) {
             if(coup.in[t] == 0) {
                 isDraw = false;
@@ -105,12 +109,14 @@ public class GameManager {
             //System.out.println("draw : "+coup.in[t]);
             t++;
         }
+
         if(isDraw) {
             return new WinningMove();
         }
         return null;
     }
 
+    // Renvoie à qui est la victoire en fonction du dernier pion qui a été joué
     private int getVictoryForPlayerToken(int playerToken) {
         return switch (playerToken) {
             case -1 -> 1;

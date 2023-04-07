@@ -36,6 +36,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     @FXML
     private Button accueilButton;
     @FXML
+    private Button replayButton;
+    @FXML
     private Label winOrLose;
     @FXML
     private Label player1Label;
@@ -45,8 +47,6 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     private Label titleLabel;
     @FXML
     private GridPane gridPane;
-    @FXML
-    private Button replayButton;
     @FXML
     private CheckBox playerOnePlaysFirstCheckbox;
     @FXML
@@ -154,6 +154,38 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         }
     }
 
+    private void fillCircleTable() {
+        for (int i=0; i<3; i++) {
+            for (int j=0; j<3; j++) {
+                ImageView image = new ImageView(new Image(Main.class.getResource("/images/orange_circle.jpg").toString()));
+                image.setFitHeight(90.0);
+                image.setFitWidth(90.0);
+                image.setPreserveRatio(true);
+                image.setVisible(false);
+                Insets insets = new Insets(5);
+                gridPane.setMargin(image, insets);
+                imageViewCircleTable[i][j] = image;
+                gridPane.add(imageViewCircleTable[i][j], i , j);
+            }
+        }
+    }
+
+    private void fillCrossTable() {
+        for (int i=0; i<3; i++) {
+            for (int j=0; j<3; j++) {
+                ImageView image = new ImageView(new Image(Main.class.getResource("/images/blue_cross.jpg").toString()));
+                image.setFitHeight(90.0);
+                image.setFitWidth(90.0);
+                image.setPreserveRatio(true);
+                image.setVisible(false);
+                Insets insets = new Insets(5);
+                gridPane.setMargin(image, insets);
+                imageViewCrossTable[i][j] = image;
+                gridPane.add(imageViewCrossTable[i][j], i , j);
+            }
+        }
+    }
+
     private void setClickListenerOnImage(ImageView image) {
         image.setOnMouseClicked(event -> {
             if(isGamePlayable) {
@@ -218,6 +250,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         turnConclusion(moveCoordinates.x, moveCoordinates.y);
     }
 
+    // Rajoute un délai avant d'afficher les images
     private void displayAiMove(int xAiMoveCoordinates, int yAiMoveCoordinates) {
         Task<Void> task = new Task<Void>() {
             @Override
@@ -237,38 +270,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         thread.start();
     }
 
-    private void fillCircleTable() {
-        for (int i=0; i<3; i++) {
-            for (int j=0; j<3; j++) {
-                ImageView image = new ImageView(new Image(Main.class.getResource("/images/orange_circle.jpg").toString()));
-                image.setFitHeight(90.0);
-                image.setFitWidth(90.0);
-                image.setPreserveRatio(true);
-                image.setVisible(false);
-                Insets insets = new Insets(5);
-                gridPane.setMargin(image, insets);
-                imageViewCircleTable[i][j] = image;
-                gridPane.add(imageViewCircleTable[i][j], i , j);
-            }
-        }
-    }
-
-    private void fillCrossTable() {
-        for (int i=0; i<3; i++) {
-            for (int j=0; j<3; j++) {
-                ImageView image = new ImageView(new Image(Main.class.getResource("/images/blue_cross.jpg").toString()));
-                image.setFitHeight(90.0);
-                image.setFitWidth(90.0);
-                image.setPreserveRatio(true);
-                image.setVisible(false);
-                Insets insets = new Insets(5);
-                gridPane.setMargin(image, insets);
-                imageViewCrossTable[i][j] = image;
-                gridPane.add(imageViewCrossTable[i][j], i , j);
-            }
-        }
-    }
-
+    // Test de fin de partie afin de savoir qui a gagné
     private void turnConclusion(int x, int y) {
         WinningMove winningMove = gameManager.gameFinished(x, y);
 
@@ -320,6 +322,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     private void onAccueilButtonClick() {
         mainController.changeView("welcomeScreenLayout");
     }
+
     @FXML
     private void onReplayButtonClick() {
         mainController.removeFromDarkModeObservers(this);
@@ -330,6 +333,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
         onReplayButtonClick();
     }
 
+    // Mettre en valeur 3 cases
     private void highlightCases(int xA, int yA, int xB, int yB, int xC, int yC, boolean apply) {
         Effect effect;
         if(apply) {

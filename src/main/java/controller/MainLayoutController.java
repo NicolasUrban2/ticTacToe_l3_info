@@ -48,27 +48,6 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
     }
 
     @FXML
-    private void onDarkModeToggleButtonClick() {
-        setDarkModeToggleButtonStyle();
-        mainController.setDarkModeToggleButtonSelected(darkModeToggleButton.isSelected());
-    }
-
-    private void setDarkModeToggleButtonStyle() {
-        String imageName;
-        if(darkModeToggleButton.isSelected()) {
-            imageName = "sunIcon.png";
-            darkModeToggleButton.setStyle(darkModeToggleButtonSelectedStyle);
-        } else {
-            darkModeToggleButton.setStyle(darkModeToggleButtonUnselectedStyle);
-            imageName = "moonIcon.png";
-        }
-        ImageView newIcon = new ImageView(new Image(Main.class.getResource("/images/"+imageName).toString()));
-        newIcon.setPreserveRatio(true);
-        newIcon.setFitWidth(15);
-        darkModeToggleButton.setGraphic(newIcon);
-    }
-
-    @FXML
     private void onAiParametresButtonClick() throws IOException {
         openModalWindow("Paramètres", "aiSettingsOverview");
     }
@@ -130,6 +109,7 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
         });
     }
 
+    // Permet d'ouvrir une fenêtre en rendant impossible l'interaction avec la fenêtre principale
     private void openModalWindow(String windowName, String fxmlFileName) throws IOException {
         ViewAndController viewAndController = ViewLoader.getView(fxmlFileName);
         Object controller = viewAndController.controller;
@@ -206,6 +186,29 @@ public class MainLayoutController implements Initializable, CanSetDarkmode {
                 }
             });
         }
+    }
+
+    @FXML
+    private void onDarkModeToggleButtonClick() {
+        setDarkModeToggleButtonStyle();
+        mainController.setDarkModeToggleButtonSelected(darkModeToggleButton.isSelected());
+    }
+
+
+    // Changer le style du bouton (Soleil ou Lune)
+    private void setDarkModeToggleButtonStyle() {
+        String imageName;
+        if(darkModeToggleButton.isSelected()) {
+            imageName = "sunIcon.png";
+            darkModeToggleButton.setStyle(darkModeToggleButtonSelectedStyle);
+        } else {
+            darkModeToggleButton.setStyle(darkModeToggleButtonUnselectedStyle);
+            imageName = "moonIcon.png";
+        }
+        ImageView newIcon = new ImageView(new Image(Main.class.getResource("/images/"+imageName).toString()));
+        newIcon.setPreserveRatio(true);
+        newIcon.setFitWidth(15);
+        darkModeToggleButton.setGraphic(newIcon);
     }
 
     @Override

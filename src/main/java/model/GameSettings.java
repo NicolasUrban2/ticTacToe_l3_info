@@ -4,15 +4,11 @@ import ai.MultiLayerPerceptron;
 
 public class GameSettings {
     private static GameSettings INSTANCE;
-
     private MultiLayerPerceptron multiLayerPerceptron;
-
     private String gameMode;
     private String difficulty;
 
-    private GameSettings() {
-
-    }
+    private GameSettings() {}
 
     public static GameSettings getInstance() {
         if(INSTANCE == null) {

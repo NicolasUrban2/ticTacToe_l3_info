@@ -59,10 +59,7 @@ public class AiSettingsOverviewController implements Initializable, CanSetDarkmo
     private Label moyenLabel;
     @FXML
     private Label difficileLabel;
-
-
     private MainController mainController = MainController.getInstance();
-
     private final String[] regexTable = {"^([0-9]+)$", "^([0-9]+)\\.([0-9]+)$"};
 
     @Override
@@ -86,6 +83,7 @@ public class AiSettingsOverviewController implements Initializable, CanSetDarkmo
         setEventHandlerToTextField(1, textFieldDifficileLearningRate);
     }
 
+    // Permet d'empêcher la validation des champs lorsque le contenu n'est pas aux normes
     private void setEventHandlerToTextField(int regexIndex, TextField textField) {
         EventHandler<KeyEvent> eventHandler = new EventHandler<KeyEvent>() {
             @Override
@@ -115,13 +113,6 @@ public class AiSettingsOverviewController implements Initializable, CanSetDarkmo
         };
         textField.addEventHandler(KeyEvent.KEY_RELEASED, eventHandler);
     }
-
-    /*
-    private static void setTextFormatterToTextField(String regexNumber, TextField textField) {
-        textField.setTextFormatter(new TextFormatter<>(change ->
-                (change.getControlNewText().matches(regexNumber)) ? change : null));
-    }
-     */
 
     private void displayConfigContent() {
         ConfigFileLoader cfl = new ConfigFileLoader();
@@ -178,17 +169,17 @@ public class AiSettingsOverviewController implements Initializable, CanSetDarkmo
         mainController.getDifficultyChoiceController().updateAllDifficultyStatus();
     }
 
+    @FXML
+    private void onOkButtonClick(){
+        onSaveButtonClick();
+        closeWindow();
+    }
+
     private void closeWindow(){
         mainController.removeFromDarkModeObservers(this);
         Stage stage = (Stage) okButton.getScene().getWindow();
         mainController.enableMainWindow();
         stage.close();
-    }
-
-    @FXML
-    private void onOkButtonClick(){
-        onSaveButtonClick();
-        closeWindow();
     }
 
     @Override
