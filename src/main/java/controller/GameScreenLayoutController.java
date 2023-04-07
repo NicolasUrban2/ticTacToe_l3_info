@@ -49,6 +49,10 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
     private Button replayButton;
     @FXML
     private CheckBox playerOnePlaysFirstCheckbox;
+    @FXML
+    private ImageView dancingOtterLeftImage;
+    @FXML
+    private ImageView dancingOtterRightImage;
 
     private ImageView[][] imageViewCircleTable = new ImageView[3][3];
 
@@ -96,6 +100,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 titleLabel.setText("Mode de jeu : Erreur");
                 playerOnePlaysFirstCheckbox.setVisible(false);
         }
+        dancingOtterLeftImage.setVisible(false);
+        dancingOtterRightImage.setVisible(false);
 
         gridPane.getChildren().clear();
         fillEmptyImagesTable();
@@ -222,7 +228,7 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 Thread.sleep(500);
                 displayMove(imageViewCircleTable[xAiMoveCoordinates][yAiMoveCoordinates]);
                 isGamePlayable = !isGameFinished;
-                tourJ1LabelGauche.setVisible(true);
+                tourJ1LabelGauche.setVisible(isGamePlayable);
                 tourJ2LabelDroite.setVisible(false);
                 return null;
             }
@@ -271,6 +277,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
             //System.out.println(winningMove.victoryToken);
             if(winningMove.isDraw) {
                 winOrLose.setText("Match nul");
+                dancingOtterLeftImage.setVisible(false);
+                dancingOtterRightImage.setVisible(false);
                 isGamePlayable = false;
                 isGameFinished = true;
             } else if(winningMove.victoryToken == 1) {
@@ -280,6 +288,8 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 } else {
                     winOrLose.setText("Victoire du joueur 1 !");
                 }
+                dancingOtterLeftImage.setVisible(true);
+                dancingOtterRightImage.setVisible(false);
                 isGamePlayable = false;
                 isGameFinished = true;
             } else if(winningMove.victoryToken == 2) {
@@ -289,10 +299,14 @@ public class GameScreenLayoutController implements Initializable, CanSetDarkmode
                 } else {
                     winOrLose.setText("Victoire du joueur 2 !");
                 }
+                dancingOtterLeftImage.setVisible(false);
+                dancingOtterRightImage.setVisible(true);
                 isGamePlayable = false;
                 isGameFinished = true;
             } else {
                 winOrLose.setText("Erreur...");
+                dancingOtterLeftImage.setVisible(true);
+                dancingOtterRightImage.setVisible(true);
                 isGamePlayable = false;
                 isGameFinished = true;
             }
